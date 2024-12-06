@@ -15,6 +15,8 @@ const showNavbar = () => {
 const closeNavbar = () => {
   document.getElementById('asideBar').classList.remove('show');
 };
+
+const darkModeEnabled = (pagesData.theme.darkModeEnabled == true || pagesData.theme.darkModeEnabled == 'true');
 </script>
 
 <template>
@@ -67,7 +69,7 @@ const closeNavbar = () => {
           </button>
         </div>
         <div class="flex gap-[34px] md:gap-[20px] items-center justify-end">
-          <DarkModeToggle />
+          <DarkModeToggle v-if="darkModeEnabled" />
           <!-- Settings Button -->
           <!-- Logout Button -->
         </div>

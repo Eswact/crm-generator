@@ -86,52 +86,57 @@ if (!fs.existsSync(viewsDir)) {
   fs.mkdirSync(viewsDir, { recursive: true });
 }
 pagesData.pages.forEach((page) => {
-  let components = '';
-  page.components.forEach(function(item,index){
+  let doms = '';
+  page.doms.forEach(function(item,index){
     switch (item.type) {
       case 'datatable':
-        components += `
+        doms += `
         <div class="datatable-container">
           <table id="${item.id}" class="display" style="width:100%"></table>
         </div>`;
         break;
+      case 'custom':
+        doms += item.content;
+        break;
     }
   });
 
-  let content = `
-<template>
-  <div>
-    <div class="w-full flex justify-between items-center dark:text-white text-main text-[2rem]"><h1>${page.name}</h1></div>
-    ${components}
-
-    ${page.customDoms}
+  let content = `<template>
+  <div class="w-full flex flex-col gap-2">
+    <div class="w-full flex flex-col gap-1">
+      ${doms}
+    </div>
   </div>
 </template>
 
 <script setup>
   import { ref, onMounted } from 'vue';
-  ${(!page.components.every(x => x.type != 'datatable')) 
+  ${(!page.doms.every(x => x.type != 'datatable'))
     ? `import initializeDataTable from '../scripts/initDatatable';`
     : ''}
 
-  ${(!page.components.every(x => x.type != 'datatable')) 
-    ? `let tableColumns = ${JSON.stringify(page.components.find(x=>x.type == "datatable").columns.map(col => ({ title: col, data: col })))};
-    let ajaxReq = {
-      url: "${page.components.find(x=>x.type == "datatable").ajax.url}",
-      type: "${page.components.find(x=>x.type == "datatable").ajax.method}",
-      dataSrc: "${page.components.find(x=>x.type == "datatable").ajax.dataSrc}"
-    };`
-    : ''}
+  ${page.doms.filter(x => x.type == 'datatable').map(function(item, index) {
+    return `let ${item.id}Columns = ${JSON.stringify(item.columns.map(col => ({ title: col, data: col })))};
+  let ${item.id}Ajax = {
+    url: "${item.ajax.url}",
+    type: "${item.ajax.method}",
+    dataSrc: "${item.ajax.dataSrc}"
+  };
+  `;
+  }).join('')}
 
   onMounted(() => {
-  ${(page.components.find(x=>x.type == "datatable"))
-    ? `initializeDataTable('#${page.components.find(x=>x.type == "datatable").id}', ajaxReq, tableColumns, {})`
-    : ''}
+    ${page.doms.filter(x => x.type == 'datatable').map(function(item, index) {
+      return `initializeDataTable('#${item.id}', ${item.id}Ajax, ${item.id}Columns, {});
+      `;
+    }).join('')}
+
+    ${page.customReadyScripts}
   });
- 
+
   ${page.customScripts}
-</script>
-  `;
+</script>`;
+
   let filePath = path.join(viewsDir, page.file);
   fs.writeFileSync(filePath, content.trim());
   console.log(`Created: ${filePath}`);

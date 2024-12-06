@@ -12,7 +12,7 @@ let colorObject = {
   third: siteData.theme.colors.third || "#E3D26F",
   fourth: siteData.theme.colors.fourth || "#347FC4",
 };
-colorObject = {...colorObject, ...siteData.theme.colors.palette};
+colorObject = {...colorObject, ...siteData.theme.colors.customColors};
 
 let fontFamilyObject = {
   base: siteData.theme.font.family,
@@ -20,7 +20,6 @@ let fontFamilyObject = {
 let customFonts = {};
 siteData.theme.font.custom.forEach(font => { customFonts[font.name] = font.name; });
 fontFamilyObject = {...fontFamilyObject, ...customFonts};
-
 
 export default {
   content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}', './siteData.json'],

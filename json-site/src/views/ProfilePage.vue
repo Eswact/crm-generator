@@ -1,9 +1,8 @@
 <template>
-  <div>
-    <div class="w-full flex justify-between items-center dark:text-white text-main text-[2rem]"><h1>Profile</h1></div>
-    
-
-    <div>Edit Profile</div>
+  <div class="w-full flex flex-col gap-2">
+    <div class="w-full flex flex-col gap-1">
+      <div>Edit Profile</div>
+    </div>
   </div>
 </template>
 
@@ -14,8 +13,10 @@
   
 
   onMounted(() => {
-  
+    
+
+    
   });
- 
+
   
 </script>

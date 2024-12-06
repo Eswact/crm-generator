@@ -4,6 +4,7 @@ import './styles/index.css';
 import './styles/fonts.css';
 import App from './App.vue';
 import router from './router';
+import { createPinia } from 'pinia'
 
 import siteData from '../siteData.json';
 
@@ -71,5 +72,6 @@ async function loadIcons() {
 loadIcons().then(() => {
     const app = createApp(App).component('font-awesome-icon', FontAwesomeIcon);
     app.use(router);
+    app.use(createPinia());
     app.mount('#app');
 });
