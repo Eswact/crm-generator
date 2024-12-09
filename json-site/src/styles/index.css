@@ -7,3 +7,24 @@
       @apply font-base text-base;
     }
 }
+
+@layer utilities {
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-bg rounded-sm;
+  }
+  .dark ::-webkit-scrollbar-track {
+    @apply bg-darkBg rounded-sm;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-darkBg rounded-sm;
+  }
+  .dark ::-webkit-scrollbar-thumb {
+    @apply bg-bg rounded-sm;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-main;
+  }
+}

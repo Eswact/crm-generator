@@ -28,10 +28,11 @@
               <span>
                 The content types are integrated directly within the page definitions, making it easier to construct dynamic DOM structures that align with the project's requirements. This approach ensures that the JSON file can handle both general and page-specific configurations efficiently.
               </span>
-            </div>
-            <div class="max-w-[1000px] w-full py-2 gap-8 flex justify-between items-center">
-              <button class="px-4 py-2 bg-third text-white shadow-md text-xl font-bold rounded-lg">Getting Started</button>
-              <button class="px-4 py-2 bg-main text-white shadow-md text-xl font-bold rounded-lg">This Page</button>
+            </div>      
+          </div><div class="w-full py-2 mt-2 flex justify-center items-center">
+            <div class="w-full max-w-[1000px] gap-8 flex justify-between items-center">
+              <button @click=gettingStarted class="px-4 py-2 bg-third text-white shadow-md text-xl font-bold rounded-lg">Getting Started</button>
+              <button @click="sharedFunctions.getPageByPath(route.path)" class="px-4 py-2 bg-main text-white shadow-md text-xl font-bold rounded-lg">This Page</button>
             </div>
           </div>
     </div>
@@ -40,6 +41,11 @@
 
 <script setup>
   import { ref, onMounted } from 'vue';
+  import { useRoute, useRouter } from 'vue-router';
+  const route = useRoute();
+  const router = useRouter();
+  import commonFunctions from '../scripts/common.js'
+  import { sharedFunctions } from '../scripts/shared.js'
   
 
   
@@ -51,4 +57,8 @@
   });
 
   
+        function gettingStarted() {
+          router.push({ path: '/configuration' });
+        }
+      
 </script>

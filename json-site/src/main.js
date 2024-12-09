@@ -30,7 +30,7 @@ async function loadIcons() {
     ]);
 
     // default icons
-    let libraryIcons = [{ prefix: 'fa-solid', name: 'faBars' }];
+    let libraryIcons = [{ prefix: 'fa-solid', name: 'faBars' }, { prefix: 'fa-solid', name: 'faXmark' }, { prefix: 'fa-solid', name: 'faCircleXmark' }];
 
     siteData.pages.forEach(function (item) {
         let [prefix, iconFaName] = item.icon.split(' ');

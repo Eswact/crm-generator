@@ -5,6 +5,7 @@ const siteData = require('./data.js');
 const pagesData = siteData;
 const jsonFilePath = path.join(__dirname, '../json-site/siteData.json');
 const viewsDir = path.join(__dirname, '../json-site/src/views');
+const scriptsDir = path.join(__dirname, '../json-site/src/scripts');
 const sourceImagesDir = path.join(__dirname, './images');
 const targetImagesDir = path.join(__dirname, '../json-site/public/images');
 const sourceFontsDir = path.join(__dirname, './fonts');
@@ -80,6 +81,17 @@ siteData.theme.font.custom.forEach(font => {
 });
 fs.writeFileSync(fontsCssOutputFile, cssContent);
 
+//Scripts
+if (!fs.existsSync(scriptsDir)) {
+  fs.mkdirSync(scriptsDir, { recursive: true });
+}
+if (siteData.scripts && siteData.scripts.length > 0) {
+  siteData.scripts.forEach(script => {
+      const scriptFilePath = path.join(scriptsDir, `${script.name}.js`);
+      fs.writeFileSync(scriptFilePath, script.script, 'utf-8');
+      console.log(`Script file created: ${scriptFilePath}`);
+  });
+}
 
 //Views
 if (!fs.existsSync(viewsDir)) {
@@ -111,6 +123,11 @@ pagesData.pages.forEach((page) => {
 
 <script setup>
   import { ref, onMounted } from 'vue';
+  import { useRoute, useRouter } from 'vue-router';
+  const route = useRoute();
+  const router = useRouter();
+  import commonFunctions from '../scripts/common.js'
+  import { sharedFunctions } from '../scripts/shared.js'
   ${(!page.doms.every(x => x.type != 'datatable'))
     ? `import initializeDataTable from '../scripts/initDatatable';`
     : ''}

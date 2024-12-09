@@ -34,8 +34,8 @@
   },
   "pages": [
     {
-      "file": "HomePage.vue",
-      "name": "Home",
+      "file": "Introduction.vue",
+      "name": "Introduction",
       "path": "/",
       "icon": "fa-solid fa-home",
       "seo": {
@@ -43,33 +43,85 @@
         "keywords": [
           "home",
           "main",
-          "welcome"
+          "introduction"
         ]
       },
       "doms": [
         {
           "type": "custom",
-          "content": "<div class=\"w-full flex flex-col gap-6 justify-center items-center text-lg\">\n            <h1 class=\"text-main text-center text-[2.25rem] leading-10 font-bold\">JSON-Based Dynamic CRM Generator</h1>\n            <div class=\"max-w-[1000px] flex flex-col gap-4 justify-center items-center\">\n              <p class=\"text-center\">The project's goal is to simplify the process of website development, particularly for CRM systems, by utilizing a JSON file and local resources. It enables dynamic generation of a Vue 3 and Tailwind CSS-based website using predefined configurations in the JSON file, making it easier to create, customize, and maintain websites.</p>\n              <img style=\"border-width:4px;\" class=\"mb-4 px-4 py-2 border border-dashed border-main dark:border-bg rounded-xl dark:hidden\" title=\"process\" src=\"/images/process.png\" />\n              <img style=\"border-width:4px;\" class=\"mb-4 px-4 py-2 border border-dashed border-main dark:border-bg rounded-xl hidden dark:block\" title=\"process\" src=\"/images/process-dark.png\" />\n            </div>\n            <div class=\"max-w-[1000px] flex flex-col gap-4 justify-center items-center\">\n              <h2 class=\"text-main text-center text-[1.75rem] font-semibold\">JSON Configuration</h2>\n              <p>The JSON file forms the foundation of the project and includes the following key components:</p>\n              <img style=\"border-width:4px;\" class=\"mb-4 px-4 py-2 border border-dashed border-main dark:border-bg rounded-xl dark:hidden\" title=\"json config\" src=\"/images/json-detail.png\" />\n              <img style=\"border-width:4px;\" class=\"mb-4 px-4 py-2 border border-dashed border-main dark:border-bg rounded-xl hidden dark:block\" title=\"json config\" src=\"/images/json-detail-dark.png\" />\n              <span>\n                <span class=\"font-semibold\">General Information: </span>\n                In addition to the website's name and logo, it also includes metadata details such as the title, description, and icon.\n              </span>\n              <span>\n                <span class=\"font-semibold\">Themes: </span>\n                Specifies settings for visual elements such as color schemes, dark mode enablement, and font configurations. These settings define the overall aesthetic of the website.\n              </span>\n              <span>\n                <span class=\"font-semibold\">Pages: </span>\n                Each page is defined within the JSON structure, detailing its layout and the components used. Pages also include a variety of content types to streamline development like DataTable, customType\n              </span>\n              <span>\n                The content types are integrated directly within the page definitions, making it easier to construct dynamic DOM structures that align with the project's requirements. This approach ensures that the JSON file can handle both general and page-specific configurations efficiently.\n              </span>\n            </div>\n            <div class=\"max-w-[1000px] w-full py-2 gap-8 flex justify-between items-center\">\n              <button class=\"px-4 py-2 bg-third text-white shadow-md text-xl font-bold rounded-lg\">Getting Started</button>\n              <button class=\"px-4 py-2 bg-main text-white shadow-md text-xl font-bold rounded-lg\">This Page</button>\n            </div>\n          </div>"
+          "content": "<div class=\"w-full flex flex-col gap-6 justify-center items-center text-lg\">\n            <h1 class=\"text-main text-center text-[2.25rem] leading-10 font-bold\">JSON-Based Dynamic CRM Generator</h1>\n            <div class=\"max-w-[1000px] flex flex-col gap-4 justify-center items-center\">\n              <p class=\"text-center\">The project's goal is to simplify the process of website development, particularly for CRM systems, by utilizing a JSON file and local resources. It enables dynamic generation of a Vue 3 and Tailwind CSS-based website using predefined configurations in the JSON file, making it easier to create, customize, and maintain websites.</p>\n              <img style=\"border-width:4px;\" class=\"mb-4 px-4 py-2 border border-dashed border-main dark:border-bg rounded-xl dark:hidden\" title=\"process\" src=\"/images/process.png\" />\n              <img style=\"border-width:4px;\" class=\"mb-4 px-4 py-2 border border-dashed border-main dark:border-bg rounded-xl hidden dark:block\" title=\"process\" src=\"/images/process-dark.png\" />\n            </div>\n            <div class=\"max-w-[1000px] flex flex-col gap-4 justify-center items-center\">\n              <h2 class=\"text-main text-center text-[1.75rem] font-semibold\">JSON Configuration</h2>\n              <p>The JSON file forms the foundation of the project and includes the following key components:</p>\n              <img style=\"border-width:4px;\" class=\"mb-4 px-4 py-2 border border-dashed border-main dark:border-bg rounded-xl dark:hidden\" title=\"json config\" src=\"/images/json-detail.png\" />\n              <img style=\"border-width:4px;\" class=\"mb-4 px-4 py-2 border border-dashed border-main dark:border-bg rounded-xl hidden dark:block\" title=\"json config\" src=\"/images/json-detail-dark.png\" />\n              <span>\n                <span class=\"font-semibold\">General Information: </span>\n                In addition to the website's name and logo, it also includes metadata details such as the title, description, and icon.\n              </span>\n              <span>\n                <span class=\"font-semibold\">Themes: </span>\n                Specifies settings for visual elements such as color schemes, dark mode enablement, and font configurations. These settings define the overall aesthetic of the website.\n              </span>\n              <span>\n                <span class=\"font-semibold\">Pages: </span>\n                Each page is defined within the JSON structure, detailing its layout and the components used. Pages also include a variety of content types to streamline development like DataTable, customType\n              </span>\n              <span>\n                The content types are integrated directly within the page definitions, making it easier to construct dynamic DOM structures that align with the project's requirements. This approach ensures that the JSON file can handle both general and page-specific configurations efficiently.\n              </span>\n            </div>      \n          </div>"
+        },
+        {
+          "type": "custom",
+          "content": "<div class=\"w-full py-2 mt-2 flex justify-center items-center\">\n            <div class=\"w-full max-w-[1000px] gap-8 flex justify-between items-center\">\n              <button @click=gettingStarted class=\"px-4 py-2 bg-third text-white shadow-md text-xl font-bold rounded-lg\">Getting Started</button>\n              <button @click=\"sharedFunctions.getPageByPath(route.path)\" class=\"px-4 py-2 bg-main text-white shadow-md text-xl font-bold rounded-lg\">This Page</button>\n            </div>\n          </div>"
         }
       ],
-      "customScripts": "",
+      "customScripts": "\n        function gettingStarted() {\n          router.push({ path: '/configuration' });\n        }\n      ",
       "customReadyScripts": ""
     },
     {
-      "file": "ProductsPage.vue",
-      "name": "Products",
-      "path": "/products",
-      "icon": "fa-solid fa-layer-group",
+      "file": "ConfigurationPage.vue",
+      "name": "Configuration",
+      "path": "/configuration",
+      "icon": "fa-solid fa-hammer",
       "seo": {
-        "title": "Products - My CRM",
-        "description": "Overview of products",
+        "title": "Configuration - My CRM",
+        "description": "Configuration",
         "keywords": [
-          "products",
-          "sale",
-          "price"
+          "Configuration",
+          "options",
+          "settings"
         ]
       },
       "doms": [
+        {
+          "type": "custom",
+          "content": "<div class=\"w-full py-0 px-6 mt-2 flex justify-center items-center\">\n<div class=\"p-6 w-full max-w-[1000px]\">\n    <h1 class=\"text-3xl font-bold text-center mb-6\">Getting Started</h1>\n    <ol class=\"list-decimal list-inside space-y-4\">\n        <li>\n            <strong>Install Dependencies</strong>\n            <p>Open your terminal and run the following command in both the <code>generator</code> and <code>json-site</code> folders:</p>\n            <pre class=\"bg-darkBg text-bg dark:bg-black p-4 mt-2 rounded-md\"><code>npm install</code></pre>\n        </li>\n        <li>\n            <strong>Edit <code>data.js</code> in the <code>generator</code> Folder</strong>\n            <p>Navigate to the <code>generator</code> folder, open <code>data.js</code>, and make the necessary adjustments to the data.</p>\n        </li>\n        <li>\n            <strong>Generate JSON Files</strong>\n            <p>Run the following command in the <code>json-site</code> folder:</p>\n            <pre class=\"bg-darkBg text-bg dark:bg-black p-4 mt-2 rounded-md\"><code>npm run generate</code></pre>\n        </li>\n    </ol>\n</div>\n</div>\n"
+        },
+        {
+          "type": "custom",
+          "content": "<div class=\"w-full py-0 px-6 mt-2 flex justify-center items-center\">\n<div class=\"p-6 max-w-[1000px]\">\n    <h1 class=\"text-3xl font-bold text-center mb-6\">Configuration</h1>\n    <ol class=\"list-decimal list-inside space-y-4\">\n        <li>\n            <strong>General </strong>\n            <p>This section contains basic information about the site. Visual elements such as logo, site name, icon, page title and SEO information are defined here.</p>\n            <pre class=\"bg-darkBg text-bg dark:bg-black p-4 mt-2 rounded-md\"><code>\n\"general\": {\n  \"logo\": \"/images/logo.png\",   \n  \"siteName\": \"My CRM\",         \n  \"icon\": \"/images/icon.png\",   \n  \"title\": \"My CRM - Home\"      \n}\n            </code></pre>\n        </li>\n        <li>\n            <strong>Theme</strong>\n            <p>Theme settings control the site design. This includes features like dark mode, colors, and fonts. You can also specify custom colors and the project’s logo and icon. Additionally, this section allows you to include fonts and images in the project directory.</p>\n            <pre class=\"bg-darkBg text-bg dark:bg-black p-4 mt-2 rounded-md\"><code>\n\"theme\": {\n  \"darkModeEnabled\": true,\n  \"colors\": {\n    \"bg\": \"#F7F7F7\",\n    \"text\": \"#333\",\n    \"darkBg\": \"#091625\",\n    \"darkText\": \"#FFF\",\n    \"accept\": \"#4CAF50\",\n    \"cancel\": \"#DC3545\",\n    \"main\": \"#87567A\",\n    \"second\": \"#2F323A\",\n    \"third\": \"#E3D26F\",\n    \"fourth\": \"#347FC4\",\n    \"customColors\": {\n      \"test\": \"00FF00\"\n      ...\n    }\n  },\n  \"font\": {\n    \"family\": \"Montserrat\",\n    \"size\": \"14px\",\n    \"custom\": [\n      {\n        \"name\": \"Montserrat\",\n        \"file\": \"Montserrat.woff2\"\n      }\n      ...\n    ]\n  },\n},\n            </code></pre>\n        </li>\n        <li>\n            <strong>Pages</strong>\n            <p>In this section, the pages of the site are defined. Information about SEO, page-specific content, and the components used in each page are provided. There are two main types of pages:</p>\n            <p class=\"p-3\"><span class=\"font-semibold\">Datatable:</span> A page that includes a table of data that can be dynamically populated through an AJAX call. This is useful for displaying large amounts of data in a structured format with the ability to filter, search, and paginate.</p>\n            <p class=\"p-3 pt-0\"><span class=\"font-semibold\">Custom:</span> A page that allows for more customized content. The content is specified directly in the JSON file and can include custom HTML or Vue components.</p>\n            <pre class=\"bg-darkBg text-bg dark:bg-black p-4 mt-2 rounded-md\"><code>\n{\n  \"file\": \"Configuration.vue\",\n  \"name\": \"Configuration\",\n  \"path\": \"/configuration\",\n  \"icon\": 'fa-solid fa-layer-group',\n  \"seo\": {\n    \"title\": \"Configuration - My CRM\",\n    \"description\": \"Configuration\",\n    \"keywords\": [\"Configuration\", \"options\", \"settings\"]\n  },\n  \"doms\": [\n    {\n      \"type\": \"custom\",\n      \"content\": 'Content here'\n    },\n    {\n      \"type\": \"datatable\",\n      \"id\": \"productsTable\",\n      \"columns\": [\"title\", \"url\", \"albumId\", \"thumbnailUrl\"],\n      \"ajax\": { \"url\": \"https://jsonplaceholder.typicode.com/photos\", \"method\": \"GET\", \"dataSrc\": '' },\n      \"filters\": [],\n      \"toolbar\": []\n    },\n    {\n      \"type\": \"custom\",\n      \"content\": 'Content here'\n    }\n  ],\n  \"customScripts\": 'custom scripts',\n  \"customReadyScripts\": 'dom ready custom scripts',\n}\n            </code></pre>\n        </li>\n        <li>\n            <strong>Custom Scripts</strong>\n            <p>Shareable functions and scripts are located here.</p>\n            <pre class=\"bg-darkBg text-bg dark:bg-black p-4 mt-2 rounded-md\"><code>\n\"scripts\": [\n  {\n    \"name\": \"shared\",\n    \"pages\": [],\n    \"script\": \"import siteData from '../../siteData.json'\n    import commonFunctions from './common';\n    const sharedFunctions = {\n        getPageByPath: function(path) {\n            const currentPageJson = siteData.pages.find(x => x.path == path);\n            const formatted = JSON.stringify(currentPageJson);\n            commonFunctions.openModal(500, 600, formatted);\n        }\n    }\n    export { sharedFunctions }\"\n  }\n]\n            </code></pre>\n        </li>\n    </ol>\n</div>\n</div>"
+        },
+        {
+          "type": "custom",
+          "content": "<div class=\"w-full flex justify-center items-center\">\n            <div class=\"w-full py-0 px-6 max-w-[1000px] gap-8 flex justify-between items-center\">\n              <button @click=examples class=\"px-4 py-2 bg-third text-white shadow-md text-xl font-bold rounded-lg\">Examples</button>\n              <button @click=\"sharedFunctions.getPageByPath(route.path)\" class=\"px-4 py-2 bg-main text-white shadow-md text-xl font-bold rounded-lg\">This Page</button>\n            </div>\n          </div>"
+        }
+      ],
+      "customScripts": "\n       function examples() {\n          router.push({ path: '/examples' });\n        }\n      ",
+      "customReadyScripts": ""
+    },
+    {
+      "file": "ExamplesPage.vue",
+      "name": "Examples",
+      "path": "/examples",
+      "icon": "fa-solid fa-chart-simple",
+      "seo": {
+        "title": "Examples - My CRM",
+        "description": "Overview of Examples",
+        "keywords": [
+          "example",
+          "demo",
+          "try"
+        ]
+      },
+      "doms": [
+        {
+          "type": "datatable",
+          "id": "messagesTable",
+          "columns": [
+            "postId",
+            "name",
+            "email",
+            "body"
+          ],
+          "ajax": {
+            "url": "https://jsonplaceholder.typicode.com/comments",
+            "method": "GET",
+            "dataSrc": ""
+          },
+          "filters": [],
+          "toolbar": []
+        },
         {
           "type": "datatable",
           "id": "productsTable",
@@ -92,63 +144,33 @@
       "customReadyScripts": ""
     },
     {
-      "file": "MessagesPage.vue",
-      "name": "Messages",
-      "path": "/messages",
-      "icon": "fa-solid fa-comment",
+      "file": "Community.vue",
+      "name": "Community",
+      "path": "/community",
+      "icon": "fa-solid fa-user-group",
       "seo": {
-        "title": "Messages - My CRM",
-        "description": "Overview of customer messages",
+        "title": "Community - My CRM",
+        "description": "Community",
         "keywords": [
-          "messages",
-          "communication",
-          "complaint"
-        ]
-      },
-      "doms": [
-        {
-          "type": "datatable",
-          "id": "messagesTable",
-          "columns": [
-            "postId",
-            "name",
-            "email",
-            "body"
-          ],
-          "ajax": {
-            "url": "https://jsonplaceholder.typicode.com/comments",
-            "method": "GET",
-            "dataSrc": ""
-          },
-          "filters": [],
-          "toolbar": []
-        }
-      ],
-      "customScripts": "",
-      "customReadyScripts": ""
-    },
-    {
-      "file": "ProfilePage.vue",
-      "name": "Profile",
-      "path": "/profile",
-      "icon": "fa-solid fa-user",
-      "seo": {
-        "title": "User Profile",
-        "description": "Manage your profile information",
-        "keywords": [
-          "profile",
-          "user",
-          "settings"
+          "community",
+          "comments"
         ]
       },
       "doms": [
         {
           "type": "custom",
-          "content": "<div>Edit Profile</div>"
+          "content": "<div>Community</div>"
         }
       ],
       "customScripts": "",
       "customReadyScripts": ""
+    }
+  ],
+  "scripts": [
+    {
+      "name": "shared",
+      "pages": [],
+      "script": "\n        import siteData from '../../siteData.json'\n        import commonFunctions from './common';\n        const sharedFunctions = {\n            getPageByPath: function(path) {\n                const currentPageJson = siteData.pages.find(x => x.path == path);\n                const formatted = JSON.stringify(currentPageJson, null, 2).replace(/</g, \"&lt;\").replace(/>/g, \"&gt;\");\n                let modalHtml = '<pre class=\"bg-darkBg text-bg p-4 rounded-sm font-mono text-sm whitespace-pre-wrap\">' + formatted + '</pre>'\n                commonFunctions.openModal(500, 600, modalHtml);\n            }\n        }\n        export { sharedFunctions }\n      "
     }
   ]
 }
