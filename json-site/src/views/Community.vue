@@ -1,7 +1,7 @@
 <template>
   <div class="w-full flex flex-col gap-2">
     <div class="w-full flex flex-col gap-1">
-      <div>Community</div>
+      <div>Contact Form?</div>
     </div>
   </div>
 </template>
@@ -15,7 +15,7 @@
   import { sharedFunctions } from '../scripts/shared.js'
   
 
-  
+    
 
   onMounted(() => {
     

@@ -103,7 +103,7 @@ pagesData.pages.forEach((page) => {
     switch (item.type) {
       case 'datatable':
         doms += `
-        <div class="datatable-container">
+        <div class="${item.containerClass}">
           <table id="${item.id}" class="display" style="width:100%"></table>
         </div>`;
         break;
@@ -132,15 +132,24 @@ pagesData.pages.forEach((page) => {
     ? `import initializeDataTable from '../scripts/initDatatable';`
     : ''}
 
-  ${page.doms.filter(x => x.type == 'datatable').map(function(item, index) {
-    return `let ${item.id}Columns = ${JSON.stringify(item.columns.map(col => ({ title: col, data: col })))};
-  let ${item.id}Ajax = {
-    url: "${item.ajax.url}",
-    type: "${item.ajax.method}",
-    dataSrc: "${item.ajax.dataSrc}"
-  };
-  `;
-  }).join('')}
+    ${page.doms.filter(x => x.type === 'datatable').map(item => `
+      let ${item.id}Columns = [
+        ${item.columns.map(col => `{
+          order: ${col.order},
+          title: "${col.title}",
+          data: "${col.name}",
+          name: "${col.name}",
+          checkable: ${col.checkable},
+          render: ${col.render ? col.render.toString() : 'null'}
+        }`).join(',')}
+      ];
+  
+      let ${item.id}Ajax = {
+        url: "${item.ajax.url}",
+        type: "${item.ajax.method}",
+        dataSrc: "${item.ajax.dataSrc}"
+      };
+    `).join('')}
 
   onMounted(() => {
     ${page.doms.filter(x => x.type == 'datatable').map(function(item, index) {

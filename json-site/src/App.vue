@@ -1,12 +1,24 @@
 <script setup>
-  import { computed } from 'vue';
+  import { computed, onMounted  } from 'vue';
   import { useRoute } from 'vue-router';
   import Navbar from './components/Navbar.vue';
   import commonFunctions from './scripts/common';
+  import siteData from '../siteData.json'
 
   const route = useRoute();
   const showNavbar = computed(() => {
     return route.name !== 'notFound';
+  });
+
+  function setWebsiteIcon() {
+    const link = document.querySelector("link[rel~='icon']") || document.createElement('link');
+    link.rel = 'icon';
+    link.href = siteData.icon || '/default-icon.png';
+    document.head.appendChild(link);
+  }
+
+  onMounted(() => {
+    setWebsiteIcon();
   });
 </script>
 

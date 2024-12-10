@@ -1,7 +1,7 @@
 module.exports = { 
   "logo": "/images/logo.png",
   "siteName": "My CRM",
-  "icon": "/images/icon.png", //must be "/images/icon.png"
+  "icon": "/images/icon.png",
   "title": "My CRM",
   "theme": {
     "darkModeEnabled": true,
@@ -138,11 +138,11 @@ module.exports = {
             <strong>General </strong>
             <p>This section contains basic information about the site. Visual elements such as logo, site name, icon, page title and SEO information are defined here.</p>
             <pre class="bg-darkBg text-bg dark:bg-black p-4 mt-2 rounded-md"><code>
-"general": {
+{
   "logo": "/images/logo.png",   
   "siteName": "My CRM",         
   "icon": "/images/icon.png",   
-  "title": "My CRM - Home"      
+  "title": "My CRM"      
 }
             </code></pre>
         </li>
@@ -277,16 +277,119 @@ module.exports = {
       "doms": [
         {
           "type": "datatable",
+          "containerClass": "w-full",
           "id": "messagesTable",
-          "columns": ["postId", "name", "email", "body"],
+          "columns": [
+            {
+              order: 0,
+              name: 'postId',
+              title: 'Group',
+              checkable: true,
+              render: function (data, type, row) {
+                if (data != null) {
+                    return `<div class="flex justify-center items-center font-bold text-2xl">
+                                ${data}
+                            </div>`;
+                }
+                else { return ''; }
+              },
+            },
+            {
+              order: 1,
+              name: 'name',
+              title: 'Name',
+              checkable: false,
+              render: function (data, type, row) {
+                if (data != null) {
+                    return `<div class="flex">
+                                ${data}
+                            </div>`;
+                }
+                else { return ''; }
+              },
+            },
+            {
+              order: 2,
+              name: 'email',
+              title: 'Mail',
+              checkable: true,
+              render: function (data, type, row) {
+                if (data != null) {
+                    return `<div class="flex">
+                                ${data}
+                            </div>`;
+                }
+                else { return ''; }
+              },
+            },
+            {
+              order: 3,
+              name: 'body',
+              title: 'Message',
+              checkable: false,
+              render: function (data, type, row) {
+                if (data != null) {
+                    return `<div class="flex">
+                                ${data}
+                            </div>`;
+                }
+                else { return ''; }
+              },
+            }
+          ],
           "ajax": { "url": "https://jsonplaceholder.typicode.com/comments", "method": "GET", "dataSrc": '' },
           "filters": [],
           "toolbar": []
         },
         {
           "type": "datatable",
+          "containerClass": "w-full",
           "id": "productsTable",
-          "columns": ["title", "url", "albumId", "thumbnailUrl"],
+          "columns": [
+            {
+              order: 0,
+              name: 'title',
+              title: 'Title',
+              checkable: false,
+              render: function (data, type, row) {
+                if (data != null) {
+                    return `<div class="flex w-full gap-6 items-center">
+                                <img class="w-[200px]" src="${row.url}" />
+                                <div class="max-w-[250px] font-semibold text-xl">${data}</div>
+                            </div>`;
+                }
+                else { return ''; }
+              },
+            },
+            {
+              order: 1,
+              name: 'albumId',
+              title: 'Album No',
+              checkable: true,
+              render: function (data, type, row) {
+                if (data != null) {
+                    return `<div class="w-full flex justify-center items-center font-bold text-xl">
+                                ${data}
+                            </div>`;
+                }
+                else { return ''; }
+              },
+            },
+            {
+              order: 2,
+              name: 'thumbnailUrl',
+              title: 'Thumbnail',
+              checkable: true,
+              render: function (data, type, row) {
+                if (data != null) {
+                    return `<div class="flex w-full">
+                                <img src="${data}" />
+                            </div>`;
+                }
+                else { return ''; }
+              },
+            }
+          ],
           "ajax": { "url": "https://jsonplaceholder.typicode.com/photos", "method": "GET", "dataSrc": '' },
           "filters": [],
           "toolbar": []
@@ -308,7 +411,7 @@ module.exports = {
       "doms": [
         {
           "type": "custom",
-          "content": `<div>Community</div>`
+          "content": `<div>Contact Form?</div>`
         }
       ],
       "customScripts": ``,

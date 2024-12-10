@@ -30,11 +30,11 @@
             <strong>General </strong>
             <p>This section contains basic information about the site. Visual elements such as logo, site name, icon, page title and SEO information are defined here.</p>
             <pre class="bg-darkBg text-bg dark:bg-black p-4 mt-2 rounded-md"><code>
-"general": {
+{
   "logo": "/images/logo.png",   
   "siteName": "My CRM",         
   "icon": "/images/icon.png",   
-  "title": "My CRM - Home"      
+  "title": "My CRM"      
 }
             </code></pre>
         </li>
@@ -156,7 +156,7 @@
   import { sharedFunctions } from '../scripts/shared.js'
   
 
-  
+    
 
   onMounted(() => {
     

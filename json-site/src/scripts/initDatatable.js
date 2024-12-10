@@ -28,13 +28,13 @@ export default function initializeDataTable(selector, ajaxReq, tableColumns, opt
 
     // defaultOptions.dom = '';
     defaultOptions.drawCallback = function() {
-        console.log('callback');
+        // console.log('callback');
     }
     defaultOptions.fnRowCallBack = function() {
-        console.log('row');
+        // console.log('row');
     }
     defaultOptions.fnInitComplete = function() {
-        console.log('complete');
+        // console.log('complete');
     }
     // defaultOptions.processing = `<div><img src="/images/loading.gif"/></div>`;
 

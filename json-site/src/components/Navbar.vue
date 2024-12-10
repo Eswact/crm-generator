@@ -28,7 +28,7 @@ const darkModeEnabled = (pagesData.theme.darkModeEnabled == true || pagesData.th
     >
       <!-- Logo -->
       <div class="flex items-center gap-[12px] p-[12px]">
-        <img class="rounded-lg bg-white h-[56px] w-[56px] min-w-[56px] px-[3px] pt-[4px] pb-[2px]" :src="pagesData.logo" alt="logo" />
+        <img class="rounded-lg bg-white h-[56px] w-[56px] min-w-[56px] px-[3px] pt-[4px] pb-[2px]" :src="pagesData.logo || '/images/default-logo.png'" onerror="this.src='/images/default-logo.png'" alt="logo" />
         <h1 class="text-[28px] font-bold block p-[6px] text-white whitespace-nowrap">{{ pagesData.siteName }}</h1>
       </div>
       <!-- Navigation Links -->
