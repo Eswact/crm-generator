@@ -21,7 +21,7 @@ module.exports = {
         "test": "00FF00"
       }
     },
-    "font": {
+    "fonts": {
       "family": "Montserrat",
       "size": "14px",
       "custom": [
@@ -105,14 +105,14 @@ module.exports = {
       "doms": [
         {
           "type": "custom",
-          "content": `<div class="w-full py-0 px-6 mt-2 flex justify-center items-center">
+          "content": `<div class="w-full py-0  md:px-0 mt-2 flex justify-center items-center">
 <div class="p-6 w-full max-w-[1000px]">
     <h1 class="text-3xl font-bold text-center mb-6">Getting Started</h1>
     <ol class="list-decimal list-inside space-y-4">
         <li>
             <strong>Install Dependencies</strong>
             <p>Open your terminal and run the following command in both the <code>generator</code> and <code>json-site</code> folders:</p>
-            <pre class="bg-darkBg text-bg dark:bg-black p-4 mt-2 rounded-md"><code>npm install</code></pre>
+            <pre class="bg-darkBg text-bg dark:bg-black p-4 mt-2 rounded-md overflow-hidden"><code>npm install</code></pre>
         </li>
         <li>
             <strong>Edit <code>data.js</code> in the <code>generator</code> Folder</strong>
@@ -121,7 +121,7 @@ module.exports = {
         <li>
             <strong>Generate JSON Files</strong>
             <p>Run the following command in the <code>json-site</code> folder:</p>
-            <pre class="bg-darkBg text-bg dark:bg-black p-4 mt-2 rounded-md"><code>npm run generate</code></pre>
+            <pre class="bg-darkBg text-bg dark:bg-black p-4 mt-2 rounded-md overflow-hidden"><code>npm run generate</code></pre>
         </li>
     </ol>
 </div>
@@ -130,14 +130,14 @@ module.exports = {
         },
         {
           "type": "custom",
-          "content": `<div class="w-full py-0 px-6 mt-2 flex justify-center items-center">
-<div class="p-6 max-w-[1000px]">
+          "content": `<div class="w-full py-0  md:px-0 mt-2 flex justify-center items-center">
+<div class="p-6 w-full max-w-[1000px]">
     <h1 class="text-3xl font-bold text-center mb-6">Configuration</h1>
     <ol class="list-decimal list-inside space-y-4">
         <li>
             <strong>General </strong>
             <p>This section contains basic information about the site. Visual elements such as logo, site name, icon, page title and SEO information are defined here.</p>
-            <pre class="bg-darkBg text-bg dark:bg-black p-4 mt-2 rounded-md"><code>
+            <pre class="bg-darkBg text-bg dark:bg-black p-4 mt-2 rounded-md overflow-hidden"><code>
 {
   "logo": "/images/logo.png",   
   "siteName": "My CRM",         
@@ -149,7 +149,7 @@ module.exports = {
         <li>
             <strong>Theme</strong>
             <p>Theme settings control the site design. This includes features like dark mode, colors, and fonts. You can also specify custom colors and the project’s logo and icon. Additionally, this section allows you to include fonts and images in the project directory.</p>
-            <pre class="bg-darkBg text-bg dark:bg-black p-4 mt-2 rounded-md"><code>
+            <pre class="bg-darkBg text-bg dark:bg-black p-4 mt-2 rounded-md overflow-hidden"><code>
 "theme": {
   "darkModeEnabled": true,
   "colors": {
@@ -187,7 +187,7 @@ module.exports = {
             <p>In this section, the pages of the site are defined. Information about SEO, page-specific content, and the components used in each page are provided. There are two main types of pages:</p>
             <p class="p-3"><span class="font-semibold">Datatable:</span> A page that includes a table of data that can be dynamically populated through an AJAX call. This is useful for displaying large amounts of data in a structured format with the ability to filter, search, and paginate.</p>
             <p class="p-3 pt-0"><span class="font-semibold">Custom:</span> A page that allows for more customized content. The content is specified directly in the JSON file and can include custom HTML or Vue components.</p>
-            <pre class="bg-darkBg text-bg dark:bg-black p-4 mt-2 rounded-md"><code>
+            <pre class="bg-darkBg text-bg dark:bg-black p-4 mt-2 rounded-md overflow-hidden"><code>
 {
   "file": "Configuration.vue",
   "name": "Configuration",
@@ -224,7 +224,7 @@ module.exports = {
         <li>
             <strong>Custom Scripts</strong>
             <p>Shareable functions and scripts are located here.</p>
-            <pre class="bg-darkBg text-bg dark:bg-black p-4 mt-2 rounded-md"><code>
+            <pre class="bg-darkBg text-bg dark:bg-black p-4 mt-2 rounded-md overflow-hidden"><code>
 "scripts": [
   {
     "name": "shared",
@@ -274,6 +274,7 @@ module.exports = {
         "description": "Overview of Examples",
         "keywords": ["example", "demo", "try"]
       },
+      "pageCss": "w-full flex flex-col gap-8",
       "doms": [
         {
           "type": "datatable",
@@ -337,9 +338,18 @@ module.exports = {
               },
             }
           ],
-          "ajax": { "url": "https://jsonplaceholder.typicode.com/comments", "method": "GET", "dataSrc": '' },
-          "filters": [],
-          "toolbar": []
+          "ajax": { 
+            url: "https://jsonplaceholder.typicode.com/comments", 
+            method: "GET", 
+            dataSrc: '', 
+            data: function (d) {}
+          },
+          "options": {
+            dom: '<"w-full flex justify-between items-center md:flex-col md:justify-center"<"toolbar"><l>>rt<"w-full flex justify-between items-center md:flex-col md:justify-center"<i><p>>',
+            drawCallback: function (settings, data) {console.log(data)},
+            fnRowCallBack: function (nRow, data, iDisplayIndex, iDisplayIndexFull) {},
+            fnInitComplete: function () {},
+          }
         },
         {
           "type": "datatable",
@@ -390,9 +400,18 @@ module.exports = {
               },
             }
           ],
-          "ajax": { "url": "https://jsonplaceholder.typicode.com/photos", "method": "GET", "dataSrc": '' },
-          "filters": [],
-          "toolbar": []
+          "ajax": { 
+            url: "https://jsonplaceholder.typicode.com/photos", 
+            method: "GET", 
+            dataSrc: '', 
+            data: function (d) {}
+          },
+          "options": {
+            dom: '<"w-full flex justify-between items-center md:flex-col md:justify-center"<"toolbar"><l>>rt<"w-full flex justify-between items-center md:flex-col md:justify-center"<i><p>>',
+            drawCallback: function (settings, data) {console.log(data)},
+            fnRowCallBack: function (nRow, data, iDisplayIndex, iDisplayIndexFull) {},
+            fnInitComplete: function () {},
+          }
         },
       ],
       "customScripts": ``,
@@ -423,8 +442,8 @@ module.exports = {
       "name": "shared",
       "pages": [], //all ?
       "script": `
-        import siteData from '../../siteData.json'
-        import commonFunctions from './common';
+        import siteData from '../../../siteData.json'
+        import commonFunctions from '../common';
         const sharedFunctions = {
             getPageByPath: function(path) {
                 const currentPageJson = siteData.pages.find(x => x.path == path);

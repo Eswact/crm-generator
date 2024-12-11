@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "generate": "node ../generator/generateViews.js && npm run dev",
+    "generate": "node ../generator/generate.js && npm run dev",
     "build": "vite build",
     "preview": "vite preview"
   },

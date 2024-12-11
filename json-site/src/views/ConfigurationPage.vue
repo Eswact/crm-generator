@@ -1,14 +1,13 @@
 <template>
-  <div class="w-full flex flex-col gap-2">
-    <div class="w-full flex flex-col gap-1">
-      <div class="w-full py-0 px-6 mt-2 flex justify-center items-center">
+      <div class="w-full flex flex-col gap-1">
+        <div class="w-full py-0  md:px-0 mt-2 flex justify-center items-center">
 <div class="p-6 w-full max-w-[1000px]">
     <h1 class="text-3xl font-bold text-center mb-6">Getting Started</h1>
     <ol class="list-decimal list-inside space-y-4">
         <li>
             <strong>Install Dependencies</strong>
             <p>Open your terminal and run the following command in both the <code>generator</code> and <code>json-site</code> folders:</p>
-            <pre class="bg-darkBg text-bg dark:bg-black p-4 mt-2 rounded-md"><code>npm install</code></pre>
+            <pre class="bg-darkBg text-bg dark:bg-black p-4 mt-2 rounded-md overflow-hidden"><code>npm install</code></pre>
         </li>
         <li>
             <strong>Edit <code>data.js</code> in the <code>generator</code> Folder</strong>
@@ -17,19 +16,19 @@
         <li>
             <strong>Generate JSON Files</strong>
             <p>Run the following command in the <code>json-site</code> folder:</p>
-            <pre class="bg-darkBg text-bg dark:bg-black p-4 mt-2 rounded-md"><code>npm run generate</code></pre>
+            <pre class="bg-darkBg text-bg dark:bg-black p-4 mt-2 rounded-md overflow-hidden"><code>npm run generate</code></pre>
         </li>
     </ol>
 </div>
 </div>
-<div class="w-full py-0 px-6 mt-2 flex justify-center items-center">
-<div class="p-6 max-w-[1000px]">
+<div class="w-full py-0  md:px-0 mt-2 flex justify-center items-center">
+<div class="p-6 w-full max-w-[1000px]">
     <h1 class="text-3xl font-bold text-center mb-6">Configuration</h1>
     <ol class="list-decimal list-inside space-y-4">
         <li>
             <strong>General </strong>
             <p>This section contains basic information about the site. Visual elements such as logo, site name, icon, page title and SEO information are defined here.</p>
-            <pre class="bg-darkBg text-bg dark:bg-black p-4 mt-2 rounded-md"><code>
+            <pre class="bg-darkBg text-bg dark:bg-black p-4 mt-2 rounded-md overflow-hidden"><code>
 {
   "logo": "/images/logo.png",   
   "siteName": "My CRM",         
@@ -41,7 +40,7 @@
         <li>
             <strong>Theme</strong>
             <p>Theme settings control the site design. This includes features like dark mode, colors, and fonts. You can also specify custom colors and the project’s logo and icon. Additionally, this section allows you to include fonts and images in the project directory.</p>
-            <pre class="bg-darkBg text-bg dark:bg-black p-4 mt-2 rounded-md"><code>
+            <pre class="bg-darkBg text-bg dark:bg-black p-4 mt-2 rounded-md overflow-hidden"><code>
 "theme": {
   "darkModeEnabled": true,
   "colors": {
@@ -79,7 +78,7 @@
             <p>In this section, the pages of the site are defined. Information about SEO, page-specific content, and the components used in each page are provided. There are two main types of pages:</p>
             <p class="p-3"><span class="font-semibold">Datatable:</span> A page that includes a table of data that can be dynamically populated through an AJAX call. This is useful for displaying large amounts of data in a structured format with the ability to filter, search, and paginate.</p>
             <p class="p-3 pt-0"><span class="font-semibold">Custom:</span> A page that allows for more customized content. The content is specified directly in the JSON file and can include custom HTML or Vue components.</p>
-            <pre class="bg-darkBg text-bg dark:bg-black p-4 mt-2 rounded-md"><code>
+            <pre class="bg-darkBg text-bg dark:bg-black p-4 mt-2 rounded-md overflow-hidden"><code>
 {
   "file": "Configuration.vue",
   "name": "Configuration",
@@ -116,7 +115,7 @@
         <li>
             <strong>Custom Scripts</strong>
             <p>Shareable functions and scripts are located here.</p>
-            <pre class="bg-darkBg text-bg dark:bg-black p-4 mt-2 rounded-md"><code>
+            <pre class="bg-darkBg text-bg dark:bg-black p-4 mt-2 rounded-md overflow-hidden"><code>
 "scripts": [
   {
     "name": "shared",
@@ -143,30 +142,29 @@
               <button @click="sharedFunctions.getPageByPath(route.path)" class="px-4 py-2 bg-main text-white shadow-md text-xl font-bold rounded-lg">This Page</button>
             </div>
           </div>
-    </div>
-  </div>
-</template>
-
-<script setup>
-  import { ref, onMounted } from 'vue';
-  import { useRoute, useRouter } from 'vue-router';
-  const route = useRoute();
-  const router = useRouter();
-  import commonFunctions from '../scripts/common.js'
-  import { sharedFunctions } from '../scripts/shared.js'
+      </div>
+    </template>
   
-
+    <script setup>
+      import { ref, onMounted } from 'vue';
+      import { useRoute, useRouter } from 'vue-router';
+      const route = useRoute();
+      const router = useRouter();
+      import commonFunctions from '../scripts/common.js'
+      import { sharedFunctions } from '../scripts/custom/shared.js'
+      
     
-
-  onMounted(() => {
+        
     
-
+      onMounted(() => {
+        
     
-  });
-
-  
+        
+      });
+    
+      
        function examples() {
           router.push({ path: '/examples' });
         }
       
-</script>
+    </script>

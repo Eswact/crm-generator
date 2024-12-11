@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import DarkModeToggle from './DarkModeToggle.vue'
-import pagesData from '../../siteData.json'; // JSON verisi
+import pagesData from '../../siteData.json';
 
 const route = useRoute();
 const router = useRouter();

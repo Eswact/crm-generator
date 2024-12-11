@@ -1,6 +1,6 @@
 
-        import siteData from '../../siteData.json'
-        import commonFunctions from './common';
+        import siteData from '../../../siteData.json'
+        import commonFunctions from '../common';
         const sharedFunctions = {
             getPageByPath: function(path) {
                 const currentPageJson = siteData.pages.find(x => x.path == path);

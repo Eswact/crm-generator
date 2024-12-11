@@ -15,10 +15,10 @@ let colorObject = {
 colorObject = {...colorObject, ...siteData.theme.colors.customColors};
 
 let fontFamilyObject = {
-  base: siteData.theme.font.family,
+  base: siteData.theme.fonts.family,
 }
 let customFonts = {};
-siteData.theme.font.custom.forEach(font => { customFonts[font.name] = font.name; });
+siteData.theme.fonts.custom.forEach(font => { customFonts[font.name] = font.name; });
 fontFamilyObject = {...fontFamilyObject, ...customFonts};
 
 export default {
@@ -28,7 +28,7 @@ export default {
     extend: {
       colors: colorObject,
       fontFamily: fontFamilyObject,
-      fontSize: { base: siteData.theme.font.size, },
+      fontSize: { base: siteData.theme.fonts.size, },
     },
     screens: {
       '2xl': {'max': '1600px'},

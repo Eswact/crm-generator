@@ -1,7 +1,6 @@
 <template>
-  <div class="w-full flex flex-col gap-2">
-    <div class="w-full flex flex-col gap-1">
-      <div class="w-full flex flex-col gap-6 justify-center items-center text-lg">
+      <div class="w-full flex flex-col gap-1">
+        <div class="w-full flex flex-col gap-6 justify-center items-center text-lg">
             <h1 class="text-main text-center text-[2.25rem] leading-10 font-bold">JSON-Based Dynamic CRM Generator</h1>
             <div class="max-w-[1000px] flex flex-col gap-4 justify-center items-center">
               <p class="text-center">The project's goal is to simplify the process of website development, particularly for CRM systems, by utilizing a JSON file and local resources. It enables dynamic generation of a Vue 3 and Tailwind CSS-based website using predefined configurations in the JSON file, making it easier to create, customize, and maintain websites.</p>
@@ -35,30 +34,29 @@
               <button @click="sharedFunctions.getPageByPath(route.path)" class="px-4 py-2 bg-main text-white shadow-md text-xl font-bold rounded-lg">This Page</button>
             </div>
           </div>
-    </div>
-  </div>
-</template>
-
-<script setup>
-  import { ref, onMounted } from 'vue';
-  import { useRoute, useRouter } from 'vue-router';
-  const route = useRoute();
-  const router = useRouter();
-  import commonFunctions from '../scripts/common.js'
-  import { sharedFunctions } from '../scripts/shared.js'
+      </div>
+    </template>
   
-
+    <script setup>
+      import { ref, onMounted } from 'vue';
+      import { useRoute, useRouter } from 'vue-router';
+      const route = useRoute();
+      const router = useRouter();
+      import commonFunctions from '../scripts/common.js'
+      import { sharedFunctions } from '../scripts/custom/shared.js'
+      
     
-
-  onMounted(() => {
+        
     
-
+      onMounted(() => {
+        
     
-  });
-
-  
+        
+      });
+    
+      
         function gettingStarted() {
           router.push({ path: '/configuration' });
         }
       
-</script>
+    </script>
