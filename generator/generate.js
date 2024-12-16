@@ -178,7 +178,7 @@ function createViews() {
 function createDatatableDom(item) {
   return `
     <div class="${item.containerClass}">
-      <table id="${item.id}" class="display" style="width:100%"></table>
+      <table id="${item.id}" class="display stripe hover" style="width:100%"></table>
     </div>`;
 }
 

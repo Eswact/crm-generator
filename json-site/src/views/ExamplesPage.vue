@@ -2,11 +2,16 @@
       <div class="w-full flex flex-col gap-8">
         
     <div class="w-full">
-      <table id="messagesTable" class="display" style="width:100%"></table>
+      <table id="messagesTable" class="display stripe hover" style="width:100%"></table>
     </div>
     <div class="w-full">
-      <table id="productsTable" class="display" style="width:100%"></table>
-    </div>
+      <table id="productsTable" class="display stripe hover" style="width:100%"></table>
+    </div><div class="w-full flex justify-center items-center">
+            <div class="w-full py-0 gap-8 flex justify-between items-center">
+              <div></div>
+              <button @click="sharedFunctions.getPageByPath(route.path)" class="px-4 py-2 bg-main text-white shadow-md text-xl font-bold rounded-lg">This Page</button>
+            </div>
+          </div>
       </div>
     </template>
   
@@ -88,8 +93,7 @@
           };
     
           let messagesTableOptions = {
-            dom: "<\"w-full flex justify-between items-center md:flex-col md:justify-center\"<\"toolbar\"><l>>rt<\"w-full flex justify-between items-center md:flex-col md:justify-center\"<i><p>>",
-drawCallback: function (settings, data) {console.log(data)},
+            drawCallback: function (settings, data) {console.log(data)},
 fnRowCallBack: function (nRow, data, iDisplayIndex, iDisplayIndexFull) {},
 fnInitComplete: function () {}
           };
@@ -149,8 +153,7 @@ fnInitComplete: function () {}
           };
     
           let productsTableOptions = {
-            dom: "<\"w-full flex justify-between items-center md:flex-col md:justify-center\"<\"toolbar\"><l>>rt<\"w-full flex justify-between items-center md:flex-col md:justify-center\"<i><p>>",
-drawCallback: function (settings, data) {console.log(data)},
+            drawCallback: function (settings, data) {console.log(data)},
 fnRowCallBack: function (nRow, data, iDisplayIndex, iDisplayIndexFull) {},
 fnInitComplete: function () {}
           };

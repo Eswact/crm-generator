@@ -28,3 +28,34 @@
     @apply bg-main;
   }
 }
+
+/* datatable start */
+table.dataTable thead {
+  @apply bg-second;
+}
+table.dataTable thead tr {
+  @apply bg-second text-white h-[60px] rounded-md;
+}
+/* table.dataTable thead tr th:first-child {
+  border-radius: 0.5rem 0 0 0;
+}
+table.dataTable thead tr th:last-child {
+  border-radius: 0 0.5rem 0 0;
+} */
+div.dt-scroll {
+  @apply border-2 border-second overflow-hidden;
+  border-radius: 0.55rem 0.55rem 0 0;
+}
+/* .dt-scroll-body {
+  @apply pt-[1rem] pb-[0.25rem];
+} */
+div.dt-container .dt-paging .dt-paging-button {
+  @apply bg-second text-white text-[1rem] border border-second rounded-md font-bold;
+}
+div.dt-container .dt-paging .dt-paging-button.current, div.dt-container .dt-paging .dt-paging-button.current:hover {
+  @apply bg-main text-white border-main cursor-default;
+}
+div.dt-container .dt-paging .dt-paging-button:hover {
+  @apply bg-[#191919] text-white cursor-default;
+}
+/* datatable end */

@@ -345,7 +345,6 @@ module.exports = {
             data: function (d) {}
           },
           "options": {
-            dom: '<"w-full flex justify-between items-center md:flex-col md:justify-center"<"toolbar"><l>>rt<"w-full flex justify-between items-center md:flex-col md:justify-center"<i><p>>',
             drawCallback: function (settings, data) {console.log(data)},
             fnRowCallBack: function (nRow, data, iDisplayIndex, iDisplayIndexFull) {},
             fnInitComplete: function () {},
@@ -407,12 +406,20 @@ module.exports = {
             data: function (d) {}
           },
           "options": {
-            dom: '<"w-full flex justify-between items-center md:flex-col md:justify-center"<"toolbar"><l>>rt<"w-full flex justify-between items-center md:flex-col md:justify-center"<i><p>>',
             drawCallback: function (settings, data) {console.log(data)},
             fnRowCallBack: function (nRow, data, iDisplayIndex, iDisplayIndexFull) {},
             fnInitComplete: function () {},
           }
         },
+        {
+          "type": "custom",
+          "content": `<div class="w-full flex justify-center items-center">
+            <div class="w-full py-0 gap-8 flex justify-between items-center">
+              <div></div>
+              <button @click="sharedFunctions.getPageByPath(route.path)" class="px-4 py-2 bg-main text-white shadow-md text-xl font-bold rounded-lg">This Page</button>
+            </div>
+          </div>`
+        }
       ],
       "customScripts": ``,
       "customReadyScripts": ``,

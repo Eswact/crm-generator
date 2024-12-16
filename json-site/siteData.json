@@ -141,9 +141,7 @@
             "method": "GET",
             "dataSrc": ""
           },
-          "options": {
-            "dom": "<\"w-full flex justify-between items-center md:flex-col md:justify-center\"<\"toolbar\"><l>>rt<\"w-full flex justify-between items-center md:flex-col md:justify-center\"<i><p>>"
-          }
+          "options": {}
         },
         {
           "type": "datatable",
@@ -174,9 +172,11 @@
             "method": "GET",
             "dataSrc": ""
           },
-          "options": {
-            "dom": "<\"w-full flex justify-between items-center md:flex-col md:justify-center\"<\"toolbar\"><l>>rt<\"w-full flex justify-between items-center md:flex-col md:justify-center\"<i><p>>"
-          }
+          "options": {}
+        },
+        {
+          "type": "custom",
+          "content": "<div class=\"w-full flex justify-center items-center\">\n            <div class=\"w-full py-0 gap-8 flex justify-between items-center\">\n              <div></div>\n              <button @click=\"sharedFunctions.getPageByPath(route.path)\" class=\"px-4 py-2 bg-main text-white shadow-md text-xl font-bold rounded-lg\">This Page</button>\n            </div>\n          </div>"
         }
       ],
       "customScripts": "",
