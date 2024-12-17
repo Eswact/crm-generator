@@ -208,7 +208,20 @@
   "scripts": [
     {
       "name": "shared",
-      "pages": [],
+      "pages": [
+        {
+          "name": "Introduction",
+          "import": "{ sharedFunctions }"
+        },
+        {
+          "name": "Configuration",
+          "import": "{ sharedFunctions }"
+        },
+        {
+          "name": "Examples",
+          "import": "{ sharedFunctions }"
+        }
+      ],
       "script": "\n        import siteData from '../../../siteData.json'\n        import commonFunctions from '../common';\n        const sharedFunctions = {\n            getPageByPath: function(path) {\n                const currentPageJson = siteData.pages.find(x => x.path == path);\n                const formatted = JSON.stringify(currentPageJson, null, 2).replace(/</g, \"&lt;\").replace(/>/g, \"&gt;\");\n                let modalHtml = '<pre class=\"bg-darkBg text-bg p-4 rounded-sm font-mono text-sm whitespace-pre-wrap\">' + formatted + '</pre>'\n                commonFunctions.openModal(500, 600, modalHtml);\n            }\n        }\n        export { sharedFunctions }\n      "
     }
   ]

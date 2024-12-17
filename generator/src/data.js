@@ -447,7 +447,20 @@ module.exports = {
   "scripts": [
     {
       "name": "shared",
-      "pages": [], //all ?
+      "pages": [
+        {
+          "name": "Introduction",
+          "import": "{ sharedFunctions }"
+        },
+        {
+          "name": "Configuration",
+          "import": "{ sharedFunctions }"
+        },
+        {
+          "name": "Examples",
+          "import": "{ sharedFunctions }"
+        }
+      ],
       "script": `
         import siteData from '../../../siteData.json'
         import commonFunctions from '../common';

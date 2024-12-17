@@ -127,7 +127,16 @@ function createViews() {
       const route = useRoute();
       const router = useRouter();
       import commonFunctions from '../scripts/common.js'
-      import { sharedFunctions } from '../scripts/custom/shared.js'
+      ${
+        (siteData.scripts && siteData.scripts.length > 0) 
+        ? siteData.scripts.map(function(item, index) {
+            let thisPageScript = item.pages.find(x => x.name == page.name);
+            let returnStr = '';
+            (thisPageScript) ? returnStr = `import ${thisPageScript.import} from '../scripts/custom/${item.name}.js'` : null;
+            return returnStr;
+          }).join('\n')
+        : ''
+      }
       ${(!page.doms.every(x => x.type != 'datatable'))
         ? `import initializeDataTable from '../scripts/initDatatable';`
         : ''}
