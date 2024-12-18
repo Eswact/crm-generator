@@ -280,6 +280,7 @@ module.exports = {
           "type": "datatable",
           "containerClass": "w-full",
           "id": "messagesTable",
+          "name": "messagesTable",
           "columns": [
             {
               order: 0,
@@ -344,8 +345,9 @@ module.exports = {
             dataSrc: '', 
             data: function (d) {}
           },
+          "serverSide": false,
           "options": {
-            drawCallback: function (settings, data) {console.log(data)},
+            drawCallback: function (settings, data) {},
             fnRowCallBack: function (nRow, data, iDisplayIndex, iDisplayIndexFull) {},
             fnInitComplete: function () {},
           }
@@ -354,6 +356,7 @@ module.exports = {
           "type": "datatable",
           "containerClass": "w-full",
           "id": "productsTable",
+          "name": "productsTable",
           "columns": [
             {
               order: 0,
@@ -405,10 +408,11 @@ module.exports = {
             dataSrc: '', 
             data: function (d) {}
           },
+          "serverSide": false,
           "options": {
-            drawCallback: function (settings, data) {console.log(data)},
+            drawCallback: function (settings, data) {},
             fnRowCallBack: function (nRow, data, iDisplayIndex, iDisplayIndexFull) {},
-            fnInitComplete: function () {},
+            fnInitComplete: function () {console.log('fnInitComplete')},
           }
         },
         {
@@ -436,9 +440,48 @@ module.exports = {
       },
       "doms": [
         {
-          "type": "custom",
-          "content": `<div>Contact Form?</div>`
-        }
+          "type": "datatable",
+          "containerClass": "w-full",
+          "id": "transferedAutomatTable",
+          "name": "transferedAutomatTable",
+          "columns": [
+            {
+              order: 0,
+              name: 'plate',
+              title: 'Plate',
+              checkable: false,
+            },
+            {
+              order: 1,
+              name: 'model',
+              title: 'Model',
+              checkable: true,
+            },
+            {
+              order: 1,
+              name: 'customerName',
+              title: 'Customer',
+              checkable: true,
+            }
+          ],
+          "ajax": { 
+            url: "http://localhost:44350/warehouse/get-automats", 
+            method: "POST", 
+            dataSrc: function (json) { return json.data; }, 
+            data: function (d) {
+              d.IsField = true;
+              d.plate = "";
+              d.model = "";
+              d.customerId = "";
+            }
+          },
+          "serverSide": true,
+          "options": {
+            drawCallback: function (settings, data) {},
+            fnRowCallBack: function (nRow, data, iDisplayIndex, iDisplayIndexFull) {},
+            fnInitComplete: function () {console.log('fnInitComplete')},
+          }
+        },
       ],
       "customScripts": ``,
       "customReadyScripts": ``,

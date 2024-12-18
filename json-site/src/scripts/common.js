@@ -10,7 +10,6 @@ const commonFunctions = {
         document.getElementById('sharedModal').classList.remove('show');
     },
     updateSEO: function({ title, description, keywords }) {
-        console.log({ title:title, description:description, keywords:keywords })
         if (title) {
           document.title = title;
         }

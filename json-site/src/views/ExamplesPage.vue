@@ -22,9 +22,11 @@
       const router = useRouter();
       import commonFunctions from '../scripts/common.js'
       import { sharedFunctions } from '../scripts/custom/shared.js'
-      import initializeDataTable from '../scripts/initDatatable';
+      import datatableHelper from '../scripts/datatableHelper';
     
         
+          var messagesTable;
+
           let messagesTableColumns = [
             {
               order: 0,
@@ -88,16 +90,20 @@
           let messagesTableAjax = {
             url: "https://jsonplaceholder.typicode.com/comments",
             type: "GET",
-            dataSrc: "",
+            dataSrc: '',
             data: function (d) {}
           };
     
           let messagesTableOptions = {
-            drawCallback: function (settings, data) {console.log(data)},
+            drawCallback: function (settings, data) {},
 fnRowCallBack: function (nRow, data, iDisplayIndex, iDisplayIndexFull) {},
 fnInitComplete: function () {}
           };
+          messagesTableOptions.serverSide = false;
+          messagesTableOptions.processing = false;
         
+          var productsTable;
+
           let productsTableColumns = [
             {
               order: 0,
@@ -148,19 +154,22 @@ fnInitComplete: function () {}
           let productsTableAjax = {
             url: "https://jsonplaceholder.typicode.com/photos",
             type: "GET",
-            dataSrc: "",
+            dataSrc: '',
             data: function (d) {}
           };
     
           let productsTableOptions = {
-            drawCallback: function (settings, data) {console.log(data)},
+            drawCallback: function (settings, data) {},
 fnRowCallBack: function (nRow, data, iDisplayIndex, iDisplayIndexFull) {},
-fnInitComplete: function () {}
+fnInitComplete: function () {console.log('fnInitComplete')}
           };
+          productsTableOptions.serverSide = false;
+          productsTableOptions.processing = false;
         
     
       onMounted(() => {
-        initializeDataTable('#messagesTable', messagesTableAjax, messagesTableColumns, messagesTableOptions);initializeDataTable('#productsTable', productsTableAjax, productsTableColumns, productsTableOptions);
+        messagesTable = datatableHelper.initializeDataTable('messagesTable', '#messagesTable', messagesTableAjax, messagesTableColumns, messagesTableOptions);
+productsTable = datatableHelper.initializeDataTable('productsTable', '#productsTable', productsTableAjax, productsTableColumns, productsTableOptions);
     
         
       });

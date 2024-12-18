@@ -16,6 +16,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.7.1",
     "@fortawesome/vue-fontawesome": "^3.0.8",
     "datatables.net": "^2.1.8",
+    "datatables.net-colreorder": "^2.0.4",
     "datatables.net-dt": "^2.1.8",
     "jquery": "^3.7.1",
     "pinia": "^2.3.0",

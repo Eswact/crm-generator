@@ -138,10 +138,12 @@ function createViews() {
         : ''
       }
       ${(!page.doms.every(x => x.type != 'datatable'))
-        ? `import initializeDataTable from '../scripts/initDatatable';`
+        ? `import datatableHelper from '../scripts/datatableHelper';`
         : ''}
     
         ${page.doms.filter(x => x.type === 'datatable').map(item => `
+          var ${item.name};
+
           let ${item.id}Columns = [
             ${item.columns.map(col => `{
               order: ${col.order},
@@ -156,7 +158,7 @@ function createViews() {
           let ${item.id}Ajax = {
             url: "${item.ajax.url}",
             type: "${item.ajax.method || 'GET'}",
-            dataSrc: "${item.ajax.dataSrc || ''}",
+            dataSrc: ${item.ajax.dataSrc || "''"},
             data: ${item.ajax.data || null}
           };
     
@@ -165,12 +167,14 @@ function createViews() {
               `${key}: ${ typeof value === 'function' ? value.toString() : JSON.stringify(value) }`)
             .join(',\n')}
           };
+          ${item.id}Options.serverSide = ${item.serverSide};
+          ${item.id}Options.processing = ${item.serverSide};
         `).join('')}
     
       onMounted(() => {
         ${page.doms.filter(x => x.type == 'datatable').map(function(item, index) {
-          return `initializeDataTable('#${item.id}', ${item.id}Ajax, ${item.id}Columns, ${item.id}Options);`;
-        }).join('')}
+          return `${item.name} = datatableHelper.initializeDataTable('${item.name}', '#${item.id}', ${item.id}Ajax, ${item.id}Columns, ${item.id}Options);`;
+        }).join('\n')}
     
         ${page.customReadyScripts}
       });
