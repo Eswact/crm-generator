@@ -207,22 +207,39 @@
           "name": "transferedAutomatTable",
           "columns": [
             {
-              "order": 0,
-              "name": "plate",
-              "title": "Plate",
-              "checkable": false
-            },
-            {
               "order": 1,
               "name": "model",
               "title": "Model",
-              "checkable": true
+              "checkable": true,
+              "orderable": false
             },
             {
-              "order": 1,
+              "order": 0,
+              "name": "plate",
+              "title": "Plate",
+              "checkable": false,
+              "orderable": false
+            },
+            {
+              "order": 2,
               "name": "customerName",
               "title": "Customer",
-              "checkable": true
+              "checkable": true,
+              "orderable": false
+            },
+            {
+              "order": 3,
+              "name": "location",
+              "title": "Location",
+              "checkable": true,
+              "orderable": false
+            },
+            {
+              "order": 4,
+              "name": "transferedTime",
+              "title": "Date",
+              "checkable": true,
+              "orderable": true
             }
           ],
           "ajax": {
@@ -230,10 +247,17 @@
             "method": "POST"
           },
           "serverSide": true,
-          "options": {}
+          "options": {
+            "order": [
+              [
+                4,
+                "desc"
+              ]
+            ]
+          }
         }
       ],
-      "customScripts": "",
+      "customScripts": "function dateTrFormat(data) {\n          let options = { timeZone: 'Europe/Istanbul', year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: false };\n          let formattedDate = new Date(data).toLocaleString('tr-TR', options);\n          return formattedDate;\n      }",
       "customReadyScripts": ""
     }
   ],

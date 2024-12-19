@@ -446,22 +446,45 @@ module.exports = {
           "name": "transferedAutomatTable",
           "columns": [
             {
-              order: 0,
-              name: 'plate',
-              title: 'Plate',
-              checkable: false,
-            },
-            {
               order: 1,
               name: 'model',
               title: 'Model',
               checkable: true,
+              orderable: false,
             },
             {
-              order: 1,
+              order: 0,
+              name: 'plate',
+              title: 'Plate',
+              checkable: false,
+              orderable: false,
+            },
+            {
+              order: 2,
               name: 'customerName',
               title: 'Customer',
               checkable: true,
+              orderable: false,
+            },
+            {
+              order: 3,
+              name: 'location',
+              title: 'Location',
+              checkable: true,
+              orderable: false,
+            },
+            {
+              order: 4,
+              name: 'transferedTime',
+              title: 'Date',
+              checkable: true,
+              orderable: true,
+              render: function (data, type, row) {
+                if (data != null) {
+                    return dateTrFormat(data);  
+                }
+                else { return ''; }
+              },
             }
           ],
           "ajax": { 
@@ -480,10 +503,15 @@ module.exports = {
             drawCallback: function (settings, data) {},
             fnRowCallBack: function (nRow, data, iDisplayIndex, iDisplayIndexFull) {},
             fnInitComplete: function () {console.log('fnInitComplete')},
+            order: [[4, 'desc']]
           }
         },
       ],
-      "customScripts": ``,
+      "customScripts": `function dateTrFormat(data) {
+          let options = { timeZone: 'Europe/Istanbul', year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: false };
+          let formattedDate = new Date(data).toLocaleString('tr-TR', options);
+          return formattedDate;
+      }`,
       "customReadyScripts": ``,
     }
   ],

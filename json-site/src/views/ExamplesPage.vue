@@ -34,6 +34,7 @@
               data: "postId",
               name: "postId",
               checkable: true,
+              orderable: undefined,
               render: function (data, type, row) {
                 if (data != null) {
                     return `<div class="flex justify-center items-center font-bold text-2xl">
@@ -48,6 +49,7 @@
               data: "name",
               name: "name",
               checkable: false,
+              orderable: undefined,
               render: function (data, type, row) {
                 if (data != null) {
                     return `<div class="flex">
@@ -62,6 +64,7 @@
               data: "email",
               name: "email",
               checkable: true,
+              orderable: undefined,
               render: function (data, type, row) {
                 if (data != null) {
                     return `<div class="flex">
@@ -76,6 +79,7 @@
               data: "body",
               name: "body",
               checkable: false,
+              orderable: undefined,
               render: function (data, type, row) {
                 if (data != null) {
                     return `<div class="flex">
@@ -111,6 +115,7 @@ fnInitComplete: function () {}
               data: "title",
               name: "title",
               checkable: false,
+              orderable: undefined,
               render: function (data, type, row) {
                 if (data != null) {
                     return `<div class="flex w-full gap-6 items-center">
@@ -126,6 +131,7 @@ fnInitComplete: function () {}
               data: "albumId",
               name: "albumId",
               checkable: true,
+              orderable: undefined,
               render: function (data, type, row) {
                 if (data != null) {
                     return `<div class="w-full flex justify-center items-center font-bold text-xl">
@@ -140,6 +146,7 @@ fnInitComplete: function () {}
               data: "thumbnailUrl",
               name: "thumbnailUrl",
               checkable: true,
+              orderable: undefined,
               render: function (data, type, row) {
                 if (data != null) {
                     return `<div class="flex w-full">

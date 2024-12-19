@@ -151,6 +151,7 @@ function createViews() {
               data: "${col.name}",
               name: "${col.name}",
               checkable: ${col.checkable},
+              orderable: ${col.orderable},
               render: ${col.render ? col.render.toString() : 'null'}
             }`).join(',')}
           ];
