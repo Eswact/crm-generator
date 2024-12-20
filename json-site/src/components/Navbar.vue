@@ -24,7 +24,7 @@ const darkModeEnabled = (pagesData.theme.darkModeEnabled == true || pagesData.th
     <!-- Navbar -->
     <aside
       id="asideBar"
-      class="z-20 font-Montserrat fixed flex flex-col gap-[28px] overflow-hidden left-0 top-0 h-full py-[34px] w-[80px] md:w-0 hover:w-[248px] md:hover:w-0 transition-all bg-second shadow-[0_2px_3px_3px] md:shadow-none dark:shadow-md"
+      class="z-20 font-Montserrat fixed flex flex-col gap-[28px] overflow-hidden left-0 top-0 h-full py-[34px] w-[80px] md:w-0 hover:w-[280px] md:hover:w-0 transition-all bg-second shadow-[0_1px_2px_2px] md:shadow-none dark:shadow-md rounded-r-2xl"
     >
       <!-- Logo -->
       <div class="flex items-center gap-[12px] p-[12px]">

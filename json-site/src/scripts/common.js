@@ -1,8 +1,10 @@
 const commonFunctions = {
     openModal: function(width, height, html) {
         let sharedModalBg = document.getElementById('sharedModalBg');
-        sharedModalBg.style.width = `${width}px`;
-        sharedModalBg.style.height = `${height}px`;
+        if (window.innerWidth >= 640) { //sm
+          sharedModalBg.style.width = `${width}px`;
+          sharedModalBg.style.height = `${height}px`;
+        }
         document.getElementById('sharedModal').classList.add('show');
         document.getElementById('sharedModalBody').innerHTML = html;
     },
