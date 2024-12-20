@@ -7,13 +7,6 @@ import commonFunctions from './common';
 
 
 const datatableHelper = {
-    getTablePrefs: function (name) {
-        return JSON.parse(localStorage.getItem(`${name}Prefs`));
-    },
-    setTablePrefs: function (name, prefs) {
-        prefs = prefs.sort((a, b) => a.order - b.order);
-        localStorage.setItem(`${name}Prefs`, JSON.stringify(prefs));
-    },
     reloadTable: function (name) {
         $(`#${name}`).DataTable().ajax.reload();
     },
@@ -73,11 +66,18 @@ const datatableHelper = {
         if (options.fnInitComplete) {
             const userFnInitComplete = options.fnInitComplete;
             options.fnInitComplete = function () {
-                $(`.${name}Toolbar`).html(`<button id="open${name}CT" class="p-2 px-4 flex items-center gap-2 bg-main hover:bg-opacity-80 duration-200 dark:bg-opacity-70 dark:hover:bg-opacity-100 text-white shadow-md text-xl rounded-lg">
-                    <svg class="w-6 h-6 fill-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM144 256a144 144 0 1 1 288 0 144 144 0 1 1 -288 0zm144-64c0 35.3-28.7 64-64 64c-7.1 0-13.9-1.2-20.3-3.3c-5.5-1.8-11.9 1.6-11.7 7.4c.3 6.9 1.3 13.8 3.2 20.7c13.7 51.2 66.4 81.6 117.6 67.9s81.6-66.4 67.9-117.6c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3z"/></svg>
-                    <span class="font-semibold">Visibility</span>
-                </button>`);
+                $(`.${name}Toolbar`).html(`<div class="flex items-center gap-2">
+                    <button id="open${name}CT" class="p-2 px-4 flex items-center gap-2 bg-main hover:bg-opacity-80 duration-200 dark:bg-opacity-70 dark:hover:bg-opacity-100 text-white shadow-md text-xl rounded-lg">
+                        <svg class="w-6 h-6 fill-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM144 256a144 144 0 1 1 288 0 144 144 0 1 1 -288 0zm144-64c0 35.3-28.7 64-64 64c-7.1 0-13.9-1.2-20.3-3.3c-5.5-1.8-11.9 1.6-11.7 7.4c.3 6.9 1.3 13.8 3.2 20.7c13.7 51.2 66.4 81.6 117.6 67.9s81.6-66.4 67.9-117.6c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3z"/></svg>
+                        <span class="font-semibold md:hidden">Visibility</span>
+                    </button>
+                    <button id="open${name}Filters" class="p-2 px-4 flex items-center gap-2 bg-main hover:bg-opacity-80 duration-200 dark:bg-opacity-70 dark:hover:bg-opacity-100 text-white shadow-md text-xl rounded-lg">
+                        <svg class="w-6 h-6 fill-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg>
+                        <span class="font-semibold md:hidden">Filters</span>
+                    </button>
+                </div>`);
                 $(`#open${name}CT`).off('click').on('click', () => thisHelper.openCTModal(name, tableColumns));
+                $(`#open${name}Filters`).off('click').on('click', () => thisHelper.openFiltersModal(name, tableColumns));
                 userFnInitComplete.apply(this, arguments);
             };
         }
@@ -95,6 +95,14 @@ const datatableHelper = {
         return $(selector).DataTable(finalOptions);
     },
 
+
+    getTablePrefs: function (name) {
+        return JSON.parse(localStorage.getItem(`${name}Prefs`));
+    },
+    setTablePrefs: function (name, prefs) {
+        prefs = prefs.sort((a, b) => a.order - b.order);
+        localStorage.setItem(`${name}Prefs`, JSON.stringify(prefs));
+    },
     openCTModal: function (table, tableColumns) {
         let thisHelper = this;
 
@@ -165,6 +173,11 @@ const datatableHelper = {
         commonFunctions.closeModal();
         // this.reloadTable(table);
     },
+
+
+    openFiltersModal: function(table, tableColumns) {
+        commonFunctions.openFilter();
+    }
 };
 
 export default datatableHelper;

@@ -14,6 +14,11 @@ const routes = pagesData.pages.map((page) => {
     }
   };
 });
+routes.push({
+  path: '/:pathMatch(.*)*',
+  name: 'notFound',
+  component: () => import('../components/NotFound.vue')
+});
 
 const router = createRouter({
   history: createWebHistory(),
