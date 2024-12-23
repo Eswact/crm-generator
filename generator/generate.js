@@ -157,12 +157,7 @@ function createViews() {
           ];
 
           ${(item.filters && item.filters.length > 0) 
-            ? `let ${item.id}Filters = [${item.filters.map(filter => JSON.stringify(filter)).join(',')}]
-              function updateTableData(d, filters) {
-                filters.map(function(filter, index) {
-                  d[filter.data] = filter.value
-                }).join(';');
-              }`
+            ? `let ${item.id}Filters = [${item.filters.map(filter => JSON.stringify(filter)).join(',')}]`
             : ''}
       
           let ${item.id}Ajax = {
@@ -171,7 +166,7 @@ function createViews() {
             dataSrc: ${item.ajax.dataSrc || "''"},
             data: function(d) {
               ${(item.filters && item.filters.length > 0)
-              ? `updateTableData(d, ${item.id}Filters);`
+              ? `datatableHelper.updateTableAjaxData(d, ${item.id}Filters);`
               : ''}
             }
           };

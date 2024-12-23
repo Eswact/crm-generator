@@ -182,6 +182,11 @@ const datatableHelper = {
         this.fillFiltersModal(table, tableFilters);
         commonFunctions.openFilter();
     },
+    updateTableAjaxData: function(d, filters) {
+        filters.map(function(filter, index) {
+            d[filter.data] = filter.value
+        }).join(';');
+    },
     fillFiltersModal: function(table, tableFilters) {
         let filterHtml = '';
         tableFilters.map(function(filter, index){
@@ -214,6 +219,7 @@ const datatableHelper = {
         $('#tableFilterList').html(filterHtml);
 
         $('#filterModalApply').off('click').on('click', () => this.applyFilters(table, tableFilters));
+        $('#filterModalReset').off('click').on('click', () => this.resetFilters(table, tableFilters));
     },
     applyFilters: function(table, tableFilters) {
         tableFilters.map(function(filter, index){
@@ -232,6 +238,13 @@ const datatableHelper = {
             }
         });
         console.log(tableFilters);
+        this.reloadTable(table);
+        commonFunctions.closeFilter();
+    },
+    resetFilters: function(table, tableFilters) {
+        tableFilters.map(function(filter, index){
+            filter.value = filter.default;
+        });
         this.reloadTable(table);
         commonFunctions.closeFilter();
     }
