@@ -75,6 +75,7 @@ const datatableHelper = {
                         ? `<button id="open${name}Filters" class="p-2 px-4 flex items-center gap-2 bg-main hover:bg-opacity-80 duration-200 dark:bg-opacity-70 dark:hover:bg-opacity-100 text-white shadow-md text-xl rounded-lg">
                                 <svg class="w-6 h-6 fill-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg>
                                 <span class="font-semibold md:hidden">Filters</span>
+                                <span class="filterCounter font-semibold"></span>
                             </button>`
                         :''
                     }
@@ -182,10 +183,13 @@ const datatableHelper = {
         this.fillFiltersModal(table, tableFilters);
         commonFunctions.openFilter();
     },
-    updateTableAjaxData: function(d, filters) {
+    updateTableAjaxData: function(name, d, filters) {
         filters.map(function(filter, index) {
             d[filter.data] = filter.value
         }).join(';');
+
+        let filterCounter = filters.filter(filter => filter.visible && filter.value != '' && filter.value != null).reduce((i, e) => (e.value != e.default) ? i + 1 : 0, 0);
+        $(`#open${name}Filters .filterCounter`).html((filterCounter > 0) ? `(${filterCounter})` : '');
     },
     fillFiltersModal: function(table, tableFilters) {
         let filterHtml = '';
@@ -194,14 +198,14 @@ const datatableHelper = {
                 switch(filter.type) {
                     case 'text':
                         filterHtml += `<div class="w-full flex flex-col">
-                                            <label class="font-semibold text-second text-sm">${filter.name}</label>
-                                            <input type="text" data-filter="${filter.data}" value="${filter.value ? filter.value : ''}" placeholder="${filter.name}" class="filterInput w-full border border-darkBg text-darkBg rounded-lg  px-4 py-3 md:py-2 md:px-3">
+                                            <label class="font-semibold text-second text-md pl-1">${filter.name}</label>
+                                            <input type="text" data-filter="${filter.data}" value="${filter.value ? filter.value : ''}" placeholder="${filter.name}" class="filterInput text-lg w-full h-[50px] md:h-auto border border-darkBg text-darkBg rounded-xl  px-4 py-3 md:py-2 md:px-3">
                                         </div>`;
                         break;
                     case 'select':
                         filterHtml += `<div class="w-full flex flex-col">
-                                            <label class="font-semibold text-second text-sm">${filter.name}</label>
-                                            <select data-filter="${filter.data}" value="${filter.value ? filter.value : ''}" class="filterInput w-full border border-darkBg text-darkBg rounded-lg  px-4 py-3 md:py-2 md:px-3">
+                                            <label class="font-semibold text-second text-md pl-1">${filter.name}</label>
+                                            <select data-filter="${filter.data}" value="${filter.value ? filter.value : ''}" class="filterInput text-lg w-full h-[50px] md:h-auto border border-darkBg text-darkBg rounded-xl  px-4 py-3 md:py-2 md:px-3">
                                                 <option value="">All</option>
                                                 ${filter.options.map(option => `<option value="${option.value}" ${filter.value == option.value ? 'selected' : ''}>${option.label}</option>`).join('')}
                                             </select>
@@ -209,8 +213,8 @@ const datatableHelper = {
                         break;
                     case 'check':
                         filterHtml += `<div class="w-full flex flex-col">
-                                            <label class="font-semibold text-second text-sm">${filter.name}</label>
-                                            <input type="checkbox" data-filter="${filter.data}" class="filterInput w-full border border-darkBg text-darkBg rounded-lg" ${filter.value ? 'checked' : ''}>
+                                            <label class="font-semibold text-second text-md pl-1">${filter.name}</label>
+                                            <input type="checkbox" data-filter="${filter.data}" class="filterInput text-lg w-full h-[50px] md:h-auto border border-darkBg text-darkBg rounded-xl" ${filter.value ? 'checked' : ''}>
                                         </div>`;
                         break;
                 }

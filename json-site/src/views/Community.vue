@@ -75,7 +75,7 @@
             type: "POST",
             dataSrc: function (json) { return json.data; },
             data: function(d) {
-              datatableHelper.updateTableAjaxData(d, transferedAutomatTableFilters);
+              datatableHelper.updateTableAjaxData("transferedAutomatTable", d, transferedAutomatTableFilters);
             }
           };
     

@@ -166,7 +166,7 @@ function createViews() {
             dataSrc: ${item.ajax.dataSrc || "''"},
             data: function(d) {
               ${(item.filters && item.filters.length > 0)
-              ? `datatableHelper.updateTableAjaxData(d, ${item.id}Filters);`
+              ? `datatableHelper.updateTableAjaxData("${item.name}", d, ${item.id}Filters);`
               : ''}
             }
           };
