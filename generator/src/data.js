@@ -339,11 +339,12 @@ module.exports = {
               },
             }
           ],
+          "filters": [],
           "ajax": { 
             url: "https://jsonplaceholder.typicode.com/comments", 
             method: "GET", 
             dataSrc: '', 
-            data: function (d) {}
+            // data: function (d) {}
           },
           "serverSide": false,
           "options": {
@@ -402,11 +403,12 @@ module.exports = {
               },
             }
           ],
+          "filters": [],
           "ajax": { 
             url: "https://jsonplaceholder.typicode.com/photos", 
             method: "GET", 
             dataSrc: '', 
-            data: function (d) {}
+            // data: function (d) {}
           },
           "serverSide": false,
           "options": {
@@ -487,16 +489,56 @@ module.exports = {
               },
             }
           ],
+          "filters": [
+            {
+              "data":"IsField",
+              "name":"IsField",
+              "type":"check",
+              "value": true,
+              "default": true,
+              "visible": false
+            },
+            {
+              "data":"plate",
+              "name":"Plate",
+              "type":"text",
+              "value": null,
+              "default": null,
+              "visible": true
+            },
+            {
+              "data":"model",
+              "name":"Model",
+              "type":"select",
+              "options": [
+                {
+                  "value": "AA-91",
+                  "label": "AA-91"
+                }    
+              ],
+              "value": null,
+              "default": null,
+              "visible": true
+            },
+            {
+              "data":"customerId",
+              "name":"Customer",
+              "type":"select",
+              "options": [
+                {
+                  "value": "1",
+                  "label": "Eren"
+                }    
+              ],
+              "value": null,
+              "default": null,
+              "visible": true
+            }
+          ],
           "ajax": { 
             url: "http://localhost:44350/warehouse/get-automats", 
             method: "POST", 
-            dataSrc: function (json) { return json.data; }, 
-            data: function (d) {
-              d.IsField = true;
-              d.plate = "";
-              d.model = "";
-              d.customerId = "";
-            }
+            dataSrc: function (json) { return json.data; },
           },
           "serverSide": true,
           "options": {

@@ -90,12 +90,16 @@
               }
             }
           ];
+
+          
       
           let messagesTableAjax = {
             url: "https://jsonplaceholder.typicode.com/comments",
             type: "GET",
             dataSrc: '',
-            data: function (d) {}
+            data: function(d) {
+              
+            }
           };
     
           let messagesTableOptions = {
@@ -157,12 +161,16 @@ fnInitComplete: function () {}
               }
             }
           ];
+
+          
       
           let productsTableAjax = {
             url: "https://jsonplaceholder.typicode.com/photos",
             type: "GET",
             dataSrc: '',
-            data: function (d) {}
+            data: function(d) {
+              
+            }
           };
     
           let productsTableOptions = {
@@ -175,8 +183,8 @@ fnInitComplete: function () {console.log('fnInitComplete')}
         
     
       onMounted(() => {
-        messagesTable = datatableHelper.initializeDataTable('messagesTable', '#messagesTable', messagesTableAjax, messagesTableColumns, messagesTableOptions);
-productsTable = datatableHelper.initializeDataTable('productsTable', '#productsTable', productsTableAjax, productsTableColumns, productsTableOptions);
+        messagesTable = datatableHelper.initializeDataTable('messagesTable', '#messagesTable', messagesTableAjax, messagesTableColumns, null, messagesTableOptions);
+productsTable = datatableHelper.initializeDataTable('productsTable', '#productsTable', productsTableAjax, productsTableColumns, null, productsTableOptions);
     
         
       });

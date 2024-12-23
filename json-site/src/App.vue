@@ -42,15 +42,15 @@
     </div>
 
     <div id="tableFilterModal" class="fixed top-0 left-0 z-30 w-full h-full bg-[rgba(0,0,0,0.7)] justify-end items-center">
-      <div id="filterModalContent" class="w-[400px] overflow-hidden duration-200 max-w-full h-full p-8 rounded-l-2xl bg-white flex flex-col justify-between items-center gap-4">
+      <div id="filterModalContent" class="w-[400px] overflow-hidden duration-200 max-w-full h-full p-8 rounded-l-2xl bg-bg flex flex-col justify-between items-center gap-4">
         <div class="w-full flex justify-between text-4xl">
           <h1 class="font-bold text-second">Filters</h1>
           <button @click="commonFunctions.closeFilter" class="text-cancel"><font-awesome-icon icon="fa-solid fa-circle-xmark" /></button>
         </div>
-        <div id="tableFilterList" class="w-full flex flex-col"></div>
+        <div id="tableFilterList" class="w-full h-full py-8 md:py-4 overflow-y-auto flex flex-col gap-4 md:gap-2"></div>
         <div class="w-full flex flex-col gap-3">
-          <button class="w-full border rounded-lg p-2 text-xl font-semibold tracking-wider bg-second text-white border-second">Apply</button>
-          <button class="w-full border rounded-lg p-2 text-xl font-semibold tracking-wider text-second border-second">Reset</button>
+          <button id="filterModalApply" class="w-full border rounded-lg p-2 text-xl font-semibold tracking-wider bg-second text-white border-second">Apply</button>
+          <button id="filterModalReset" class="w-full border rounded-lg p-2 text-xl font-semibold tracking-wider text-second border-second">Reset</button>
         </div>
       </div>
     </div>

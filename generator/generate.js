@@ -155,12 +155,25 @@ function createViews() {
               render: ${col.render ? col.render.toString() : 'null'}
             }`).join(',')}
           ];
+
+          ${(item.filters && item.filters.length > 0) 
+            ? `let ${item.id}Filters = [${item.filters.map(filter => JSON.stringify(filter)).join(',')}]
+              function updateTableData(d, filters) {
+                filters.map(function(filter, index) {
+                  d[filter.data] = filter.value
+                }).join(';');
+              }`
+            : ''}
       
           let ${item.id}Ajax = {
             url: "${item.ajax.url}",
             type: "${item.ajax.method || 'GET'}",
             dataSrc: ${item.ajax.dataSrc || "''"},
-            data: ${item.ajax.data || null}
+            data: function(d) {
+              ${(item.filters && item.filters.length > 0)
+              ? `updateTableData(d, ${item.id}Filters);`
+              : ''}
+            }
           };
     
           let ${item.id}Options = {
@@ -174,7 +187,7 @@ function createViews() {
     
       onMounted(() => {
         ${page.doms.filter(x => x.type == 'datatable').map(function(item, index) {
-          return `${item.name} = datatableHelper.initializeDataTable('${item.name}', '#${item.id}', ${item.id}Ajax, ${item.id}Columns, ${item.id}Options);`;
+          return `${item.name} = datatableHelper.initializeDataTable('${item.name}', '#${item.id}', ${item.id}Ajax, ${item.id}Columns, ${(item.filters && item.filters.length > 0) ? `${item.id}Filters`: null}, ${item.id}Options);`;
         }).join('\n')}
     
         ${page.customReadyScripts}

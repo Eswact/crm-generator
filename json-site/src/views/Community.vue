@@ -67,16 +67,20 @@
               }
             }
           ];
+
+          let transferedAutomatTableFilters = [{"data":"IsField","name":"IsField","type":"check","value":true,"default":true,"visible":false},{"data":"plate","name":"Plate","type":"text","value":null,"default":null,"visible":true},{"data":"model","name":"Model","type":"select","options":[{"value":"AA-91","label":"AA-91"}],"value":null,"default":null,"visible":true},{"data":"customerId","name":"Customer","type":"select","options":[{"value":"1","label":"Eren"}],"value":null,"default":null,"visible":true}]
+              function updateTableData(d, filters) {
+                filters.map(function(filter, index) {
+                  d[filter.data] = filter.value
+                }).join(';');
+              }
       
           let transferedAutomatTableAjax = {
             url: "http://localhost:44350/warehouse/get-automats",
             type: "POST",
             dataSrc: function (json) { return json.data; },
-            data: function (d) {
-              d.IsField = true;
-              d.plate = "";
-              d.model = "";
-              d.customerId = "";
+            data: function(d) {
+              updateTableData(d, transferedAutomatTableFilters);
             }
           };
     
@@ -91,7 +95,7 @@ order: [[4,"desc"]]
         
     
       onMounted(() => {
-        transferedAutomatTable = datatableHelper.initializeDataTable('transferedAutomatTable', '#transferedAutomatTable', transferedAutomatTableAjax, transferedAutomatTableColumns, transferedAutomatTableOptions);
+        transferedAutomatTable = datatableHelper.initializeDataTable('transferedAutomatTable', '#transferedAutomatTable', transferedAutomatTableAjax, transferedAutomatTableColumns, transferedAutomatTableFilters, transferedAutomatTableOptions);
     
         
       });
