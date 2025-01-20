@@ -32,6 +32,7 @@
       ]
     }
   },
+  "splashDefaultContext": "<img src=\"/images/loading.gif\" />",
   "pages": [
     {
       "file": "Introduction.vue",
@@ -56,8 +57,8 @@
           "content": "<div class=\"w-full py-2 mt-2 flex justify-center items-center\">\n            <div class=\"w-full max-w-[1000px] gap-8 flex justify-between items-center\">\n              <button @click=gettingStarted class=\"px-4 py-2 bg-third text-white shadow-md text-xl font-bold rounded-lg\">Getting Started</button>\n              <button @click=\"sharedFunctions.getPageByPath(route.path)\" class=\"px-4 py-2 bg-main text-white shadow-md text-xl font-bold rounded-lg\">This Page</button>\n            </div>\n          </div>"
         }
       ],
-      "customScripts": "\n        function gettingStarted() {\n          router.push({ path: '/configuration' });\n        }\n      ",
-      "customReadyScripts": ""
+      "customScripts": "\n        import { toast } from \"vue3-toastify\";\n        function gettingStarted() {\n          router.push({ path: '/configuration' });\n        }\n      ",
+      "customReadyScripts": "\n        toast.success(\"Toast Test!\");\n      "
     },
     {
       "file": "ConfigurationPage.vue",
@@ -171,7 +172,6 @@
               "checkable": true
             }
           ],
-          "filters": [],
           "ajax": {
             "url": "https://jsonplaceholder.typicode.com/photos",
             "method": "GET",
@@ -302,6 +302,150 @@
                 "desc"
               ]
             ]
+          }
+        },
+        {
+          "type": "datatable",
+          "containerClass": "w-full",
+          "id": "createdAutomatTable",
+          "name": "createdAutomatTable",
+          "columns": [
+            {
+              "order": 0,
+              "name": "plate",
+              "title": "Plate",
+              "checkable": false,
+              "orderable": false
+            },
+            {
+              "order": 1,
+              "name": "model",
+              "title": "Model",
+              "checkable": true,
+              "orderable": false
+            },
+            {
+              "order": 2,
+              "name": "imeiAndroid",
+              "title": "Android Imei",
+              "checkable": true,
+              "orderable": false
+            },
+            {
+              "order": 3,
+              "name": "macAndroid",
+              "title": "Android Mac",
+              "checkable": true,
+              "orderable": false
+            },
+            {
+              "order": 4,
+              "name": "imeimodem",
+              "title": "Modem Imei",
+              "checkable": true,
+              "orderable": false
+            },
+            {
+              "order": 5,
+              "name": "macmodem",
+              "title": "Modem Mac",
+              "checkable": true,
+              "orderable": false
+            },
+            {
+              "order": 6,
+              "name": "imeiplc",
+              "title": "PLC Imei",
+              "checkable": true,
+              "orderable": false
+            },
+            {
+              "order": 7,
+              "name": "macplc",
+              "title": "PLC Mac",
+              "checkable": true,
+              "orderable": false
+            }
+          ],
+          "filters": [
+            {
+              "data": "plate",
+              "name": "Plate",
+              "type": "text",
+              "value": null,
+              "default": null,
+              "visible": true
+            },
+            {
+              "data": "model",
+              "name": "Model",
+              "type": "select",
+              "options": [
+                {
+                  "value": "AA-91",
+                  "label": "AA-91"
+                }
+              ],
+              "value": null,
+              "default": null,
+              "visible": true
+            },
+            {
+              "data": "androidImei",
+              "name": "Android Imei",
+              "type": "text",
+              "value": null,
+              "default": null,
+              "visible": true
+            },
+            {
+              "data": "androidMac",
+              "name": "Android Mac",
+              "type": "text",
+              "value": null,
+              "default": null,
+              "visible": true
+            },
+            {
+              "data": "modemImei",
+              "name": "Modem Imei",
+              "type": "text",
+              "value": null,
+              "default": null,
+              "visible": true
+            },
+            {
+              "data": "modemMac",
+              "name": "Modem Mac",
+              "type": "text",
+              "value": null,
+              "default": null,
+              "visible": true
+            },
+            {
+              "data": "plcImei",
+              "name": "PLC Imei",
+              "type": "text",
+              "value": null,
+              "default": null,
+              "visible": true
+            },
+            {
+              "data": "plcMac",
+              "name": "PLC Mac",
+              "type": "text",
+              "value": null,
+              "default": null,
+              "visible": true
+            }
+          ],
+          "ajax": {
+            "url": "http://localhost:44350/production/get-manufacts",
+            "method": "POST"
+          },
+          "serverSide": true,
+          "options": {
+            "order": false
           }
         }
       ],

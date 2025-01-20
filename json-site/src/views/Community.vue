@@ -4,6 +4,9 @@
     <div class="w-full">
       <table id="transferedAutomatTable" class="display stripe hover" style="width:100%"></table>
     </div>
+    <div class="w-full">
+      <table id="createdAutomatTable" class="display stripe hover" style="width:100%"></table>
+    </div>
       </div>
     </template>
   
@@ -27,7 +30,14 @@
               name: "model",
               checkable: true,
               orderable: false,
-              render: null
+              render: function (data, type, row) {
+                if (data != null) {
+                    return `<div class="py-2 px-4 flex items-center font-semibold text-second dark:text-fourth">
+                                ${data}
+                            </div>`;
+                }
+                else { return '<div class="py-2 px-4 flex items-center font-semibold text-second dark:text-fourth">-</div>'; }
+              }
             },{
               order: 0,
               title: "Plate",
@@ -35,7 +45,14 @@
               name: "plate",
               checkable: false,
               orderable: false,
-              render: null
+              render: function (data, type, row) {
+                if (data != null) {
+                    return `<div class="p-2 flex items-center font-bold text-lg">
+                                ${data}
+                            </div>`;
+                }
+                else { return '<div class="p-2 flex items-center font-bold text-xl">-</div>'; }
+              }
             },{
               order: 2,
               title: "Customer",
@@ -88,9 +105,118 @@ order: [[4,"desc"]]
           transferedAutomatTableOptions.serverSide = true;
           transferedAutomatTableOptions.processing = true;
         
+          var createdAutomatTable;
+
+          let createdAutomatTableColumns = [
+            {
+              order: 0,
+              title: "Plate",
+              data: "plate",
+              name: "plate",
+              checkable: false,
+              orderable: false,
+              render: function (data, type, row) {
+                if (data != null) {
+                    return `<div class="p-2 flex items-center font-bold text-lg">
+                                ${data}
+                            </div>`;
+                }
+                else { return '<div class="p-2 flex items-center font-bold text-xl">-</div>'; }
+              }
+            },{
+              order: 1,
+              title: "Model",
+              data: "model",
+              name: "model",
+              checkable: true,
+              orderable: false,
+              render: function (data, type, row) {
+                if (data != null) {
+                    return `<div class="py-2 px-4 flex items-center font-semibold text-second dark:text-fourth">
+                                ${data}
+                            </div>`;
+                }
+                else { return '<div class="py-2 px-4 flex items-center font-semibold text-second dark:text-fourth">-</div>'; }
+              }
+            },{
+              order: 2,
+              title: "Android Imei",
+              data: "imeiAndroid",
+              name: "imeiAndroid",
+              checkable: true,
+              orderable: false,
+              render: null
+            },{
+              order: 3,
+              title: "Android Mac",
+              data: "macAndroid",
+              name: "macAndroid",
+              checkable: true,
+              orderable: false,
+              render: null
+            },{
+              order: 4,
+              title: "Modem Imei",
+              data: "imeimodem",
+              name: "imeimodem",
+              checkable: true,
+              orderable: false,
+              render: null
+            },{
+              order: 5,
+              title: "Modem Mac",
+              data: "macmodem",
+              name: "macmodem",
+              checkable: true,
+              orderable: false,
+              render: null
+            },{
+              order: 6,
+              title: "PLC Imei",
+              data: "imeiplc",
+              name: "imeiplc",
+              checkable: true,
+              orderable: false,
+              render: null
+            },{
+              order: 7,
+              title: "PLC Mac",
+              data: "macplc",
+              name: "macplc",
+              checkable: true,
+              orderable: false,
+              render: null
+            }
+          ];
+
+          let createdAutomatTableFilters = [{"data":"plate","name":"Plate","type":"text","value":null,"default":null,"visible":true},{"data":"model","name":"Model","type":"select","options":[{"value":"AA-91","label":"AA-91"}],"value":null,"default":null,"visible":true},{"data":"androidImei","name":"Android Imei","type":"text","value":null,"default":null,"visible":true},{"data":"androidMac","name":"Android Mac","type":"text","value":null,"default":null,"visible":true},{"data":"modemImei","name":"Modem Imei","type":"text","value":null,"default":null,"visible":true},{"data":"modemMac","name":"Modem Mac","type":"text","value":null,"default":null,"visible":true},{"data":"plcImei","name":"PLC Imei","type":"text","value":null,"default":null,"visible":true},{"data":"plcMac","name":"PLC Mac","type":"text","value":null,"default":null,"visible":true}]
+      
+          let createdAutomatTableAjax = {
+            url: "http://localhost:44350/production/get-manufacts",
+            type: "POST",
+            dataSrc: function (json) { return json.responseData; },
+            data: function(d) {
+              datatableHelper.updateTableAjaxData("createdAutomatTable", d, createdAutomatTableFilters);
+            }
+          };
+    
+          let createdAutomatTableOptions = {
+            drawCallback: function (settings, data) {},
+fnRowCallBack: function (nRow, data, iDisplayIndex, iDisplayIndexFull) {},
+fnInitComplete: function () {
+              createdAutomatTable.on('click', 'tbody tr', (e) => {
+                e.currentTarget.classList.toggle('selected');
+              });
+            },
+order: false
+          };
+          createdAutomatTableOptions.serverSide = true;
+          createdAutomatTableOptions.processing = true;
+        
     
       onMounted(() => {
         transferedAutomatTable = datatableHelper.initializeDataTable('transferedAutomatTable', '#transferedAutomatTable', transferedAutomatTableAjax, transferedAutomatTableColumns, transferedAutomatTableFilters, transferedAutomatTableOptions);
+createdAutomatTable = datatableHelper.initializeDataTable('createdAutomatTable', '#createdAutomatTable', createdAutomatTableAjax, createdAutomatTableColumns, createdAutomatTableFilters, createdAutomatTableOptions);
     
         
       });

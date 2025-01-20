@@ -63,6 +63,7 @@ const datatableHelper = {
             defaultOptions.ajax = ajaxReq
         }
     
+        //fnInitComplete
         if (options.fnInitComplete) {
             const userFnInitComplete = options.fnInitComplete;
             options.fnInitComplete = function () {
@@ -90,9 +91,28 @@ const datatableHelper = {
                 $(`.${name}Toolbar`).html(`<button id="open${name}CT">Visibility</button>`);
             };
         }
-    
-        // defaultOptions.drawCallback = function() {};
-        // defaultOptions.fnRowCallBack = function() {};
+
+        //drawCallback
+        if (options.drawCallback) {
+            const userDrawCallback = options.drawCallback;
+            options.drawCallback = function () {
+                userDrawCallback.apply(this, arguments);
+            };
+        }
+        else {
+            options.drawCallback = function () {};
+        }
+
+        //fnRowCallBack
+        if (options.fnRowCallBack) {
+            const userFnRowCallBack = options.fnRowCallBack;
+            options.fnRowCallBack = function () {
+                userFnRowCallBack.apply(this, arguments);
+            };
+        }
+        else {
+            options.fnRowCallBack = function () {};
+        }
     
         const finalOptions = { ...defaultOptions, ...options };
         

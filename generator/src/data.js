@@ -32,6 +32,7 @@ module.exports = {
       ]
     },
   },
+  "splashDefaultContext": `<img src="/images/loading.gif" />`,
   "pages": [
     {
       "file": "Introduction.vue",
@@ -86,11 +87,14 @@ module.exports = {
         }
       ],
       "customScripts": `
+        import { toast } from "vue3-toastify";
         function gettingStarted() {
           router.push({ path: '/configuration' });
         }
       `,
-      "customReadyScripts": ``,
+      "customReadyScripts": `
+        toast.success("Toast Test!");
+      `,
     },
     {
       "file": "ConfigurationPage.vue",
@@ -403,7 +407,16 @@ module.exports = {
               },
             }
           ],
-          "filters": [],
+          // "filters": [
+          //   {
+          //     "data":"title",
+          //     "name":"Title",
+          //     "type":"text",
+          //     "value": null,
+          //     "default": null,
+          //     "visible": true
+          //   }
+          // ],
           "ajax": { 
             url: "https://jsonplaceholder.typicode.com/photos", 
             method: "GET", 
@@ -453,6 +466,14 @@ module.exports = {
               title: 'Model',
               checkable: true,
               orderable: false,
+              render: function (data, type, row) {
+                if (data != null) {
+                    return `<div class="py-2 px-4 flex items-center font-semibold text-second dark:text-fourth">
+                                ${data}
+                            </div>`;
+                }
+                else { return '<div class="py-2 px-4 flex items-center font-semibold text-second dark:text-fourth">-</div>'; }
+              },
             },
             {
               order: 0,
@@ -460,6 +481,14 @@ module.exports = {
               title: 'Plate',
               checkable: false,
               orderable: false,
+              render: function (data, type, row) {
+                if (data != null) {
+                    return `<div class="p-2 flex items-center font-bold text-lg">
+                                ${data}
+                            </div>`;
+                }
+                else { return '<div class="p-2 flex items-center font-bold text-xl">-</div>'; }
+              },
             },
             {
               order: 2,
@@ -546,6 +575,174 @@ module.exports = {
             fnRowCallBack: function (nRow, data, iDisplayIndex, iDisplayIndexFull) {},
             fnInitComplete: function () {console.log('fnInitComplete')},
             order: [[4, 'desc']]
+          }
+        },
+        {
+          "type": "datatable",
+          "containerClass": "w-full",
+          "id": "createdAutomatTable",
+          "name": "createdAutomatTable",
+          "columns": [
+            {
+              order: 0,
+              name: 'plate',
+              title: 'Plate',
+              checkable: false,
+              orderable: false,
+              render: function (data, type, row) {
+                if (data != null) {
+                    return `<div class="p-2 flex items-center font-bold text-lg">
+                                ${data}
+                            </div>`;
+                }
+                else { return '<div class="p-2 flex items-center font-bold text-xl">-</div>'; }
+              },
+            },
+            {
+              order: 1,
+              name: 'model',
+              title: 'Model',
+              checkable: true,
+              orderable: false,
+              render: function (data, type, row) {
+                if (data != null) {
+                    return `<div class="py-2 px-4 flex items-center font-semibold text-second dark:text-fourth">
+                                ${data}
+                            </div>`;
+                }
+                else { return '<div class="py-2 px-4 flex items-center font-semibold text-second dark:text-fourth">-</div>'; }
+              },
+            },
+            {
+              order: 2,
+              name: 'imeiAndroid',
+              title: 'Android Imei',
+              checkable: true,
+              orderable: false,
+            },
+            {
+              order: 3,
+              name: 'macAndroid',
+              title: 'Android Mac',
+              checkable: true,
+              orderable: false,
+            },
+            {
+              order: 4,
+              name: 'imeimodem',
+              title: 'Modem Imei',
+              checkable: true,
+              orderable: false,
+            },
+            {
+              order: 5,
+              name: 'macmodem',
+              title: 'Modem Mac',
+              checkable: true,
+              orderable: false,
+            },
+            {
+              order: 6,
+              name: 'imeiplc',
+              title: 'PLC Imei',
+              checkable: true,
+              orderable: false,
+            },
+            {
+              order: 7,
+              name: 'macplc',
+              title: 'PLC Mac',
+              checkable: true,
+              orderable: false,
+            },
+          ],
+          "filters": [
+            {
+              "data":"plate",
+              "name":"Plate",
+              "type":"text",
+              "value": null,
+              "default": null,
+              "visible": true
+            },
+            {
+              "data":"model",
+              "name":"Model",
+              "type":"select",
+              "options": [
+                {
+                  "value": "AA-91",
+                  "label": "AA-91"
+                }    
+              ],
+              "value": null,
+              "default": null,
+              "visible": true
+            },
+            {
+              "data":"androidImei",
+              "name":"Android Imei",
+              "type":"text",
+              "value": null,
+              "default": null,
+              "visible": true
+            },
+            {
+              "data":"androidMac",
+              "name":"Android Mac",
+              "type":"text",
+              "value": null,
+              "default": null,
+              "visible": true
+            },
+            {
+              "data":"modemImei",
+              "name":"Modem Imei",
+              "type":"text",
+              "value": null,
+              "default": null,
+              "visible": true
+            },
+            {
+              "data":"modemMac",
+              "name":"Modem Mac",
+              "type":"text",
+              "value": null,
+              "default": null,
+              "visible": true
+            },
+            {
+              "data":"plcImei",
+              "name":"PLC Imei",
+              "type":"text",
+              "value": null,
+              "default": null,
+              "visible": true
+            },
+            {
+              "data":"plcMac",
+              "name":"PLC Mac",
+              "type":"text",
+              "value": null,
+              "default": null,
+              "visible": true
+            }
+          ],
+          "ajax": { 
+            url: "http://localhost:44350/production/get-manufacts", 
+            method: "POST", 
+            dataSrc: function (json) { return json.responseData; },
+          },
+          "serverSide": true,
+          "options": {
+            drawCallback: function (settings, data) {},
+            fnRowCallBack: function (nRow, data, iDisplayIndex, iDisplayIndexFull) {},
+            fnInitComplete: function () {
+              createdAutomatTable.on('click', 'tbody tr', (e) => {
+                e.currentTarget.classList.toggle('selected');
+              });
+            },
+            order: false
           }
         },
       ],

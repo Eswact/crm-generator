@@ -2,6 +2,7 @@
   import { computed, onMounted  } from 'vue';
   import { useRoute } from 'vue-router';
   import Navbar from './components/Navbar.vue';
+  import SplashScreen from './components/SplashScreen.vue';
   import commonFunctions from './scripts/common';
   import siteData from '../siteData.json'
 
@@ -24,6 +25,7 @@
 
 <template>
   <div class="w-full flex items-center">
+    <SplashScreen />
     <Navbar v-if="showNavbar" />
     <main :class="[ showNavbar
             ? 'w-[calc(100%-80px)] md:w-full px-[54px] md:px-[24px] pb-[40px] mt-[120px] ml-[80px] md:ml-0 md:mt-[100px]'

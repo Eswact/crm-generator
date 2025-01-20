@@ -52,9 +52,12 @@
         
     
         
+        toast.success("Toast Test!");
+      
       });
     
       
+        import { toast } from "vue3-toastify";
         function gettingStarted() {
           router.push({ path: '/configuration' });
         }

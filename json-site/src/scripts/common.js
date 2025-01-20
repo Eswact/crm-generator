@@ -1,3 +1,15 @@
+import { ref } from "vue";
+import siteDataJson from "../../siteData.json";
+
+const defaultSplash = {
+  visible: false,
+  defaultHtml: siteDataJson.splashDefaultContext || `<img class="defaultImg" src="/defaults/images/loading.gif" />`,
+  title: null,
+  description: null,
+  buttons: [],
+};
+const splash = ref({ ...defaultSplash });
+
 const commonFunctions = {
   openModal: function(width, height, html) {
     let sharedModalBg = document.getElementById('sharedModalBg');
@@ -39,6 +51,15 @@ const commonFunctions = {
   },
   closeFilter: function() {
     document.getElementById('tableFilterModal').classList.remove('show');
+  },
+  useSplashScreen(options) {
+    Object.assign(splash.value, { ...defaultSplash, ...options, visible: true });
+  },
+  hideSplashScreen() {
+    splash.value.visible = false;
+  },
+  getSplashScreen() {
+    return splash;
   },
 }
 
