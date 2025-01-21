@@ -104,6 +104,8 @@ order: [[4,"desc"]]
           };
           transferedAutomatTableOptions.serverSide = true;
           transferedAutomatTableOptions.processing = true;
+
+          let transferedAutomatTableOperations = {}
         
           var createdAutomatTable;
 
@@ -212,11 +214,13 @@ order: false
           };
           createdAutomatTableOptions.serverSide = true;
           createdAutomatTableOptions.processing = true;
+
+          let createdAutomatTableOperations = {"add":{"title":"Yeni Otomat Oluştur","url":"http://localhost:44350/production/set-automat","method":"POST","data":[{"name":"plaka","title":"Plaka","type":"string","value":"","placeholder":"xxx-xx-xxx","controlFunction":"function(value) { return value != null && value != '' && value.length > 0; }","visible":true},{"name":"model","title":"Model","type":"select","options":[{"value":"","label":"Seçim yapınız"},{"value":"CD636047-CE35-43D4-A82D-AF0943BB63BE","label":"AA-91"},{"value":"CD636047-CE35-43D4-A82D-AF0943BB63BE","label":"AA-92"}],"controlFunction":"function(value) { return value != null && value != ''; }","visible":true},{"name":"serialNumber","title":"Serial number","type":"number","value":"","placeholder":"xxxxxxxxxxx","controlFunction":"function(value) { return value != null && value != '' && value.length > 7; }","visible":true},{"name":"androidImei","title":"Android imei","type":"string","value":"","placeholder":"xx-xx-xx-xx","controlFunction":"function(value) { return value != null && value != '' && value.length > 4; }","visible":true},{"name":"androidMac","title":"Android mac","type":"string","value":"","placeholder":"xx-xx-xx-xx","controlFunction":"function(value) { return value != null && value != '' && value.length > 4; }","visible":true},{"name":"modemImei","title":"Modem imei","type":"string","value":"","controlFunction":"function(value) { return value != null && value != '' && value.length > 4; }","visible":true},{"name":"modemMac","title":"Modem mac","type":"string","value":"","controlFunction":"function(value) { return value != null && value != '' && value.length > 4; }","visible":true},{"name":"plcImei","title":"Plc imei","type":"string","value":"","controlFunction":"function(value) { return value != null && value != '' && value.length > 4; }","visible":true},{"name":"plcMac","title":"Plc mac","type":"string","value":"","controlFunction":"function(value) { return value != null && value != '' && value.length > 4; }","visible":true}]}}
         
     
       onMounted(() => {
-        transferedAutomatTable = datatableHelper.initializeDataTable('transferedAutomatTable', '#transferedAutomatTable', transferedAutomatTableAjax, transferedAutomatTableColumns, transferedAutomatTableFilters, transferedAutomatTableOptions);
-createdAutomatTable = datatableHelper.initializeDataTable('createdAutomatTable', '#createdAutomatTable', createdAutomatTableAjax, createdAutomatTableColumns, createdAutomatTableFilters, createdAutomatTableOptions);
+        transferedAutomatTable = datatableHelper.initializeDataTable('transferedAutomatTable', '#transferedAutomatTable', transferedAutomatTableAjax, transferedAutomatTableColumns, transferedAutomatTableFilters, transferedAutomatTableOptions, transferedAutomatTableOperations);
+createdAutomatTable = datatableHelper.initializeDataTable('createdAutomatTable', '#createdAutomatTable', createdAutomatTableAjax, createdAutomatTableColumns, createdAutomatTableFilters, createdAutomatTableOptions, createdAutomatTableOperations);
     
         
       });

@@ -109,6 +109,8 @@ fnInitComplete: function () {}
           };
           messagesTableOptions.serverSide = false;
           messagesTableOptions.processing = false;
+
+          let messagesTableOperations = {}
         
           var productsTable;
 
@@ -180,11 +182,13 @@ fnInitComplete: function () {console.log('fnInitComplete')}
           };
           productsTableOptions.serverSide = false;
           productsTableOptions.processing = false;
+
+          let productsTableOperations = {}
         
     
       onMounted(() => {
-        messagesTable = datatableHelper.initializeDataTable('messagesTable', '#messagesTable', messagesTableAjax, messagesTableColumns, null, messagesTableOptions);
-productsTable = datatableHelper.initializeDataTable('productsTable', '#productsTable', productsTableAjax, productsTableColumns, null, productsTableOptions);
+        messagesTable = datatableHelper.initializeDataTable('messagesTable', '#messagesTable', messagesTableAjax, messagesTableColumns, null, messagesTableOptions, messagesTableOperations);
+productsTable = datatableHelper.initializeDataTable('productsTable', '#productsTable', productsTableAjax, productsTableColumns, null, productsTableOptions, productsTableOperations);
     
         
       });

@@ -15,6 +15,16 @@ const paths = {
   fontsCssOutputFile: path.resolve(__dirname, '../json-site/src/styles/fonts.css'),
 }
 
+// utilities
+function customSerializer(obj) {
+  return JSON.stringify(obj, (key, value) => {
+    if (typeof value === "function") {
+      return value.toString();
+    }
+    return value;
+  });
+}
+
 //Images
 function copyImages() {
   if (fs.existsSync(paths.sourceImagesDir)) {
@@ -178,11 +188,15 @@ function createViews() {
           };
           ${item.id}Options.serverSide = ${item.serverSide};
           ${item.id}Options.processing = ${item.serverSide};
+
+          ${(item.operations) 
+              ? `let ${item.id}Operations = ${customSerializer(item.operations)}`
+              : `let ${item.id}Operations = {}`}
         `).join('')}
     
       onMounted(() => {
         ${page.doms.filter(x => x.type == 'datatable').map(function(item, index) {
-          return `${item.name} = datatableHelper.initializeDataTable('${item.name}', '#${item.id}', ${item.id}Ajax, ${item.id}Columns, ${(item.filters && item.filters.length > 0) ? `${item.id}Filters`: null}, ${item.id}Options);`;
+          return `${item.name} = datatableHelper.initializeDataTable('${item.name}', '#${item.id}', ${item.id}Ajax, ${item.id}Columns, ${(item.filters && item.filters.length > 0) ? `${item.id}Filters`: null}, ${item.id}Options, ${item.id}Operations);`;
         }).join('\n')}
     
         ${page.customReadyScripts}
