@@ -1,12 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import pagesData from '../../siteData.json';
 import commonFunctions from '../scripts/common';
+const modules = import.meta.glob('../views/*.vue');
 
 const routes = pagesData.pages.map((page) => {
   return {
     path: page.path,
     name: page.name,
-    component: () => import(/* @vite-ignore */ `../views/${page.file}`),
+    component: modules[`../views/${page.file}`],
     meta: {
       title: page.seo.title || pagesData.title || pagesData.siteName,
       description: page.seo.description || '',

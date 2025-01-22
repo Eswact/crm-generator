@@ -27,7 +27,7 @@ const darkModeEnabled = (pagesData.theme.darkModeEnabled == true || pagesData.th
       class="z-20 font-Montserrat fixed flex flex-col gap-[28px] overflow-hidden left-0 top-0 h-full py-[34px] w-[80px] md:w-0 hover:w-[280px] md:hover:w-0 transition-all bg-second shadow-[0_1px_2px_2px] md:shadow-none dark:shadow-md rounded-r-2xl md:rounded-r-none"
     >
       <!-- Mobile Close Button -->
-      <button @click="closeNavbar" class="hidden sm:flex text-cancel rounded-full bg-white text-[2.5rem] p-0 m-0 absolute right-4 top-4"><font-awesome-icon icon="fa-solid fa-circle-xmark" /></button>
+      <button @click="closeNavbar" class="hidden sm:flex text-cancel rounded-full bg-white text-[2.5rem] p-0 m-0 absolute right-4 top-4"><i class="fa-solid fa-circle-xmark"></i></button>
       <!-- Logo -->
       <div class="flex items-center gap-[12px] p-[12px]">
         <img class="rounded-lg bg-white h-[56px] w-[56px] min-w-[56px] px-[3px] pt-[4px] pb-[2px]" :src="pagesData.logo || '/images/default-logo.png'" onerror="this.src='/images/default-logo.png'" alt="logo" />
@@ -47,7 +47,7 @@ const darkModeEnabled = (pagesData.theme.darkModeEnabled == true || pagesData.th
             @click="closeNavbar"
           >
             <span :class="['p-[8px] w-[44px] border-box flex justify-center items-center', { 'bg-main rounded-lg': isActive(page.path) }]">
-              <font-awesome-icon class="min-w-[30px] flex justify-center items-center text-[26px]" :icon="page.icon" />
+              <i :class=page.icon class="min-w-[30px] flex justify-center items-center text-[26px]"></i>
             </span>
             <span class="text-[1.45rem] font-semibold">{{ page.name }}</span>
           </router-link>
@@ -67,7 +67,7 @@ const darkModeEnabled = (pagesData.theme.darkModeEnabled == true || pagesData.th
             @click="showNavbar"
             class="hidden md:block text-white text-[2rem] px-[4px]"
           >
-            <font-awesome-icon icon="fa-solid fa-bars" />
+            <i class="fa-solid fa-bars"></i>
           </button>
         </div>
         <div class="flex gap-[34px] md:gap-[20px] items-center justify-end">

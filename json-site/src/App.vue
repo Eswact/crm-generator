@@ -48,7 +48,7 @@
 
     <div id="sharedModal" class="fixed top-0 left-0 z-30 w-full h-full bg-[rgba(0,0,0,0.7)] justify-center items-center">
       <div id="sharedModalBg" class="relative p-[1.25rem] bg-bg text-darkBg rounded-lg sm:w-full sm:h-full">
-        <button @click="commonFunctions.closeModal" class="text-cancel rounded-full bg-white flex text-[2rem] p-0 m-0 absolute right-[-0.8rem] top-[-0.8rem] sm:right-2 sm:top-2"><font-awesome-icon icon="fa-solid fa-circle-xmark" /></button>
+        <button @click="commonFunctions.closeModal" class="text-cancel rounded-full bg-white flex text-[2rem] p-0 m-0 absolute right-[-0.8rem] top-[-0.8rem] sm:right-2 sm:top-2"><i class="fa-solid fa-circle-xmark"></i></button>
         <div id="sharedModalBody" class="overflow-y-auto h-full pr-[0.25rem]">
 
         </div>
@@ -59,7 +59,7 @@
       <div id="filterModalContent" class="w-[400px] overflow-hidden duration-200 max-w-full h-full p-8 rounded-l-2xl bg-bg flex flex-col justify-between items-center gap-4">
         <div class="w-full flex justify-between text-4xl">
           <h1 class="font-bold text-second">Filters</h1>
-          <button @click="commonFunctions.closeFilter" class="text-cancel"><font-awesome-icon icon="fa-solid fa-circle-xmark" /></button>
+          <button @click="commonFunctions.closeFilter" class="text-cancel"><i class="fa-solid fa-circle-xmark"></i></button>
         </div>
         <div id="tableFilterList" class="w-full h-full py-8 md:py-4 overflow-y-auto flex flex-col gap-4 md:gap-2"></div>
         <div class="w-full flex flex-col gap-3">
