@@ -9,8 +9,20 @@ import { toast } from "vue3-toastify";
 
 const datatableHelper = {
     selectedRow: {},
-    reloadTable: function (name) {
-        $(`#${name}`).DataTable().ajax.reload();
+    reloadTable: function (name, stayOnPage = false) {
+        const table = $(`#${name}`).DataTable();
+        const currentPage = table.page();
+
+        if (stayOnPage) {
+            table.ajax.reload(() => {
+                // If the last page has been reached, go back to the previous page
+                if (table.page.info().recordsDisplay <= currentPage * table.page.info().length) {
+                    table.page(Math.max(currentPage - 1, 0)).draw(false);
+                }
+            }, false);
+        } else {
+            table.ajax.reload();
+        }
     },
     initializeDataTable: function (name, selector, ajaxReq, tableColumns, tableFilters, tableOptions = {}, operations = {}, options = {}) {
         let thisHelper = this;
@@ -419,7 +431,7 @@ const datatableHelper = {
                     }
                     else {
                         toast.success(data.description || "İşlem başarılı");
-                        thisHelper.reloadTable(table);
+                        thisHelper.reloadTable(table, true);
                         commonFunctions.closeModal();
                     }
                 },
@@ -520,7 +532,7 @@ const datatableHelper = {
                     else {
                         toast.success(data.description || "İşlem başarılı");
                         thisHelper.selectedRow[table] = {};
-                        thisHelper.reloadTable(table);
+                        thisHelper.reloadTable(table, true);
                         commonFunctions.closeModal();
                     }
                 },
@@ -552,7 +564,7 @@ const datatableHelper = {
                     } else {
                         toast.success(data.description || "İşlem başarılı");
                         thisHelper.selectedRow[table] = {};
-                        thisHelper.reloadTable(table);
+                        thisHelper.reloadTable(table, true);
                     }
                 },
                 error: function (err) {
