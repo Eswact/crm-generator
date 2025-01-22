@@ -145,7 +145,7 @@
             "dataSrc": ""
           },
           "serverSide": false,
-          "options": {}
+          "tableOptions": {}
         },
         {
           "type": "datatable",
@@ -178,7 +178,7 @@
             "dataSrc": ""
           },
           "serverSide": false,
-          "options": {}
+          "tableOptions": {}
         },
         {
           "type": "custom",
@@ -201,6 +201,7 @@
           "comments"
         ]
       },
+      "pageCss": "w-full flex flex-col gap-8",
       "doms": [
         {
           "type": "datatable",
@@ -295,7 +296,7 @@
             "method": "POST"
           },
           "serverSide": true,
-          "options": {
+          "tableOptions": {
             "order": [
               [
                 4,
@@ -444,8 +445,11 @@
             "method": "POST"
           },
           "serverSide": true,
-          "options": {
+          "tableOptions": {
             "order": false
+          },
+          "options": {
+            "rowSelect": true
           },
           "operations": {
             "add": {
@@ -532,6 +536,11 @@
                   "type": "string",
                   "value": "",
                   "visible": true
+                },
+                {
+                  "name": "defaultData",
+                  "value": true,
+                  "visible": false
                 }
               ]
             }

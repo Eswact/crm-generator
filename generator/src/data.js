@@ -351,7 +351,7 @@ module.exports = {
             // data: function (d) {}
           },
           "serverSide": false,
-          "options": {
+          "tableOptions": {
             drawCallback: function (settings, data) {},
             fnRowCallBack: function (nRow, data, iDisplayIndex, iDisplayIndexFull) {},
             fnInitComplete: function () {},
@@ -424,7 +424,7 @@ module.exports = {
             // data: function (d) {}
           },
           "serverSide": false,
-          "options": {
+          "tableOptions": {
             drawCallback: function (settings, data) {},
             fnRowCallBack: function (nRow, data, iDisplayIndex, iDisplayIndexFull) {},
             fnInitComplete: function () {console.log('fnInitComplete')},
@@ -453,6 +453,7 @@ module.exports = {
         "description": "Community",
         "keywords": ["community", "comments"]
       },
+      "pageCss": "w-full flex flex-col gap-8",
       "doms": [
         {
           "type": "datatable",
@@ -570,7 +571,7 @@ module.exports = {
             dataSrc: function (json) { return json.data; },
           },
           "serverSide": true,
-          "options": {
+          "tableOptions": {
             drawCallback: function (settings, data) {},
             fnRowCallBack: function (nRow, data, iDisplayIndex, iDisplayIndexFull) {},
             fnInitComplete: function () {console.log('fnInitComplete')},
@@ -734,15 +735,14 @@ module.exports = {
             dataSrc: function (json) { return json.responseData; },
           },
           "serverSide": true,
-          "options": {
+          "tableOptions": {
             drawCallback: function (settings, data) {},
             fnRowCallBack: function (nRow, data, iDisplayIndex, iDisplayIndexFull) {},
-            fnInitComplete: function () {
-              createdAutomatTable.on('click', 'tbody tr', (e) => {
-                e.currentTarget.classList.toggle('selected');
-              });
-            },
+            fnInitComplete: function () {},
             order: false
+          },
+          "options": {
+            "rowSelect": true,
           },
           "operations": {
             "add": {
@@ -838,6 +838,11 @@ module.exports = {
                   "value": "",
                   "controlFunction": function(value) { return value != null && value != '' && value.length > 4; },
                   "visible": true
+                },
+                {
+                  "name": "defaultData",
+                  "value": true,
+                  "visible": false
                 },
               ]
             },

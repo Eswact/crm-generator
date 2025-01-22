@@ -181,13 +181,13 @@ function createViews() {
             }
           };
     
-          let ${item.id}Options = {
-            ${Object.entries(item.options).map(([key, value]) =>
+          let ${item.id}TableOptions = {
+            ${Object.entries(item.tableOptions).map(([key, value]) =>
               `${key}: ${ typeof value === 'function' ? value.toString() : JSON.stringify(value) }`)
             .join(',\n')}
           };
-          ${item.id}Options.serverSide = ${item.serverSide};
-          ${item.id}Options.processing = ${item.serverSide};
+          ${item.id}TableOptions.serverSide = ${item.serverSide};
+          ${item.id}TableOptions.processing = ${item.serverSide};
 
           ${(item.operations) 
               ? `let ${item.id}Operations = ${customSerializer(item.operations)}`
@@ -196,7 +196,7 @@ function createViews() {
     
       onMounted(() => {
         ${page.doms.filter(x => x.type == 'datatable').map(function(item, index) {
-          return `${item.name} = datatableHelper.initializeDataTable('${item.name}', '#${item.id}', ${item.id}Ajax, ${item.id}Columns, ${(item.filters && item.filters.length > 0) ? `${item.id}Filters`: null}, ${item.id}Options, ${item.id}Operations);`;
+          return `${item.name} = datatableHelper.initializeDataTable('${item.name}', '#${item.id}', ${item.id}Ajax, ${item.id}Columns, ${(item.filters && item.filters.length > 0) ? `${item.id}Filters`: null}, ${item.id}TableOptions, ${item.id}Operations, ${item.options ? JSON.stringify(item.options) : '{}'});`;
         }).join('\n')}
     
         ${page.customReadyScripts}

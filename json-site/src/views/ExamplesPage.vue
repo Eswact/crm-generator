@@ -102,13 +102,13 @@
             }
           };
     
-          let messagesTableOptions = {
+          let messagesTableTableOptions = {
             drawCallback: function (settings, data) {},
 fnRowCallBack: function (nRow, data, iDisplayIndex, iDisplayIndexFull) {},
 fnInitComplete: function () {}
           };
-          messagesTableOptions.serverSide = false;
-          messagesTableOptions.processing = false;
+          messagesTableTableOptions.serverSide = false;
+          messagesTableTableOptions.processing = false;
 
           let messagesTableOperations = {}
         
@@ -175,20 +175,20 @@ fnInitComplete: function () {}
             }
           };
     
-          let productsTableOptions = {
+          let productsTableTableOptions = {
             drawCallback: function (settings, data) {},
 fnRowCallBack: function (nRow, data, iDisplayIndex, iDisplayIndexFull) {},
 fnInitComplete: function () {console.log('fnInitComplete')}
           };
-          productsTableOptions.serverSide = false;
-          productsTableOptions.processing = false;
+          productsTableTableOptions.serverSide = false;
+          productsTableTableOptions.processing = false;
 
           let productsTableOperations = {}
         
     
       onMounted(() => {
-        messagesTable = datatableHelper.initializeDataTable('messagesTable', '#messagesTable', messagesTableAjax, messagesTableColumns, null, messagesTableOptions, messagesTableOperations);
-productsTable = datatableHelper.initializeDataTable('productsTable', '#productsTable', productsTableAjax, productsTableColumns, null, productsTableOptions, productsTableOperations);
+        messagesTable = datatableHelper.initializeDataTable('messagesTable', '#messagesTable', messagesTableAjax, messagesTableColumns, null, messagesTableTableOptions, messagesTableOperations, {});
+productsTable = datatableHelper.initializeDataTable('productsTable', '#productsTable', productsTableAjax, productsTableColumns, null, productsTableTableOptions, productsTableOperations, {});
     
         
       });

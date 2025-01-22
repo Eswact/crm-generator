@@ -28,6 +28,16 @@
   ::-webkit-scrollbar-thumb:hover {
     @apply bg-main;
   }
+  #sharedModalBg *::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  #sharedModalBg *::-webkit-scrollbar-track {
+    @apply bg-bg rounded-sm;
+  }
+  #sharedModalBg *::-webkit-scrollbar-thumb {
+    @apply bg-darkBg rounded-sm;
+  }
 }
 
 /* datatable start */
