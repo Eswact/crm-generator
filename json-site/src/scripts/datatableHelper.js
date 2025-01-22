@@ -102,19 +102,19 @@ const datatableHelper = {
                 }
                 ${operations.add
                     ? `<button id="add${name}Row" class="p-2 px-4 flex items-center gap-2 bg-main hover:bg-opacity-80 duration-200 dark:bg-opacity-70 dark:hover:bg-opacity-100 text-white shadow-md text-xl rounded-lg">
-                            <i class="fa-solid fa-plus"></i>
+                            <i class="fa-solid fa-plus text-xl"></i>
                         </button>`
                     :''
                 }
                 ${operations.edit
                     ? `<button id="edit${name}Row" class="p-2 px-4 flex items-center gap-2 bg-main hover:bg-opacity-80 duration-200 dark:bg-opacity-70 dark:hover:bg-opacity-100 text-white shadow-md text-xl rounded-lg disabled:opacity-50" disabled>
-                            <i class="fa-solid fa-pencil"></i>
+                            <i class="fa-solid fa-pencil text-xl"></i>
                         </button>`
                     :''
                 }
                 ${operations.delete
                     ? `<button id="delete${name}Row" class="p-2 px-4 flex items-center gap-2 bg-main hover:bg-opacity-80 duration-200 dark:bg-opacity-70 dark:hover:bg-opacity-100 text-white shadow-md text-xl rounded-lg disabled:opacity-50" disabled>
-                            <i class="fa-solid fa-trash-can"></i>
+                            <i class="fa-solid fa-trash-can text-xl"></i>
                         </button>`
                     :''
                 }

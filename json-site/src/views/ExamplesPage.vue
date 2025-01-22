@@ -3,9 +3,6 @@
         
     <div class="w-full">
       <table id="messagesTable" class="display stripe hover" style="width:100%"></table>
-    </div>
-    <div class="w-full">
-      <table id="productsTable" class="display stripe hover" style="width:100%"></table>
     </div><div class="w-full flex justify-center items-center">
             <div class="w-full py-0 gap-8 flex justify-between items-center">
               <div></div>
@@ -112,86 +109,19 @@ fnInitComplete: function () {}
 
           let messagesTableOperations = {}
         
-          var productsTable;
-
-          let productsTableColumns = [
-            {
-              order: 0,
-              title: "Title",
-              data: "title",
-              name: "title",
-              checkable: false,
-              orderable: undefined,
-              render: function (data, type, row) {
-                if (data != null) {
-                    return `<div class="flex w-full gap-6 items-center">
-                                <img class="w-[200px]" src="${row.url}" />
-                                <div class="max-w-[250px] font-semibold text-xl">${data}</div>
-                            </div>`;
-                }
-                else { return ''; }
-              }
-            },{
-              order: 1,
-              title: "Album No",
-              data: "albumId",
-              name: "albumId",
-              checkable: true,
-              orderable: undefined,
-              render: function (data, type, row) {
-                if (data != null) {
-                    return `<div class="w-full flex justify-center items-center font-bold text-xl">
-                                ${data}
-                            </div>`;
-                }
-                else { return ''; }
-              }
-            },{
-              order: 2,
-              title: "Thumbnail",
-              data: "thumbnailUrl",
-              name: "thumbnailUrl",
-              checkable: true,
-              orderable: undefined,
-              render: function (data, type, row) {
-                if (data != null) {
-                    return `<div class="flex w-full">
-                                <img src="${data}" />
-                            </div>`;
-                }
-                else { return ''; }
-              }
-            }
-          ];
-
-          
-      
-          let productsTableAjax = {
-            url: "https://jsonplaceholder.typicode.com/photos",
-            type: "GET",
-            dataSrc: '',
-            data: function(d) {
-              
-            }
-          };
-    
-          let productsTableTableOptions = {
-            drawCallback: function (settings, data) {},
-fnRowCallBack: function (nRow, data, iDisplayIndex, iDisplayIndexFull) {},
-fnInitComplete: function () {console.log('fnInitComplete')}
-          };
-          productsTableTableOptions.serverSide = false;
-          productsTableTableOptions.processing = false;
-
-          let productsTableOperations = {}
-        
     
       onMounted(() => {
         messagesTable = datatableHelper.initializeDataTable('messagesTable', '#messagesTable', messagesTableAjax, messagesTableColumns, null, messagesTableTableOptions, messagesTableOperations, {});
-productsTable = datatableHelper.initializeDataTable('productsTable', '#productsTable', productsTableAjax, productsTableColumns, null, productsTableTableOptions, productsTableOperations, {});
     
         
+        toast.success("Toast Test!");
+      
       });
     
+      
+        import { toast } from "vue3-toastify";
+        function gettingStarted() {
+          router.push({ path: '/configuration' });
+        }
       
     </script>

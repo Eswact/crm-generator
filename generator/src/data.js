@@ -87,14 +87,11 @@ module.exports = {
         }
       ],
       "customScripts": `
-        import { toast } from "vue3-toastify";
         function gettingStarted() {
           router.push({ path: '/configuration' });
         }
       `,
-      "customReadyScripts": `
-        toast.success("Toast Test!");
-      `,
+      "customReadyScripts": ``,
     },
     {
       "file": "ConfigurationPage.vue",
@@ -358,79 +355,6 @@ module.exports = {
           }
         },
         {
-          "type": "datatable",
-          "containerClass": "w-full",
-          "id": "productsTable",
-          "name": "productsTable",
-          "columns": [
-            {
-              order: 0,
-              name: 'title',
-              title: 'Title',
-              checkable: false,
-              render: function (data, type, row) {
-                if (data != null) {
-                    return `<div class="flex w-full gap-6 items-center">
-                                <img class="w-[200px]" src="${row.url}" />
-                                <div class="max-w-[250px] font-semibold text-xl">${data}</div>
-                            </div>`;
-                }
-                else { return ''; }
-              },
-            },
-            {
-              order: 1,
-              name: 'albumId',
-              title: 'Album No',
-              checkable: true,
-              render: function (data, type, row) {
-                if (data != null) {
-                    return `<div class="w-full flex justify-center items-center font-bold text-xl">
-                                ${data}
-                            </div>`;
-                }
-                else { return ''; }
-              },
-            },
-            {
-              order: 2,
-              name: 'thumbnailUrl',
-              title: 'Thumbnail',
-              checkable: true,
-              render: function (data, type, row) {
-                if (data != null) {
-                    return `<div class="flex w-full">
-                                <img src="${data}" />
-                            </div>`;
-                }
-                else { return ''; }
-              },
-            }
-          ],
-          // "filters": [
-          //   {
-          //     "data":"title",
-          //     "name":"Title",
-          //     "type":"text",
-          //     "value": null,
-          //     "default": null,
-          //     "visible": true
-          //   }
-          // ],
-          "ajax": { 
-            url: "https://jsonplaceholder.typicode.com/photos", 
-            method: "GET", 
-            dataSrc: '', 
-            // data: function (d) {}
-          },
-          "serverSide": false,
-          "tableOptions": {
-            drawCallback: function (settings, data) {},
-            fnRowCallBack: function (nRow, data, iDisplayIndex, iDisplayIndexFull) {},
-            fnInitComplete: function () {console.log('fnInitComplete')},
-          }
-        },
-        {
           "type": "custom",
           "content": `<div class="w-full flex justify-center items-center">
             <div class="w-full py-0 gap-8 flex justify-between items-center">
@@ -440,18 +364,25 @@ module.exports = {
           </div>`
         }
       ],
-      "customScripts": ``,
-      "customReadyScripts": ``,
+      "customScripts": `
+        import { toast } from "vue3-toastify";
+        function gettingStarted() {
+          router.push({ path: '/configuration' });
+        }
+      `,
+      "customReadyScripts": `
+        toast.success("Toast Test!");
+      `,
     },
     {
-      "file": "Community.vue",
-      "name": "Community",
-      "path": "/community",
-      "icon": 'fa-solid fa-user-group',
+      "file": "Datatables.vue",
+      "name": "Datatables",
+      "path": "/datatables",
+      "icon": 'fa-solid fa-table',
       "seo": {
-        "title": "Community - My CRM",
-        "description": "Community",
-        "keywords": ["community", "comments"]
+        "title": "Datatable - My CRM",
+        "description": "Datatable",
+        "keywords": ["datatable", "example", "table"]
       },
       "pageCss": "w-full flex flex-col gap-8",
       "doms": [

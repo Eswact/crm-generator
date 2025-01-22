@@ -57,8 +57,8 @@
           "content": "<div class=\"w-full py-2 mt-2 flex justify-center items-center\">\n            <div class=\"w-full max-w-[1000px] gap-8 flex justify-between items-center\">\n              <button @click=gettingStarted class=\"px-4 py-2 bg-third text-white shadow-md text-xl font-bold rounded-lg\">Getting Started</button>\n              <button @click=\"sharedFunctions.getPageByPath(route.path)\" class=\"px-4 py-2 bg-main text-white shadow-md text-xl font-bold rounded-lg\">This Page</button>\n            </div>\n          </div>"
         }
       ],
-      "customScripts": "\n        import { toast } from \"vue3-toastify\";\n        function gettingStarted() {\n          router.push({ path: '/configuration' });\n        }\n      ",
-      "customReadyScripts": "\n        toast.success(\"Toast Test!\");\n      "
+      "customScripts": "\n        function gettingStarted() {\n          router.push({ path: '/configuration' });\n        }\n      ",
+      "customReadyScripts": ""
     },
     {
       "file": "ConfigurationPage.vue",
@@ -148,57 +148,25 @@
           "tableOptions": {}
         },
         {
-          "type": "datatable",
-          "containerClass": "w-full",
-          "id": "productsTable",
-          "name": "productsTable",
-          "columns": [
-            {
-              "order": 0,
-              "name": "title",
-              "title": "Title",
-              "checkable": false
-            },
-            {
-              "order": 1,
-              "name": "albumId",
-              "title": "Album No",
-              "checkable": true
-            },
-            {
-              "order": 2,
-              "name": "thumbnailUrl",
-              "title": "Thumbnail",
-              "checkable": true
-            }
-          ],
-          "ajax": {
-            "url": "https://jsonplaceholder.typicode.com/photos",
-            "method": "GET",
-            "dataSrc": ""
-          },
-          "serverSide": false,
-          "tableOptions": {}
-        },
-        {
           "type": "custom",
           "content": "<div class=\"w-full flex justify-center items-center\">\n            <div class=\"w-full py-0 gap-8 flex justify-between items-center\">\n              <div></div>\n              <button @click=\"sharedFunctions.getPageByPath(route.path)\" class=\"px-4 py-2 bg-main text-white shadow-md text-xl font-bold rounded-lg\">This Page</button>\n            </div>\n          </div>"
         }
       ],
-      "customScripts": "",
-      "customReadyScripts": ""
+      "customScripts": "\n        import { toast } from \"vue3-toastify\";\n        function gettingStarted() {\n          router.push({ path: '/configuration' });\n        }\n      ",
+      "customReadyScripts": "\n        toast.success(\"Toast Test!\");\n      "
     },
     {
-      "file": "Community.vue",
-      "name": "Community",
-      "path": "/community",
-      "icon": "fa-solid fa-user-group",
+      "file": "Datatables.vue",
+      "name": "Datatables",
+      "path": "/datatables",
+      "icon": "fa-solid fa-table",
       "seo": {
-        "title": "Community - My CRM",
-        "description": "Community",
+        "title": "Datatable - My CRM",
+        "description": "Datatable",
         "keywords": [
-          "community",
-          "comments"
+          "datatable",
+          "example",
+          "table"
         ]
       },
       "pageCss": "w-full flex flex-col gap-8",
