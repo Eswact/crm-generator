@@ -24,8 +24,10 @@ const darkModeEnabled = (pagesData.theme.darkModeEnabled == true || pagesData.th
     <!-- Navbar -->
     <aside
       id="asideBar"
-      class="z-20 font-Montserrat fixed flex flex-col gap-[28px] overflow-hidden left-0 top-0 h-full py-[34px] w-[80px] md:w-0 hover:w-[280px] md:hover:w-0 transition-all bg-second shadow-[0_1px_2px_2px] md:shadow-none dark:shadow-md rounded-r-2xl"
+      class="z-20 font-Montserrat fixed flex flex-col gap-[28px] overflow-hidden left-0 top-0 h-full py-[34px] w-[80px] md:w-0 hover:w-[280px] md:hover:w-0 transition-all bg-second shadow-[0_1px_2px_2px] md:shadow-none dark:shadow-md rounded-r-2xl md:rounded-r-none"
     >
+      <!-- Mobile Close Button -->
+      <button @click="closeNavbar" class="hidden sm:flex text-cancel rounded-full bg-white text-[2.5rem] p-0 m-0 absolute right-4 top-4"><font-awesome-icon icon="fa-solid fa-circle-xmark" /></button>
       <!-- Logo -->
       <div class="flex items-center gap-[12px] p-[12px]">
         <img class="rounded-lg bg-white h-[56px] w-[56px] min-w-[56px] px-[3px] pt-[4px] pb-[2px]" :src="pagesData.logo || '/images/default-logo.png'" onerror="this.src='/images/default-logo.png'" alt="logo" />
@@ -55,15 +57,15 @@ const darkModeEnabled = (pagesData.theme.darkModeEnabled == true || pagesData.th
 
     <!-- Header -->
     <header
-      class="z-10 w-[calc(100%-80px)] bg-bg dark:bg-darkBg md:w-full fixed top-0 left-[80px] md:left-0 h-[90px] justify-center items-center px-[50px] pt-[25px] md:px-[20px]"
+      class="z-10 w-[calc(100%-80px)] bg-bg dark:bg-darkBg md:w-full fixed top-0 left-[80px] md:left-0 h-[90px] justify-center items-center px-[50px] pt-[25px] md:px-0 md:pt-0 md:h-[65px]"
     >
       <nav
-        class="w-full h-full px-[40px] md:px-[20px] py-[4px] flex items-center justify-between border-[1px] border-second bg-second rounded-md"
+        class="w-full h-full px-[40px] md:px-[20px] py-[4px] flex items-center justify-between border-[1px] border-second bg-second rounded-md md:rounded-none"
       >
         <div class="flex items-center">
           <button
             @click="showNavbar"
-            class="hidden md:block text-second hover:text-main text-[1.5rem] px-[4px]"
+            class="hidden md:block text-white text-[2rem] px-[4px]"
           >
             <font-awesome-icon icon="fa-solid fa-bars" />
           </button>

@@ -61,7 +61,7 @@ const datatableHelper = {
                     next: ">",
                     last: ">>",
                 },
-                processing: `<div class="absolute w-full h-full flex justify-center items-center"><img src="/images/loading.gif" /></div>`
+                processing: `<div class="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50"><img src="/images/loading.gif" /></div>`
             },
         };
     
@@ -539,25 +539,28 @@ const datatableHelper = {
         formData = JSON.parse(formData);
         formData = thisHelper.resolveDeep(formData, `thisHelper.selectedRow`);
         // console.log(formData);
-    
-        $.ajax({
-            url: deleteOperation.url,
-            type: deleteOperation.method,
-            data: formData,
-            success: function (data) {
-                if (data.status == undefined || !data.status) {
-                    toast.error(data.description || "İşlem başarısız");
-                    return;
-                } else {
-                    toast.success(data.description || "İşlem başarılı");
-                    thisHelper.selectedRow[table] = {};
-                    thisHelper.reloadTable(table);
+        
+        let onClick = function () {
+            $.ajax({
+                url: deleteOperation.url,
+                type: deleteOperation.method,
+                data: formData,
+                success: function (data) {
+                    if (data.status == undefined || !data.status) {
+                        toast.error(data.description || "İşlem başarısız");
+                        return;
+                    } else {
+                        toast.success(data.description || "İşlem başarılı");
+                        thisHelper.selectedRow[table] = {};
+                        thisHelper.reloadTable(table);
+                    }
+                },
+                error: function (err) {
+                    toast.error(err.description || "İşlem başarısız");
                 }
-            },
-            error: function (err) {
-                toast.error(err.description || "İşlem başarısız");
-            }
-        });
+            });
+        }
+        commonFunctions.showConfirmationMessage('The row you selected will be removed from the table', onClick);
     },
     
 
