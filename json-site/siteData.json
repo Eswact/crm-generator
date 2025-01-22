@@ -544,6 +544,93 @@
                 }
               ]
             },
+            "edit": {
+              "title": "Otomat Düzenle",
+              "url": "http://localhost:44350/production/update-automat",
+              "method": "POST",
+              "data": [
+                {
+                  "name": "manufactId",
+                  "value": "selectedRow.manufactId",
+                  "visible": false
+                },
+                {
+                  "name": "plaka",
+                  "value": "selectedRow.plate",
+                  "visible": false
+                },
+                {
+                  "name": "serialNumber",
+                  "value": "selectedRow.snAndroid",
+                  "visible": false
+                },
+                {
+                  "name": "model",
+                  "title": "Model",
+                  "type": "select",
+                  "value": "selectedRow.modelID",
+                  "options": [
+                    {
+                      "value": "",
+                      "label": "Seçim yapınız"
+                    },
+                    {
+                      "value": "CD636047-CE35-43D4-A82D-AF0943BB63BE",
+                      "label": "AA-91"
+                    },
+                    {
+                      "value": "CD636047-CE35-43D4-A82D-AF0943BB63BE",
+                      "label": "AA-92"
+                    }
+                  ],
+                  "visible": true
+                },
+                {
+                  "name": "androidImei",
+                  "title": "Android imei",
+                  "type": "string",
+                  "value": "selectedRow.imeiAndroid",
+                  "placeholder": "xx-xx-xx-xx",
+                  "visible": true
+                },
+                {
+                  "name": "androidMac",
+                  "title": "Android mac",
+                  "type": "string",
+                  "value": "selectedRow.macAndroid",
+                  "placeholder": "xx-xx-xx-xx",
+                  "visible": true
+                },
+                {
+                  "name": "modemImei",
+                  "title": "Modem imei",
+                  "type": "string",
+                  "value": "selectedRow.imeimodem",
+                  "visible": true
+                },
+                {
+                  "name": "modemMac",
+                  "title": "Modem mac",
+                  "type": "string",
+                  "value": "selectedRow.macmodem",
+                  "visible": true
+                },
+                {
+                  "name": "plcImei",
+                  "title": "Plc imei",
+                  "type": "string",
+                  "value": "selectedRow.imeiplc",
+                  "visible": true
+                },
+                {
+                  "name": "plcMac",
+                  "title": "Plc mac",
+                  "type": "string",
+                  "value": "selectedRow.macplc",
+                  "visible": true
+                }
+              ]
+            },
             "delete": {
               "url": "http://localhost:44350/production/delete-automat",
               "method": "POST",

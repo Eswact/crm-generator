@@ -110,6 +110,7 @@ const datatableHelper = {
             $(`#open${name}CT`).off('click').on('click', () => thisHelper.openCTModal(name, tableColumns));
             $(`#open${name}Filters`).off('click').on('click', () => thisHelper.openFiltersModal(name, tableFilters));
             $(`#add${name}Row`).off('click').on('click', () => thisHelper.openAddRowModal(name, operations.add));
+            $(`#edit${name}Row`).off('click').on('click', () => thisHelper.editRowModal(name, operations.edit));
             $(`#delete${name}Row`).off('click').on('click', () => thisHelper.deleteRow(name, operations.delete));
 
             if (options && options.rowSelect) {
@@ -425,13 +426,113 @@ const datatableHelper = {
         });
         
     },
+    editRowModal: function (table, editOperation) {
+        let thisHelper = this;
+
+        let editOpData = JSON.stringify(editOperation.data);
+        editOpData = editOpData.replace(/selectedRow/g, `thisHelper.selectedRow['${table}']`);
+        editOpData = JSON.parse(editOpData);
+        editOpData = thisHelper.resolveDeep(editOpData, `thisHelper.selectedRow`);
+        console.log(editOpData);
+
+        let modalHtml = ``;
+        let formHtml = '';
+        editOpData.forEach(item => {
+            if (item.visible) {
+                if (item.type === "string" || item.type === "number") {
+                    formHtml += `
+                        <div class="w-full flex flex-col">
+                            <label for="${item.name}" class="font-semibold">${item.controlFunction ? `* ${item.title}`: `${item.title}`}</label>
+                            <input 
+                                type="${item.type}" 
+                                id="${item.name}" 
+                                name="${item.name}" 
+                                value="${item.value}" 
+                                class="py-2 px-4 border border-darkBg text-darkBg rounded-lg" 
+                                ${item.placeholder ? `placeholder=${item.placeholder}`: ''} />
+                        </div>`;
+                } else if (item.type === "select") {
+                    formHtml += `
+                        <div class="w-full flex flex-col">
+                            <label for="${item.name}" class="font-semibold">${item.controlFunction ? `* ${item.title}`: `${item.title}`}</label>
+                            <select id="${item.name}" name="${item.name}" class="p-2 border border-darkBg text-darkBg rounded-lg">
+                                ${item.options.map(option => `
+                                    <option value="${option.value}" ${String(option.value).toLowerCase() == String(item.value).toLowerCase() ? 'selected' : ''}>${option.label}</option>
+                                `).join('')}
+                            </select>
+                        </div>`;
+                }
+            }
+        });
+        modalHtml = `<form class="w-full h-full flex flex-col justify-between items-center gap-4">
+                            <h1 class="w-full text-2xl font-bold">${editOperation.title}</h1>
+                            <div class="w-full h-full overflow-y-auto flex flex-col gap-4">${formHtml}</div>
+                            <button type="button" id="addRowButton" class="w-full text-xl font-bold py-2 rounded-md bg-main text-white tracking-widest">Ekle</button>
+                        </form>`;
+        commonFunctions.openModal(500, 640, modalHtml);
+    
+        // addRowButtonClick
+        document.getElementById("addRowButton").addEventListener("click", function () {
+            let formData = {};
+            let incorrectEntries = [];
+            
+            editOpData.forEach(item => {
+                if (item.visible) {
+                    const input = document.getElementById(item.name);
+                    input.classList.remove("border-red-500");
+            
+                    // add to formData
+                    formData[item.name] = input ? input.value : null;
+            
+                    // controlFunction string to function
+                    const controlFunction = new Function("value", item.controlFunction.match(/\(([^)]*)\)\s*{([\s\S]*)}/)[2]);
+                    if (!controlFunction(input.value)) {
+                        incorrectEntries.push(item);
+                    }
+                }
+                else {
+                    formData[item.name] = item.value;
+                }
+            });
+        
+            if (incorrectEntries.length > 0) {
+                incorrectEntries.forEach(item => {
+                    document.getElementById(item.name).classList.add("border-red-500");
+                });
+                toast.error("Hatalı girişler yapıldı");
+                return;
+            }
+        
+            // console.log(formData);
+            $.ajax({
+                url: editOperation.url,
+                type: editOperation.method,
+                data: formData,
+                success: function (data) {
+                    if (data.status == undefined || !data.status) {
+                        toast.error(data.description || "İşlem başarısız");
+                        return;
+                    }
+                    else {
+                        toast.success(data.description || "İşlem başarılı");
+                        thisHelper.reloadTable(table);
+                        commonFunctions.closeModal();
+                    }
+                },
+                error: function (err) {
+                    toast.error(err.description || "İşlem başarısız");
+                }
+            });
+        });
+        
+    },
     deleteRow: function (table, deleteOperation) {
         let thisHelper = this;
 
         let formData = JSON.stringify(deleteOperation.data);
         formData = formData.replace(/selectedRow/g, `thisHelper.selectedRow['${table}']`);
         formData = JSON.parse(formData);
-        formData = thisHelper.resolveDeep(formData, `thisHelper.selectedRow`, thisHelper);
+        formData = thisHelper.resolveDeep(formData, `thisHelper.selectedRow`);
         console.log(formData);
     
         $.ajax({
@@ -468,7 +569,6 @@ const datatableHelper = {
                 }
             }
         } else if (typeof data === 'string') {
-          console.log(data, resolvedString);
           if (data.includes(resolvedString)) {
             data = eval(data);
           }

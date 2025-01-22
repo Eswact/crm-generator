@@ -846,6 +846,100 @@ module.exports = {
                 },
               ]
             },
+            "edit": {
+              "title": "Otomat Düzenle",
+              "url": "http://localhost:44350/production/update-automat",
+              "method": "POST",
+              "data": [
+                {
+                  "name": "manufactId",
+                  "value": "selectedRow.manufactId",
+                  "visible": false
+                },
+                {
+                  "name": "plaka",
+                  "value": "selectedRow.plate",
+                  "visible": false
+                },
+                {
+                  "name": "serialNumber",
+                  "value": "selectedRow.snAndroid",
+                  "visible": false
+                },
+                {
+                  "name": "model",
+                  "title": "Model",
+                  "type": "select",
+                  "value": "selectedRow.modelID",
+                  "options": [
+                    {
+                      "value": "",
+                      "label": "Seçim yapınız"
+                    },
+                    {
+                      "value": "CD636047-CE35-43D4-A82D-AF0943BB63BE",
+                      "label": "AA-91"
+                    },
+                    {
+                      "value": "CD636047-CE35-43D4-A82D-AF0943BB63BE",
+                      "label": "AA-92"
+                    },
+                  ],
+                  "controlFunction": function(value) { return value != null && value != ''; },
+                  "visible": true
+                },
+                {
+                  "name": "androidImei",
+                  "title": "Android imei",
+                  "type": "string",
+                  "value": "selectedRow.imeiAndroid",
+                  "placeholder": "xx-xx-xx-xx",
+                  "controlFunction": function(value) { return value != null && value != '' && value.length > 4; },
+                  "visible": true
+                },
+                {
+                  "name": "androidMac",
+                  "title": "Android mac",
+                  "type": "string",
+                  "value": "selectedRow.macAndroid",
+                  "placeholder": "xx-xx-xx-xx",
+                  "controlFunction": function(value) { return value != null && value != '' && value.length > 4; },
+                  "visible": true
+                },
+                {
+                  "name": "modemImei",
+                  "title": "Modem imei",
+                  "type": "string",
+                  "value": "selectedRow.imeimodem",
+                  "controlFunction": function(value) { return value != null && value != '' && value.length > 4; },
+                  "visible": true
+                },
+                {
+                  "name": "modemMac",
+                  "title": "Modem mac",
+                  "type": "string",
+                  "value": "selectedRow.macmodem",
+                  "controlFunction": function(value) { return value != null && value != '' && value.length > 4; },
+                  "visible": true
+                },
+                {
+                  "name": "plcImei",
+                  "title": "Plc imei",
+                  "type": "string",
+                  "value": "selectedRow.imeiplc",
+                  "controlFunction": function(value) { return value != null && value != '' && value.length > 4; },
+                  "visible": true
+                },
+                {
+                  "name": "plcMac",
+                  "title": "Plc mac",
+                  "type": "string",
+                  "value": "selectedRow.macplc",
+                  "controlFunction": function(value) { return value != null && value != '' && value.length > 4; },
+                  "visible": true
+                }
+              ]
+            },
             "delete": {
               "url": "http://localhost:44350/production/delete-automat",
               "method": "POST",
@@ -853,7 +947,6 @@ module.exports = {
                 "manufactIds": ["selectedRow.manufactId"]
               }
             }
-            // "edit": {},
           }
         },
       ],
