@@ -52,13 +52,13 @@ const commonFunctions = {
   closeFilter: function() {
     document.getElementById('tableFilterModal').classList.remove('show');
   },
-  useSplashScreen(options) {
+  useSplashScreen: function (options) {
     Object.assign(splash.value, { ...defaultSplash, ...options, visible: true });
   },
-  hideSplashScreen() {
+  hideSplashScreen: function() {
     splash.value.visible = false;
   },
-  getSplashScreen() {
+  getSplashScreen: function() {
     return splash;
   },
 }

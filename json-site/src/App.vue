@@ -1,5 +1,5 @@
 <script setup>
-  import { computed, onMounted  } from 'vue';
+  import { computed, onMounted, onUnmounted } from 'vue';
   import { useRoute } from 'vue-router';
   import Navbar from './components/Navbar.vue';
   import SplashScreen from './components/SplashScreen.vue';
@@ -18,8 +18,20 @@
     document.head.appendChild(link);
   }
 
+  function handleEscKey(event) {
+    if (event.key === 'Escape') {
+      commonFunctions.closeModal();
+      commonFunctions.closeFilter();
+    }
+  }
+
   onMounted(() => {
     setWebsiteIcon();
+    window.addEventListener('keydown', handleEscKey);
+  });
+
+  onUnmounted(() => {
+    window.removeEventListener('keydown', handleEscKey);
   });
 </script>
 

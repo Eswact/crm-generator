@@ -102,7 +102,7 @@ const datatableHelper = {
                 }
                 ${operations.delete
                     ? `<button id="delete${name}Row" class="p-2 px-4 flex items-center gap-2 bg-main hover:bg-opacity-80 duration-200 dark:bg-opacity-70 dark:hover:bg-opacity-100 text-white shadow-md text-xl rounded-lg">
-                            <svg class="w-6 h-6 fill-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M432 256c0 17.7-14.3 32-32 32L48 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l352 0c17.7 0 32 14.3 32 32z"/></svg>
+                            <svg class="w-6 h-6 fill-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0L284.2 0c12.1 0 23.2 6.8 28.6 17.7L320 32l96 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 96C14.3 96 0 81.7 0 64S14.3 32 32 32l96 0 7.2-14.3zM32 128l384 0 0 320c0 35.3-28.7 64-64 64L96 512c-35.3 0-64-28.7-64-64l0-320zm96 64c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16s16-7.2 16-16l0-224c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16s16-7.2 16-16l0-224c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16s16-7.2 16-16l0-224c0-8.8-7.2-16-16-16z"/></svg>
                         </button>`
                     :''
                 }
@@ -110,6 +110,7 @@ const datatableHelper = {
             $(`#open${name}CT`).off('click').on('click', () => thisHelper.openCTModal(name, tableColumns));
             $(`#open${name}Filters`).off('click').on('click', () => thisHelper.openFiltersModal(name, tableFilters));
             $(`#add${name}Row`).off('click').on('click', () => thisHelper.openAddRowModal(name, operations.add));
+            $(`#delete${name}Row`).off('click').on('click', () => thisHelper.deleteRow(name, operations.delete));
 
             if (options && options.rowSelect) {
                 $(`#${name}`).DataTable().on('click', 'tbody tr', (e) => {
@@ -401,7 +402,7 @@ const datatableHelper = {
                 return;
             }
         
-            console.log(formData);
+            // console.log(formData);
             $.ajax({
                 url: addOperation.url,
                 type: addOperation.method,
@@ -424,6 +425,56 @@ const datatableHelper = {
         });
         
     },
+    deleteRow: function (table, deleteOperation) {
+        let thisHelper = this;
+
+        let formData = JSON.stringify(deleteOperation.data);
+        formData = formData.replace(/selectedRow/g, `thisHelper.selectedRow['${table}']`);
+        formData = JSON.parse(formData);
+        formData = thisHelper.resolveDeep(formData, `thisHelper.selectedRow`, thisHelper);
+        console.log(formData);
+    
+        $.ajax({
+            url: deleteOperation.url,
+            type: deleteOperation.method,
+            data: formData,
+            success: function (data) {
+                if (data.status == undefined || !data.status) {
+                    toast.error(data.description || "İşlem başarısız");
+                    return;
+                } else {
+                    toast.success(data.description || "İşlem başarılı");
+                    thisHelper.reloadTable(table);
+                }
+            },
+            error: function (err) {
+                toast.error(err.description || "İşlem başarısız");
+            }
+        });
+    },
+    
+
+    // utilities
+    resolveDeep: function (data, resolvedString) {
+        let thisHelper = this;
+        if (Array.isArray(data)) {
+            data.forEach((item, index) => {
+                data[index] = this.resolveDeep(item, resolvedString);
+            });
+        } else if (typeof data === 'object' && data !== null) {
+            for (let key in data) {
+                if (data.hasOwnProperty(key)) {
+                    data[key] = this.resolveDeep(data[key], resolvedString);
+                }
+            }
+        } else if (typeof data === 'string') {
+          console.log(data, resolvedString);
+          if (data.includes(resolvedString)) {
+            data = eval(data);
+          }
+        }
+        return data;
+      },
 };
 
 export default datatableHelper;

@@ -846,8 +846,14 @@ module.exports = {
                 },
               ]
             },
+            "delete": {
+              "url": "http://localhost:44350/production/delete-automat",
+              "method": "POST",
+              "data": {
+                "manufactIds": ["selectedRow.manufactId"]
+              }
+            }
             // "edit": {},
-            // "delete": {}
           }
         },
       ],
