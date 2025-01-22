@@ -95,13 +95,13 @@ const datatableHelper = {
                     :''
                 }
                 ${operations.edit
-                    ? `<button id="edit${name}Row" class="p-2 px-4 flex items-center gap-2 bg-main hover:bg-opacity-80 duration-200 dark:bg-opacity-70 dark:hover:bg-opacity-100 text-white shadow-md text-xl rounded-lg">
+                    ? `<button id="edit${name}Row" class="p-2 px-4 flex items-center gap-2 bg-main hover:bg-opacity-80 duration-200 dark:bg-opacity-70 dark:hover:bg-opacity-100 text-white shadow-md text-xl rounded-lg disabled:opacity-50" disabled>
                             <svg class="w-6 h-6 fill-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M410.3 231l11.3-11.3-33.9-33.9-62.1-62.1L291.7 89.8l-11.3 11.3-22.6 22.6L58.6 322.9c-10.4 10.4-18 23.3-22.2 37.4L1 480.7c-2.5 8.4-.2 17.5 6.1 23.7s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L387.7 253.7 410.3 231zM160 399.4l-9.1 22.7c-4 3.1-8.5 5.4-13.3 6.9L59.4 452l23-78.1c1.4-4.9 3.8-9.4 6.9-13.3l22.7-9.1 0 32c0 8.8 7.2 16 16 16l32 0zM362.7 18.7L348.3 33.2 325.7 55.8 314.3 67.1l33.9 33.9 62.1 62.1 33.9 33.9 11.3-11.3 22.6-22.6 14.5-14.5c25-25 25-65.5 0-90.5L453.3 18.7c-25-25-65.5-25-90.5 0zm-47.4 168l-144 144c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6l144-144c6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6z"/></svg>
                         </button>`
                     :''
                 }
                 ${operations.delete
-                    ? `<button id="delete${name}Row" class="p-2 px-4 flex items-center gap-2 bg-main hover:bg-opacity-80 duration-200 dark:bg-opacity-70 dark:hover:bg-opacity-100 text-white shadow-md text-xl rounded-lg">
+                    ? `<button id="delete${name}Row" class="p-2 px-4 flex items-center gap-2 bg-main hover:bg-opacity-80 duration-200 dark:bg-opacity-70 dark:hover:bg-opacity-100 text-white shadow-md text-xl rounded-lg disabled:opacity-50" disabled>
                             <svg class="w-6 h-6 fill-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0L284.2 0c12.1 0 23.2 6.8 28.6 17.7L320 32l96 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 96C14.3 96 0 81.7 0 64S14.3 32 32 32l96 0 7.2-14.3zM32 128l384 0 0 320c0 35.3-28.7 64-64 64L96 512c-35.3 0-64-28.7-64-64l0-320zm96 64c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16s16-7.2 16-16l0-224c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16s16-7.2 16-16l0-224c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16s16-7.2 16-16l0-224c0-8.8-7.2-16-16-16z"/></svg>
                         </button>`
                     :''
@@ -121,8 +121,10 @@ const datatableHelper = {
                     if (!isSelected) {
                         thisHelper.selectedRow[name] = row;
                         $(`#${name}`).DataTable().rows('.selected').nodes().each((row) => row.classList.remove('selected'));
+                        $(`#edit${name}Row, #delete${name}Row`).prop('disabled', false);
                     } else {
                         thisHelper.selectedRow[name] = {};
+                        $(`#edit${name}Row, #delete${name}Row`).prop('disabled', true);
                     }
 
                     e.currentTarget.classList.toggle('selected');
@@ -145,6 +147,8 @@ const datatableHelper = {
             if (options && options.rowSelect) {
                 const table = $(`#${name}`).DataTable();
                 const selected = thisHelper.selectedRow[name];
+                console.log(selected, JSON.stringify(selected) === JSON.stringify({}));
+                (JSON.stringify(selected) === JSON.stringify({})) ? $(`#edit${name}Row, #delete${name}Row`).prop('disabled', true) : null;
 
                 table.rows().every(function () {
                     const row = this.data();
@@ -467,7 +471,7 @@ const datatableHelper = {
         modalHtml = `<form class="w-full h-full flex flex-col justify-between items-center gap-4">
                             <h1 class="w-full text-2xl font-bold">${editOperation.title}</h1>
                             <div class="w-full h-full overflow-y-auto flex flex-col gap-4">${formHtml}</div>
-                            <button type="button" id="addRowButton" class="w-full text-xl font-bold py-2 rounded-md bg-main text-white tracking-widest">Ekle</button>
+                            <button type="button" id="addRowButton" class="w-full text-xl font-bold py-2 rounded-md bg-main text-white tracking-widest">Kaydet</button>
                         </form>`;
         commonFunctions.openModal(500, 640, modalHtml);
     
@@ -515,6 +519,7 @@ const datatableHelper = {
                     }
                     else {
                         toast.success(data.description || "İşlem başarılı");
+                        thisHelper.selectedRow[table] = {};
                         thisHelper.reloadTable(table);
                         commonFunctions.closeModal();
                     }
@@ -533,7 +538,7 @@ const datatableHelper = {
         formData = formData.replace(/selectedRow/g, `thisHelper.selectedRow['${table}']`);
         formData = JSON.parse(formData);
         formData = thisHelper.resolveDeep(formData, `thisHelper.selectedRow`);
-        console.log(formData);
+        // console.log(formData);
     
         $.ajax({
             url: deleteOperation.url,
@@ -545,6 +550,7 @@ const datatableHelper = {
                     return;
                 } else {
                     toast.success(data.description || "İşlem başarılı");
+                    thisHelper.selectedRow[table] = {};
                     thisHelper.reloadTable(table);
                 }
             },
@@ -574,7 +580,7 @@ const datatableHelper = {
           }
         }
         return data;
-      },
+    },
 };
 
 export default datatableHelper;
