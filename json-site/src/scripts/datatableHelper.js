@@ -445,10 +445,8 @@ const datatableHelper = {
     editRowModal: function (table, editOperation) {
         let thisHelper = this;
 
-        let editOpData = JSON.stringify(editOperation.data);
-        editOpData = editOpData.replace(/selectedRow/g, `thisHelper.selectedRow['${table}']`);
-        editOpData = JSON.parse(editOpData);
-        editOpData = thisHelper.resolveDeep(editOpData, `thisHelper.selectedRow`);
+        let editOpData = editOperation.data;
+        editOpData =  thisHelper.resolveDeep(editOpData, table, `selectedRow`);
         console.log(editOpData);
 
         let modalHtml = ``;
@@ -546,10 +544,8 @@ const datatableHelper = {
     deleteRow: function (table, deleteOperation) {
         let thisHelper = this;
 
-        let formData = JSON.stringify(deleteOperation.data);
-        formData = formData.replace(/selectedRow/g, `thisHelper.selectedRow['${table}']`);
-        formData = JSON.parse(formData);
-        formData = thisHelper.resolveDeep(formData, `thisHelper.selectedRow`);
+        let formData = deleteOperation.data;
+        formData = thisHelper.resolveDeep(formData, table, `selectedRow`);
         // console.log(formData);
         
         let onClick = function () {
@@ -577,21 +573,23 @@ const datatableHelper = {
     
 
     // utilities
-    resolveDeep: function (data, resolvedString) {
+    resolveDeep: function (data, table, resolvedString) {
         let thisHelper = this;
+        let tableData = thisHelper.selectedRow[table];
         if (Array.isArray(data)) {
             data.forEach((item, index) => {
-                data[index] = this.resolveDeep(item, resolvedString);
+                data[index] = this.resolveDeep(item, table, resolvedString);
             });
         } else if (typeof data === 'object' && data !== null) {
             for (let key in data) {
                 if (data.hasOwnProperty(key)) {
-                    data[key] = this.resolveDeep(data[key], resolvedString);
+                    data[key] = this.resolveDeep(data[key], table, resolvedString);
                 }
             }
         } else if (typeof data === 'string') {
           if (data.includes(resolvedString)) {
-            data = eval(data);
+            // get selectedRow data
+            data = tableData[data.split('.')[1]];
           }
         }
         return data;

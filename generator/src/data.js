@@ -515,7 +515,7 @@ module.exports = {
           "id": "createdAutomatTable",
           "name": "createdAutomatTable",
           "columns": [
-            {
+            { 
               order: 0,
               name: 'plate',
               title: 'Plate',
@@ -717,6 +717,21 @@ module.exports = {
                   "type": "number",
                   "value": "",
                   "placeholder": "xxxxxxxxxxx",
+                  // "showAllErrors": false,
+                  // "errorChecks": [
+                  //   {
+                  //     fn: function(value) { return value != null && value != '' && value.length > 7; },
+                  //     onerrormessage: "Uzuunluk 7 den büyük olmalıdır."
+                  //   },
+                  //   {
+                  //     fn: function(value) { return value != null && value != '' && value.length > 7; },
+                  //     onerrormessage: "Uzuunluk 7 den büyük olmalıdır."
+                  //   },
+                  //   {
+                  //     fn: function(value) { return value != null && value != '' && value.length > 7; },
+                  //     onerrormessage: "Uzuunluk 7 den büyük olmalıdır."
+                  //   },
+                  // ],
                   "controlFunction": function(value) { return value != null && value != '' && value.length > 7; },
                   "visible": true
                 },
