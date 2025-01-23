@@ -393,6 +393,8 @@ const datatableHelper = {
             let incorrectEntries = [];
             
             addOperation.data.forEach(item => {
+                if (incorrectEntries.length > 0) { return; }
+
                 if (item.visible) {
                     const input = document.getElementById(item.name);
                     input.classList.remove("border-red-500");
@@ -400,11 +402,18 @@ const datatableHelper = {
                     // add to formData
                     formData[item.name] = input ? input.value : null;
             
-                    // controlFunction string to function
-                    const controlFunction = new Function("value", item.controlFunction.match(/\(([^)]*)\)\s*{([\s\S]*)}/)[2]);
-                    if (!controlFunction(input.value)) {
-                        incorrectEntries.push(item);
-                    }
+                    // input controls
+                    item.errorChecks.forEach(errorCheck => {
+                        if (!errorCheck.control) { return; }
+                        const controlFunction = new Function("value", `return ${errorCheck.control};`);
+                        if (!controlFunction(input.value)) {
+                            input.classList.add("border-red-500");
+                            incorrectEntries.push(errorCheck.errMessage || 'Hatalı giriş yapıldı');
+                            if (!item.showAllErrors) {
+                                return;
+                            }
+                        }
+                    });
                 }
                 else {
                     formData[item.name] = item.value;
@@ -412,10 +421,9 @@ const datatableHelper = {
             });
         
             if (incorrectEntries.length > 0) {
-                incorrectEntries.forEach(item => {
-                    document.getElementById(item.name).classList.add("border-red-500");
+                incorrectEntries.forEach(message => {
+                    toast.error(message);
                 });
-                toast.error("Hatalı girişler yapıldı");
                 return;
             }
         
@@ -445,7 +453,7 @@ const datatableHelper = {
     editRowModal: function (table, editOperation) {
         let thisHelper = this;
 
-        let editOpData = editOperation.data;
+        let editOpData = JSON.parse(JSON.stringify(editOperation.data));
         editOpData =  thisHelper.resolveDeep(editOpData, table, `selectedRow`);
         console.log(editOpData);
 
@@ -485,12 +493,14 @@ const datatableHelper = {
                         </form>`;
         commonFunctions.openModal(500, 640, modalHtml);
     
-        // addRowButtonClick
+        // editRowButtonClick
         document.getElementById("addRowButton").addEventListener("click", function () {
             let formData = {};
             let incorrectEntries = [];
             
             editOpData.forEach(item => {
+                if (incorrectEntries.length > 0) { return; }
+
                 if (item.visible) {
                     const input = document.getElementById(item.name);
                     input.classList.remove("border-red-500");
@@ -498,11 +508,18 @@ const datatableHelper = {
                     // add to formData
                     formData[item.name] = input ? input.value : null;
             
-                    // controlFunction string to function
-                    const controlFunction = new Function("value", item.controlFunction.match(/\(([^)]*)\)\s*{([\s\S]*)}/)[2]);
-                    if (!controlFunction(input.value)) {
-                        incorrectEntries.push(item);
-                    }
+                    // input controls
+                    item.errorChecks.forEach(errorCheck => {
+                        if (!errorCheck.control) { return; }
+                        const controlFunction = new Function("value", `return ${errorCheck.control};`);
+                        if (!controlFunction(input.value)) {
+                            input.classList.add("border-red-500");
+                            incorrectEntries.push(errorCheck.errMessage || 'Hatalı giriş yapıldı');
+                            if (!item.showAllErrors) {
+                                return;
+                            }
+                        }
+                    });
                 }
                 else {
                     formData[item.name] = item.value;
@@ -510,10 +527,9 @@ const datatableHelper = {
             });
         
             if (incorrectEntries.length > 0) {
-                incorrectEntries.forEach(item => {
-                    document.getElementById(item.name).classList.add("border-red-500");
+                incorrectEntries.forEach(message => {
+                    toast.error(message);
                 });
-                toast.error("Hatalı girişler yapıldı");
                 return;
             }
         
@@ -544,7 +560,7 @@ const datatableHelper = {
     deleteRow: function (table, deleteOperation) {
         let thisHelper = this;
 
-        let formData = deleteOperation.data;
+        let formData = JSON.parse(JSON.stringify(deleteOperation.data));
         formData = thisHelper.resolveDeep(formData, table, `selectedRow`);
         // console.log(formData);
         

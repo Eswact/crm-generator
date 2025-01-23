@@ -427,10 +427,16 @@
               "data": [
                 {
                   "name": "plaka",
-                  "title": "Plaka",
+                  "title": "Plate",
                   "type": "string",
                   "value": "",
                   "placeholder": "xxx-xx-xxx",
+                  "errorChecks": [
+                    {
+                      "control": "value != null && value != '' && value.length > 4;",
+                      "errMessage": "Plate must be longer than 4 characters."
+                    }
+                  ],
                   "visible": true
                 },
                 {
@@ -451,6 +457,13 @@
                       "label": "AA-92"
                     }
                   ],
+                  "showAllErrors": false,
+                  "errorChecks": [
+                    {
+                      "control": "value != null && value != ''",
+                      "errMessage": "Model cannot be null."
+                    }
+                  ],
                   "visible": true
                 },
                 {
@@ -459,6 +472,17 @@
                   "type": "number",
                   "value": "",
                   "placeholder": "xxxxxxxxxxx",
+                  "showAllErrors": true,
+                  "errorChecks": [
+                    {
+                      "control": "value != null && value != '' && value.length > 7",
+                      "errMessage": "Serial number must be longer than 7 characters."
+                    },
+                    {
+                      "control": "!value.startsWith('000')",
+                      "errMessage": "Serial number cannot start with 000."
+                    }
+                  ],
                   "visible": true
                 },
                 {
@@ -467,6 +491,13 @@
                   "type": "string",
                   "value": "",
                   "placeholder": "xx-xx-xx-xx",
+                  "showAllErrors": false,
+                  "errorChecks": [
+                    {
+                      "control": "value != null && value != '' && value.length > 4;",
+                      "errMessage": "Android imei must be longer than 4 characters."
+                    }
+                  ],
                   "visible": true
                 },
                 {
@@ -475,6 +506,13 @@
                   "type": "string",
                   "value": "",
                   "placeholder": "xx-xx-xx-xx",
+                  "showAllErrors": false,
+                  "errorChecks": [
+                    {
+                      "control": "value != null && value != '' && value.length > 4;",
+                      "errMessage": "Android mac must be longer than 4 characters."
+                    }
+                  ],
                   "visible": true
                 },
                 {
@@ -482,6 +520,13 @@
                   "title": "Modem imei",
                   "type": "string",
                   "value": "",
+                  "showAllErrors": false,
+                  "errorChecks": [
+                    {
+                      "control": "value != null && value != '' && value.length > 4;",
+                      "errMessage": "Modem imei must be longer than 4 characters."
+                    }
+                  ],
                   "visible": true
                 },
                 {
@@ -489,6 +534,13 @@
                   "title": "Modem mac",
                   "type": "string",
                   "value": "",
+                  "showAllErrors": false,
+                  "errorChecks": [
+                    {
+                      "control": "value != null && value != '' && value.length > 4;",
+                      "errMessage": "Modem mac must be longer than 4 characters."
+                    }
+                  ],
                   "visible": true
                 },
                 {
@@ -496,6 +548,13 @@
                   "title": "Plc imei",
                   "type": "string",
                   "value": "",
+                  "showAllErrors": false,
+                  "errorChecks": [
+                    {
+                      "control": "value != null && value != '' && value.length > 4;",
+                      "errMessage": "Plc imei must be longer than 4 characters."
+                    }
+                  ],
                   "visible": true
                 },
                 {
@@ -503,6 +562,13 @@
                   "title": "Plc mac",
                   "type": "string",
                   "value": "",
+                  "showAllErrors": false,
+                  "errorChecks": [
+                    {
+                      "control": "value != null && value != '' && value.length > 4;",
+                      "errMessage": "Plc mac must be longer than 4 characters."
+                    }
+                  ],
                   "visible": true
                 },
                 {
@@ -551,6 +617,13 @@
                       "label": "AA-92"
                     }
                   ],
+                  "showAllErrors": false,
+                  "errorChecks": [
+                    {
+                      "control": "value != null && value != ''",
+                      "errMessage": "Model cannot be null."
+                    }
+                  ],
                   "visible": true
                 },
                 {
@@ -559,6 +632,13 @@
                   "type": "string",
                   "value": "selectedRow.imeiAndroid",
                   "placeholder": "xx-xx-xx-xx",
+                  "showAllErrors": false,
+                  "errorChecks": [
+                    {
+                      "control": "value != null && value != '' && value.length > 4;",
+                      "errMessage": "Android imei must be longer than 4 characters."
+                    }
+                  ],
                   "visible": true
                 },
                 {
@@ -567,6 +647,13 @@
                   "type": "string",
                   "value": "selectedRow.macAndroid",
                   "placeholder": "xx-xx-xx-xx",
+                  "showAllErrors": false,
+                  "errorChecks": [
+                    {
+                      "control": "value != null && value != '' && value.length > 4;",
+                      "errMessage": "Android mac must be longer than 4 characters."
+                    }
+                  ],
                   "visible": true
                 },
                 {
@@ -574,6 +661,13 @@
                   "title": "Modem imei",
                   "type": "string",
                   "value": "selectedRow.imeimodem",
+                  "showAllErrors": false,
+                  "errorChecks": [
+                    {
+                      "control": "value != null && value != '' && value.length > 4;",
+                      "errMessage": "Modem imei must be longer than 4 characters."
+                    }
+                  ],
                   "visible": true
                 },
                 {
@@ -581,6 +675,13 @@
                   "title": "Modem mac",
                   "type": "string",
                   "value": "selectedRow.macmodem",
+                  "showAllErrors": false,
+                  "errorChecks": [
+                    {
+                      "control": "value != null && value != '' && value.length > 4;",
+                      "errMessage": "Modem mac must be longer than 4 characters."
+                    }
+                  ],
                   "visible": true
                 },
                 {
@@ -588,6 +689,13 @@
                   "title": "Plc imei",
                   "type": "string",
                   "value": "selectedRow.imeiplc",
+                  "showAllErrors": false,
+                  "errorChecks": [
+                    {
+                      "control": "value != null && value != '' && value.length > 4;",
+                      "errMessage": "Plc imei must be longer than 4 characters."
+                    }
+                  ],
                   "visible": true
                 },
                 {
@@ -595,6 +703,13 @@
                   "title": "Plc mac",
                   "type": "string",
                   "value": "selectedRow.macplc",
+                  "showAllErrors": false,
+                  "errorChecks": [
+                    {
+                      "control": "value != null && value != '' && value.length > 4;",
+                      "errMessage": "Plc mac must be longer than 4 characters."
+                    }
+                  ],
                   "visible": true
                 }
               ]
