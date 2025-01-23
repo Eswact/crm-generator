@@ -71,6 +71,38 @@ const commonFunctions = {
   getSplashScreen: function() {
     return splash;
   },
+  createRightClickMenu: function (event, menuItems) {
+    const existingMenu = document.getElementById("rightClickMenu");
+    if (existingMenu) existingMenu.remove();
+
+    const menu = document.createElement("div");
+    menu.id = "rightClickMenu";
+    menu.style.top = `${event.pageY}px`;
+    menu.style.left = `${event.pageX}px`;
+    menu.classList.add("z-[1000]", "absolute", "min-w-40", "max-w-80", "bg-gray-300", "border", "border-gray-100", "text-lg", "shadow-md", "rounded-md", "dark:bg-black", "dark:border-gray-700", "dark:text-white", "overflow-hidden");
+
+    // Menü elemanlarını oluştur
+    menuItems.forEach(item => {
+        const menuItem = document.createElement("div");
+        menuItem.textContent = item.name;
+        menuItem.classList.add("cursor-pointer", "truncatedText2", "font-semibold", "tracking-wider", "px-4", "py-2", "border-b", "border-dark", "last:border-0", "hover:bg-main", "hover:text-white", "transition", "duration-200");
+
+        menuItem.addEventListener("click", () => {
+            item.click(item.data);
+            menu.remove();
+        });
+
+        menu.appendChild(menuItem);
+    });
+
+    document.body.appendChild(menu);
+
+    document.addEventListener("click", function handleClickOutside() {
+        menu.remove();
+        document.removeEventListener("click", handleClickOutside);
+    });
+
+  },
 }
 
 export default commonFunctions;

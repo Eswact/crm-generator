@@ -189,14 +189,23 @@ function createViews() {
           ${item.id}TableOptions.serverSide = ${item.serverSide};
           ${item.id}TableOptions.processing = ${item.serverSide};
 
+          ${item.options && item.options["rightClick"] 
+            ? `let ${item.id}rightClick = [${item.options["rightClick"].map(x => (`{'name': ${JSON.stringify(x.name)}, 'click': ${x.click}}`)).join(',')}];`
+            : `let ${item.id}rightClick = false`}
+          ${(item.options) 
+              ? `let ${item.id}Options = ${customSerializer(item.options)}`
+              : `let ${item.id}Options = {}`}
+
+          ${item.id}Options['rightClick'] = ${item.id}rightClick;
+
           ${(item.operations) 
               ? `let ${item.id}Operations = ${customSerializer(item.operations)}`
               : `let ${item.id}Operations = {}`}
-        `).join('')}
+          `).join('')}
     
       onMounted(() => {
         ${page.doms.filter(x => x.type == 'datatable').map(function(item, index) {
-          return `${item.name} = datatableHelper.initializeDataTable('${item.name}', '#${item.id}', ${item.id}Ajax, ${item.id}Columns, ${(item.filters && item.filters.length > 0) ? `${item.id}Filters`: null}, ${item.id}TableOptions, ${item.id}Operations, ${item.options ? JSON.stringify(item.options) : '{}'});`;
+          return `${item.name} = datatableHelper.initializeDataTable('${item.name}', '#${item.id}', ${item.id}Ajax, ${item.id}Columns, ${(item.filters && item.filters.length > 0) ? `${item.id}Filters`: null}, ${item.id}TableOptions, ${item.id}Operations, ${item.id}Options);`;
         }).join('\n')}
     
         ${page.customReadyScripts}

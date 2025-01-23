@@ -417,7 +417,18 @@
             "order": false
           },
           "options": {
-            "rowSelect": true
+            "rowSelect": true,
+            "rightClick": [
+              {
+                "name": "Edit"
+              },
+              {
+                "name": "Delete"
+              },
+              {
+                "name": "Test"
+              }
+            ]
           },
           "operations": {
             "add": {

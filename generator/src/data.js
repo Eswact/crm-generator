@@ -674,6 +674,26 @@ module.exports = {
           },
           "options": {
             "rowSelect": true,
+            "rightClick": [
+              {
+                "name": "Edit",
+                "click": function(rowData) {
+                  alert(`Edit: ${rowData.manufactId}`);
+                }
+              },
+              {
+                "name": "Delete",
+                "click": function(rowData) {
+                  alert(`Delete: ${rowData.manufactId}`);
+                }
+              },
+              {
+                "name": "Test",
+                "click": function(rowData) {
+                  commonFunctions.openModal(500, 600, rowData.manufactId);
+                }
+              }
+            ]
           },
           "operations": {
             "add": {

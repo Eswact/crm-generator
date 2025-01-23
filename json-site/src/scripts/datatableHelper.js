@@ -170,6 +170,27 @@ const datatableHelper = {
                 });
             }
 
+            if (options && options.rightClick) {
+                const table = $(`#${name}`).DataTable();
+                $(`#${name} tbody`).off("contextmenu").on("contextmenu", "tr", function (e) {
+                    e.preventDefault();
+
+                    const row = table.row(this);
+                    const rowData = row.data();
+
+                    const rightClickMenu = options.rightClick.map(option => {
+                        return {
+                            name: option.name,
+                            click: option.click,
+                            data: rowData
+                        };
+                    });
+                    console.log(rightClickMenu);
+
+                    commonFunctions.createRightClickMenu(e, rightClickMenu);
+                });
+            }
+
 
             if (userDrawCallback && userDrawCallback.type == 'function') {
                 userDrawCallback.apply(this, arguments);

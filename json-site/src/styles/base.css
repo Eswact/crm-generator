@@ -19,3 +19,18 @@ img, picture, video, canvas, svg {
   display: block;
   max-width: 100%;
 }
+
+.threeDots {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  overflow-wrap: break-word;
+}
+.truncatedText2 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}

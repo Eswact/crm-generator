@@ -105,8 +105,13 @@ order: [[4,"desc"]]
           transferedAutomatTableTableOptions.serverSide = true;
           transferedAutomatTableTableOptions.processing = true;
 
+          let transferedAutomatTablerightClick = false
+          let transferedAutomatTableOptions = {}
+
+          transferedAutomatTableOptions['rightClick'] = transferedAutomatTablerightClick;
+
           let transferedAutomatTableOperations = {}
-        
+          
           var createdAutomatTable;
 
           let createdAutomatTableColumns = [
@@ -211,12 +216,23 @@ order: false
           createdAutomatTableTableOptions.serverSide = true;
           createdAutomatTableTableOptions.processing = true;
 
+          let createdAutomatTablerightClick = [{'name': "Edit", 'click': function(rowData) {
+                  alert(`Edit: ${rowData.manufactId}`);
+                }},{'name': "Delete", 'click': function(rowData) {
+                  alert(`Delete: ${rowData.manufactId}`);
+                }},{'name': "Test", 'click': function(rowData) {
+                  commonFunctions.openModal(500, 600, rowData.manufactId);
+                }}];
+          let createdAutomatTableOptions = {"rowSelect":true,"rightClick":[{"name":"Edit","click":"function(rowData) {\r\n                  alert(`Edit: ${rowData.manufactId}`);\r\n                }"},{"name":"Delete","click":"function(rowData) {\r\n                  alert(`Delete: ${rowData.manufactId}`);\r\n                }"},{"name":"Test","click":"function(rowData) {\r\n                  commonFunctions.openModal(500, 600, rowData.manufactId);\r\n                }"}]}
+
+          createdAutomatTableOptions['rightClick'] = createdAutomatTablerightClick;
+
           let createdAutomatTableOperations = {"add":{"title":"Yeni Otomat Oluştur","url":"http://localhost:44350/production/set-automat","method":"POST","data":[{"name":"plaka","title":"Plate","type":"string","value":"","placeholder":"xxx-xx-xxx","errorChecks":[{"control":"value != null && value != '' && value.length > 4;","errMessage":"Plate must be longer than 4 characters."}],"visible":true},{"name":"model","title":"Model","type":"select","options":[{"value":"","label":"Seçim yapınız"},{"value":"CD636047-CE35-43D4-A82D-AF0943BB63BE","label":"AA-91"},{"value":"CD636047-CE35-43D4-A82D-AF0943BB63BE","label":"AA-92"}],"showAllErrors":false,"errorChecks":[{"control":"value != null && value != ''","errMessage":"Model cannot be null."}],"visible":true},{"name":"serialNumber","title":"Serial number","type":"number","value":"","placeholder":"xxxxxxxxxxx","showAllErrors":true,"errorChecks":[{"control":"value != null && value != '' && value.length > 7","errMessage":"Serial number must be longer than 7 characters."},{"control":"!value.startsWith('000')","errMessage":"Serial number cannot start with 000."}],"visible":true},{"name":"androidImei","title":"Android imei","type":"string","value":"","placeholder":"xx-xx-xx-xx","showAllErrors":false,"errorChecks":[{"control":"value != null && value != '' && value.length > 4;","errMessage":"Android imei must be longer than 4 characters."}],"visible":true},{"name":"androidMac","title":"Android mac","type":"string","value":"","placeholder":"xx-xx-xx-xx","showAllErrors":false,"errorChecks":[{"control":"value != null && value != '' && value.length > 4;","errMessage":"Android mac must be longer than 4 characters."}],"visible":true},{"name":"modemImei","title":"Modem imei","type":"string","value":"","showAllErrors":false,"errorChecks":[{"control":"value != null && value != '' && value.length > 4;","errMessage":"Modem imei must be longer than 4 characters."}],"visible":true},{"name":"modemMac","title":"Modem mac","type":"string","value":"","showAllErrors":false,"errorChecks":[{"control":"value != null && value != '' && value.length > 4;","errMessage":"Modem mac must be longer than 4 characters."}],"visible":true},{"name":"plcImei","title":"Plc imei","type":"string","value":"","showAllErrors":false,"errorChecks":[{"control":"value != null && value != '' && value.length > 4;","errMessage":"Plc imei must be longer than 4 characters."}],"visible":true},{"name":"plcMac","title":"Plc mac","type":"string","value":"","showAllErrors":false,"errorChecks":[{"control":"value != null && value != '' && value.length > 4;","errMessage":"Plc mac must be longer than 4 characters."}],"visible":true},{"name":"defaultData","value":true,"visible":false}]},"edit":{"title":"Otomat Düzenle","url":"http://localhost:44350/production/update-automat","method":"POST","data":[{"name":"manufactId","value":"selectedRow.manufactId","visible":false},{"name":"plaka","value":"selectedRow.plate","visible":false},{"name":"serialNumber","value":"selectedRow.snAndroid","visible":false},{"name":"model","title":"Model","type":"select","value":"selectedRow.modelID","options":[{"value":"","label":"Seçim yapınız"},{"value":"CD636047-CE35-43D4-A82D-AF0943BB63BE","label":"AA-91"},{"value":"CD636047-CE35-43D4-A82D-AF0943BB63BE","label":"AA-92"}],"showAllErrors":false,"errorChecks":[{"control":"value != null && value != ''","errMessage":"Model cannot be null."}],"visible":true},{"name":"androidImei","title":"Android imei","type":"string","value":"selectedRow.imeiAndroid","placeholder":"xx-xx-xx-xx","showAllErrors":false,"errorChecks":[{"control":"value != null && value != '' && value.length > 4;","errMessage":"Android imei must be longer than 4 characters."}],"visible":true},{"name":"androidMac","title":"Android mac","type":"string","value":"selectedRow.macAndroid","placeholder":"xx-xx-xx-xx","showAllErrors":false,"errorChecks":[{"control":"value != null && value != '' && value.length > 4;","errMessage":"Android mac must be longer than 4 characters."}],"visible":true},{"name":"modemImei","title":"Modem imei","type":"string","value":"selectedRow.imeimodem","showAllErrors":false,"errorChecks":[{"control":"value != null && value != '' && value.length > 4;","errMessage":"Modem imei must be longer than 4 characters."}],"visible":true},{"name":"modemMac","title":"Modem mac","type":"string","value":"selectedRow.macmodem","showAllErrors":false,"errorChecks":[{"control":"value != null && value != '' && value.length > 4;","errMessage":"Modem mac must be longer than 4 characters."}],"visible":true},{"name":"plcImei","title":"Plc imei","type":"string","value":"selectedRow.imeiplc","showAllErrors":false,"errorChecks":[{"control":"value != null && value != '' && value.length > 4;","errMessage":"Plc imei must be longer than 4 characters."}],"visible":true},{"name":"plcMac","title":"Plc mac","type":"string","value":"selectedRow.macplc","showAllErrors":false,"errorChecks":[{"control":"value != null && value != '' && value.length > 4;","errMessage":"Plc mac must be longer than 4 characters."}],"visible":true}]},"delete":{"url":"http://localhost:44350/production/delete-automat","method":"POST","data":{"manufactIds":["selectedRow.manufactId"]}}}
-        
+          
     
       onMounted(() => {
-        transferedAutomatTable = datatableHelper.initializeDataTable('transferedAutomatTable', '#transferedAutomatTable', transferedAutomatTableAjax, transferedAutomatTableColumns, transferedAutomatTableFilters, transferedAutomatTableTableOptions, transferedAutomatTableOperations, {});
-createdAutomatTable = datatableHelper.initializeDataTable('createdAutomatTable', '#createdAutomatTable', createdAutomatTableAjax, createdAutomatTableColumns, createdAutomatTableFilters, createdAutomatTableTableOptions, createdAutomatTableOperations, {"rowSelect":true});
+        transferedAutomatTable = datatableHelper.initializeDataTable('transferedAutomatTable', '#transferedAutomatTable', transferedAutomatTableAjax, transferedAutomatTableColumns, transferedAutomatTableFilters, transferedAutomatTableTableOptions, transferedAutomatTableOperations, transferedAutomatTableOptions);
+createdAutomatTable = datatableHelper.initializeDataTable('createdAutomatTable', '#createdAutomatTable', createdAutomatTableAjax, createdAutomatTableColumns, createdAutomatTableFilters, createdAutomatTableTableOptions, createdAutomatTableOperations, createdAutomatTableOptions);
     
         
       });

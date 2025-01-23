@@ -107,11 +107,16 @@ fnInitComplete: function () {}
           messagesTableTableOptions.serverSide = false;
           messagesTableTableOptions.processing = false;
 
+          let messagesTablerightClick = false
+          let messagesTableOptions = {}
+
+          messagesTableOptions['rightClick'] = messagesTablerightClick;
+
           let messagesTableOperations = {}
-        
+          
     
       onMounted(() => {
-        messagesTable = datatableHelper.initializeDataTable('messagesTable', '#messagesTable', messagesTableAjax, messagesTableColumns, null, messagesTableTableOptions, messagesTableOperations, {});
+        messagesTable = datatableHelper.initializeDataTable('messagesTable', '#messagesTable', messagesTableAjax, messagesTableColumns, null, messagesTableTableOptions, messagesTableOperations, messagesTableOptions);
     
         
         toast.success("Toast Test!");
