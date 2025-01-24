@@ -43,10 +43,9 @@
       const route = useRoute();
       const router = useRouter();
       import commonFunctions from '../scripts/common.js'
-      import { sharedFunctions } from '../scripts/custom/shared.js'
-      
+      import { sharedFunctions } from '../scripts/custom/shared.js';
     
-        
+      
     
       onMounted(() => {
         

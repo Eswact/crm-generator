@@ -428,7 +428,8 @@
               {
                 "name": "Test"
               }
-            ]
+            ],
+            "keys": true
           },
           "operations": {
             "add": {

@@ -693,7 +693,8 @@ module.exports = {
                   commonFunctions.openModal(500, 600, rowData.manufactId);
                 }
               }
-            ]
+            ],
+            "keys": true
           },
           "operations": {
             "add": {
