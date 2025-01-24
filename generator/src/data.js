@@ -667,10 +667,13 @@ module.exports = {
           },
           "serverSide": true,
           "tableOptions": {
-            drawCallback: function (settings, data) {},
+            drawCallback: function (settings, data) {
+              console.log('test');
+            },
             fnRowCallBack: function (nRow, data, iDisplayIndex, iDisplayIndexFull) {},
             fnInitComplete: function () {},
-            order: false
+            order: false,
+            keys: true
           },
           "options": {
             "rowSelect": true,
@@ -694,7 +697,6 @@ module.exports = {
                 }
               }
             ],
-            "keys": true
           },
           "operations": {
             "add": {

@@ -414,7 +414,8 @@
           },
           "serverSide": true,
           "tableOptions": {
-            "order": false
+            "order": false,
+            "keys": true
           },
           "options": {
             "rowSelect": true,
@@ -428,8 +429,7 @@
               {
                 "name": "Test"
               }
-            ],
-            "keys": true
+            ]
           },
           "operations": {
             "add": {

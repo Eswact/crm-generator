@@ -82,7 +82,7 @@ const datatableHelper = {
         }
     
         //fnInitComplete
-        let userFnInitComplete;
+        let userFnInitComplete = false;
         if (tableOptions.fnInitComplete) {
             userFnInitComplete = tableOptions.fnInitComplete;
         }
@@ -145,13 +145,13 @@ const datatableHelper = {
             }
 
 
-            if (userFnInitComplete && userFnInitComplete.type == 'function') {
+            if (userFnInitComplete) {
                 userFnInitComplete.apply(this, arguments);
             }
         };
 
         //drawCallback
-        let userDrawCallback;
+        let userDrawCallback = false;
         if (tableOptions.drawCallback) {
             userDrawCallback = tableOptions.drawCallback;
         }
@@ -159,7 +159,6 @@ const datatableHelper = {
             if (options && options.rowSelect) {
                 const table = $(`#${name}`).DataTable();
                 const selected = thisHelper.selectedRow[name];
-                console.log(selected, JSON.stringify(selected) === JSON.stringify({}));
                 (JSON.stringify(selected) === JSON.stringify({})) ? $(`#edit${name}Row, #delete${name}Row`).prop('disabled', true) : null;
 
                 table.rows().every(function () {
@@ -191,20 +190,19 @@ const datatableHelper = {
                 });
             }
 
-
-            if (userDrawCallback && userDrawCallback.type == 'function') {
+            if (userDrawCallback) {
                 userDrawCallback.apply(this, arguments);
             }
         };
 
         //fnRowCallBack
-        let userFnRowCallBack;
+        let userFnRowCallBack = false;
         if (tableOptions.fnRowCallBack) {
             userFnRowCallBack = tableOptions.fnRowCallBack;
         }
         tableOptions.fnRowCallBack = function () {
 
-            if (userFnRowCallBack && userFnRowCallBack.type == 'function') {
+            if (userFnRowCallBack) {
                 userFnRowCallBack.apply(this, arguments);
             }
         };

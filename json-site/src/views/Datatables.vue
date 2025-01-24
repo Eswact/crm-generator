@@ -209,10 +209,13 @@ let createdAutomatTableAjax = {
 };
 
 let createdAutomatTableTableOptions = {
-  drawCallback: function (settings, data) {},
+  drawCallback: function (settings, data) {
+              console.log('test');
+            },
 fnRowCallBack: function (nRow, data, iDisplayIndex, iDisplayIndexFull) {},
 fnInitComplete: function () {},
-order: false
+order: false,
+keys: true
 };
 createdAutomatTableTableOptions.serverSide = true;
 createdAutomatTableTableOptions.processing = true;
@@ -224,7 +227,7 @@ let createdAutomatTablerightClick = [{'name': "Edit", 'click': function(rowData)
                 }},{'name': "Test", 'click': function(rowData) {
                   commonFunctions.openModal(500, 600, rowData.manufactId);
                 }}];
-let createdAutomatTableOptions = {"rowSelect":true,"rightClick":[{"name":"Edit"},{"name":"Delete"},{"name":"Test"}],"keys":true}
+let createdAutomatTableOptions = {"rowSelect":true,"rightClick":[{"name":"Edit"},{"name":"Delete"},{"name":"Test"}]}
 
 createdAutomatTableOptions['rightClick'] = createdAutomatTablerightClick;
 
