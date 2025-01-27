@@ -506,7 +506,19 @@ module.exports = {
             drawCallback: function (settings, data) {},
             fnRowCallBack: function (nRow, data, iDisplayIndex, iDisplayIndexFull) {},
             fnInitComplete: function () {console.log('fnInitComplete')},
-            order: [[4, 'desc']]
+            order: [[4, 'desc']],
+            keys: true,
+          },
+          "options": {
+            "keyFocus": function (e, datatable, cell, originalEvent) {
+              console.log('Key focus on: ', cell.index());
+            },
+            "key": function (e, datatable, key, cell, originalEvent) {
+              console.log(cell.node());
+              if (key === 13 || (key >= 48 && key <= 57) || (key >= 96 && key <= 105)) {
+                  alert("Enter pressed");
+              }
+            },
           }
         },
         {
@@ -697,6 +709,18 @@ module.exports = {
                 }
               }
             ],
+            "keyFocus": function (e, datatable, cell, originalEvent) {
+              console.log('Key focus on: ', cell.index());
+            },
+            "key": function (e, datatable, key, cell, originalEvent) {
+              let columnIndex = cell.index().column;
+              let rowIndex = cell.index().row
+              // let input = $(cell.node()).find(".priceInput");
+              // let text = myInput.siblings(".fontPrice");
+              if (key === 13 || (key >= 48 && key <= 57) || (key >= 96 && key <= 105)) {
+                  alert("Enter pressed");
+              }
+            },
           },
           "operations": {
             "add": {

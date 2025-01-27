@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import 'datatables.net';
 import 'datatables.net-colreorder';
+import 'datatables.net-keytable';
 import '../styles/dataTables.dataTables.css';
 import Sortable from 'sortablejs';
 import commonFunctions from './common';
@@ -141,6 +142,18 @@ const datatableHelper = {
 
                     e.currentTarget.classList.toggle('selected');
                     console.log(thisHelper.selectedRow[name]);
+                });
+            }
+
+            if (options && options.keyFocus) {
+                $(`#${name}`).DataTable().on('key-focus', function (e, datatable, cell, originalEvent) {
+                    options.keyFocus(e, datatable, cell, originalEvent);
+                });
+                
+            }
+            if (options && options.key) {
+                $(`#${name}`).DataTable().on('key', function (e, datatable, key, cell, originalEvent) {
+                    options.key(e, datatable, key, cell, originalEvent);
                 });
             }
 

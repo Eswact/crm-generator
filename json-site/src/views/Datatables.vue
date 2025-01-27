@@ -100,15 +100,27 @@ let transferedAutomatTableTableOptions = {
   drawCallback: function (settings, data) {},
 fnRowCallBack: function (nRow, data, iDisplayIndex, iDisplayIndexFull) {},
 fnInitComplete: function () {console.log('fnInitComplete')},
-order: [[4,"desc"]]
+order: [[4,"desc"]],
+keys: true
 };
 transferedAutomatTableTableOptions.serverSide = true;
 transferedAutomatTableTableOptions.processing = true;
 
-let transferedAutomatTablerightClick = false
+let transferedAutomatTableRightClick = false
+let transferedAutomatTableKeyFocusFunction = function (e, datatable, cell, originalEvent) {
+              console.log('Key focus on: ', cell.index());
+            };
+let transferedAutomatTableKeyFunction = function (e, datatable, key, cell, originalEvent) {
+              console.log(cell.node());
+              if (key === 13 || (key >= 48 && key <= 57) || (key >= 96 && key <= 105)) {
+                  alert("Enter pressed");
+              }
+            };
 let transferedAutomatTableOptions = {}
 
-transferedAutomatTableOptions['rightClick'] = transferedAutomatTablerightClick;
+transferedAutomatTableOptions["rightClick"] = transferedAutomatTableRightClick;
+transferedAutomatTableOptions['keyFocus'] = transferedAutomatTableKeyFocusFunction;
+transferedAutomatTableOptions['key'] = transferedAutomatTableKeyFunction;
 
 let transferedAutomatTableOperations = {}
 
@@ -220,16 +232,30 @@ keys: true
 createdAutomatTableTableOptions.serverSide = true;
 createdAutomatTableTableOptions.processing = true;
 
-let createdAutomatTablerightClick = [{'name': "Edit", 'click': function(rowData) {
+let createdAutomatTableRightClick = [{'name': "Edit", 'click': function(rowData) {
                   alert(`Edit: ${rowData.manufactId}`);
                 }},{'name': "Delete", 'click': function(rowData) {
                   alert(`Delete: ${rowData.manufactId}`);
                 }},{'name': "Test", 'click': function(rowData) {
                   commonFunctions.openModal(500, 600, rowData.manufactId);
                 }}];
+let createdAutomatTableKeyFocusFunction = function (e, datatable, cell, originalEvent) {
+              console.log('Key focus on: ', cell.index());
+            };
+let createdAutomatTableKeyFunction = function (e, datatable, key, cell, originalEvent) {
+              let columnIndex = cell.index().column;
+              let rowIndex = cell.index().row
+              // let input = $(cell.node()).find(".priceInput");
+              // let text = myInput.siblings(".fontPrice");
+              if (key === 13 || (key >= 48 && key <= 57) || (key >= 96 && key <= 105)) {
+                  alert("Enter pressed");
+              }
+            };
 let createdAutomatTableOptions = {"rowSelect":true,"rightClick":[{"name":"Edit"},{"name":"Delete"},{"name":"Test"}]}
 
-createdAutomatTableOptions['rightClick'] = createdAutomatTablerightClick;
+createdAutomatTableOptions["rightClick"] = createdAutomatTableRightClick;
+createdAutomatTableOptions['keyFocus'] = createdAutomatTableKeyFocusFunction;
+createdAutomatTableOptions['key'] = createdAutomatTableKeyFunction;
 
 let createdAutomatTableOperations = {"add":{"title":"Yeni Otomat Oluştur","url":"http://localhost:44350/production/set-automat","method":"POST","data":[{"name":"plaka","title":"Plate","type":"string","value":"","placeholder":"xxx-xx-xxx","errorChecks":[{"control":"value != null && value != '' && value.length > 4;","errMessage":"Plate must be longer than 4 characters."}],"visible":true},{"name":"model","title":"Model","type":"select","options":[{"value":"","label":"Seçim yapınız"},{"value":"CD636047-CE35-43D4-A82D-AF0943BB63BE","label":"AA-91"},{"value":"CD636047-CE35-43D4-A82D-AF0943BB63BE","label":"AA-92"}],"showAllErrors":false,"errorChecks":[{"control":"value != null && value != ''","errMessage":"Model cannot be null."}],"visible":true},{"name":"serialNumber","title":"Serial number","type":"number","value":"","placeholder":"xxxxxxxxxxx","showAllErrors":true,"errorChecks":[{"control":"value != null && value != '' && value.length > 7","errMessage":"Serial number must be longer than 7 characters."},{"control":"!value.startsWith('000')","errMessage":"Serial number cannot start with 000."}],"visible":true},{"name":"androidImei","title":"Android imei","type":"string","value":"","placeholder":"xx-xx-xx-xx","showAllErrors":false,"errorChecks":[{"control":"value != null && value != '' && value.length > 4;","errMessage":"Android imei must be longer than 4 characters."}],"visible":true},{"name":"androidMac","title":"Android mac","type":"string","value":"","placeholder":"xx-xx-xx-xx","showAllErrors":false,"errorChecks":[{"control":"value != null && value != '' && value.length > 4;","errMessage":"Android mac must be longer than 4 characters."}],"visible":true},{"name":"modemImei","title":"Modem imei","type":"string","value":"","showAllErrors":false,"errorChecks":[{"control":"value != null && value != '' && value.length > 4;","errMessage":"Modem imei must be longer than 4 characters."}],"visible":true},{"name":"modemMac","title":"Modem mac","type":"string","value":"","showAllErrors":false,"errorChecks":[{"control":"value != null && value != '' && value.length > 4;","errMessage":"Modem mac must be longer than 4 characters."}],"visible":true},{"name":"plcImei","title":"Plc imei","type":"string","value":"","showAllErrors":false,"errorChecks":[{"control":"value != null && value != '' && value.length > 4;","errMessage":"Plc imei must be longer than 4 characters."}],"visible":true},{"name":"plcMac","title":"Plc mac","type":"string","value":"","showAllErrors":false,"errorChecks":[{"control":"value != null && value != '' && value.length > 4;","errMessage":"Plc mac must be longer than 4 characters."}],"visible":true},{"name":"defaultData","value":true,"visible":false}]},"edit":{"title":"Otomat Düzenle","url":"http://localhost:44350/production/update-automat","method":"POST","data":[{"name":"manufactId","value":"selectedRow.manufactId","visible":false},{"name":"plaka","value":"selectedRow.plate","visible":false},{"name":"serialNumber","value":"selectedRow.snAndroid","visible":false},{"name":"model","title":"Model","type":"select","value":"selectedRow.modelID","options":[{"value":"","label":"Seçim yapınız"},{"value":"CD636047-CE35-43D4-A82D-AF0943BB63BE","label":"AA-91"},{"value":"CD636047-CE35-43D4-A82D-AF0943BB63BE","label":"AA-92"}],"showAllErrors":false,"errorChecks":[{"control":"value != null && value != ''","errMessage":"Model cannot be null."}],"visible":true},{"name":"androidImei","title":"Android imei","type":"string","value":"selectedRow.imeiAndroid","placeholder":"xx-xx-xx-xx","showAllErrors":false,"errorChecks":[{"control":"value != null && value != '' && value.length > 4;","errMessage":"Android imei must be longer than 4 characters."}],"visible":true},{"name":"androidMac","title":"Android mac","type":"string","value":"selectedRow.macAndroid","placeholder":"xx-xx-xx-xx","showAllErrors":false,"errorChecks":[{"control":"value != null && value != '' && value.length > 4;","errMessage":"Android mac must be longer than 4 characters."}],"visible":true},{"name":"modemImei","title":"Modem imei","type":"string","value":"selectedRow.imeimodem","showAllErrors":false,"errorChecks":[{"control":"value != null && value != '' && value.length > 4;","errMessage":"Modem imei must be longer than 4 characters."}],"visible":true},{"name":"modemMac","title":"Modem mac","type":"string","value":"selectedRow.macmodem","showAllErrors":false,"errorChecks":[{"control":"value != null && value != '' && value.length > 4;","errMessage":"Modem mac must be longer than 4 characters."}],"visible":true},{"name":"plcImei","title":"Plc imei","type":"string","value":"selectedRow.imeiplc","showAllErrors":false,"errorChecks":[{"control":"value != null && value != '' && value.length > 4;","errMessage":"Plc imei must be longer than 4 characters."}],"visible":true},{"name":"plcMac","title":"Plc mac","type":"string","value":"selectedRow.macplc","showAllErrors":false,"errorChecks":[{"control":"value != null && value != '' && value.length > 4;","errMessage":"Plc mac must be longer than 4 characters."}],"visible":true}]},"delete":{"url":"http://localhost:44350/production/delete-automat","method":"POST","data":{"manufactIds":["selectedRow.manufactId"]}}}
 

@@ -107,10 +107,14 @@ fnInitComplete: function () {}
 messagesTableTableOptions.serverSide = false;
 messagesTableTableOptions.processing = false;
 
-let messagesTablerightClick = false
+let messagesTableRightClick = false
+let messagesTableKeyFocusFunction = false
+let messagesTableKeyFunction = false
 let messagesTableOptions = {}
 
-messagesTableOptions['rightClick'] = messagesTablerightClick;
+messagesTableOptions["rightClick"] = messagesTableRightClick;
+messagesTableOptions['keyFocus'] = messagesTableKeyFocusFunction;
+messagesTableOptions['key'] = messagesTableKeyFunction;
 
 let messagesTableOperations = {}
 

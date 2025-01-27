@@ -188,13 +188,21 @@ ${item.id}TableOptions.serverSide = ${item.serverSide};
 ${item.id}TableOptions.processing = ${item.serverSide};
 
 ${item.options && item.options["rightClick"] 
-  ? `let ${item.id}rightClick = [${item.options["rightClick"].map(x => (`{'name': ${JSON.stringify(x.name)}, 'click': ${x.click}}`)).join(',')}];`
-  : `let ${item.id}rightClick = false`}
+  ? `let ${item.id}RightClick = [${item.options["rightClick"].map(x => (`{'name': ${JSON.stringify(x.name)}, 'click': ${x.click}}`)).join(',')}];`
+  : `let ${item.id}RightClick = false`}
+${item.options && item.options["keyFocus"] 
+  ? `let ${item.id}KeyFocusFunction = ${item.options["keyFocus"]};`
+  : `let ${item.id}KeyFocusFunction = false`}
+${item.options && item.options["key"] 
+  ? `let ${item.id}KeyFunction = ${item.options["key"]};`
+  : `let ${item.id}KeyFunction = false`}
 ${(item.options) 
   ? `let ${item.id}Options = ${JSON.stringify(item.options)}`
   : `let ${item.id}Options = {}`}
 
-${item.id}Options['rightClick'] = ${item.id}rightClick;
+${item.id}Options["rightClick"] = ${item.id}RightClick;
+${item.id}Options['keyFocus'] = ${item.id}KeyFocusFunction;
+${item.id}Options['key'] = ${item.id}KeyFunction;
 
 ${(item.operations) 
   ? `let ${item.id}Operations = ${JSON.stringify(item.operations)}`
