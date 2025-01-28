@@ -1,8 +1,11 @@
 <script setup>
 import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import DarkModeToggle from './DarkModeToggle.vue'
 import pagesData from '../../siteData.json';
+import { useHelpStore } from '../store/pageHelper';
+import DarkModeToggle from './DarkModeToggle.vue'
+
+const helpStore = useHelpStore();
 
 const route = useRoute();
 const router = useRouter();
@@ -62,16 +65,9 @@ const darkModeEnabled = (pagesData.theme.darkModeEnabled == true || pagesData.th
       <nav
         class="w-full h-full px-[40px] md:px-[20px] py-[4px] flex items-center justify-between border-[1px] border-second bg-second rounded-md md:rounded-none"
       >
-        <div class="flex items-center">
-          <button
-            @click="showNavbar"
-            class="hidden md:block text-white text-[2rem] px-[4px]"
-          >
-            <i class="fa-solid fa-bars"></i>
-          </button>
-          <!-- <button class="text-white text-[2rem] px-[4px]">
-            <i class="fa-solid fa-question"></i>
-          </button> -->
+        <div class="flex items-center gap-8">
+          <button @click="showNavbar" class="hidden md:block text-white text-4xl px-[4px]"><i class="fa-solid fa-bars"></i></button>
+          <button v-if="helpStore.$state.helpData" @click="helpStore.toggleHelpModal()" class="text-white text-3xl px-[4px]"><i class="fa-solid fa-question"></i></button>
         </div>
         <div class="flex gap-[34px] md:gap-[20px] items-center justify-end">
           <DarkModeToggle v-if="darkModeEnabled" />

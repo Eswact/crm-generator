@@ -155,8 +155,8 @@
       "customScripts": "\n        import { toast } from \"vue3-toastify\";\n        function gettingStarted() {\n          router.push({ path: '/configuration' });\n        }\n      ",
       "customReadyScripts": "\n        toast.success(\"Toast Test!\");\n      ",
       "help": {
-        "page": "Stok Sayfası",
-        "info": "Bu sayfada entegre edilmiş platformlar üzerinden çekilen tüm stoklar listelenir. Bu sayfadan stoklarınızı kontrol edebilirsiniz. Ayrıca stok çekme, stok aktarma ve stok güncelleme işlemleri bu sayfadan yapılır. Filtreleri kullanarak istediğiniz stokları arayabilirsiniz.",
+        "page": "Examples Page",
+        "info": "In this page, you can see a list of examples. Example Dom types are: DataTable and custom. If you want to see this page's json you can click the 'this page' button at the bottom of the page.",
         "shortcuts": [
           {
             "shortcut": [
@@ -167,7 +167,7 @@
                 "key": "/images/letter_k.png"
               }
             ],
-            "shortcutDescription": "Filtreye focus olunur."
+            "shortcutDescription": "Example shortcut description."
           },
           {
             "shortcut": [
@@ -175,7 +175,7 @@
                 "key": "/images/esc_key.png"
               }
             ],
-            "shortcutDescription": "İptal etmek için kullanılır."
+            "shortcutDescription": "For the cancel."
           },
           {
             "shortcut": [
@@ -183,7 +183,7 @@
                 "key": "/images/right-click.png"
               }
             ],
-            "shortcutDescription": "Tabloda satırlara özel işlemler için kullanılır."
+            "shortcutDescription": "Example shortcut description."
           }
         ],
         "link": "https://www.youtube.com/embed/pad_iFvqtYw?si=cWmRAfFFvFuJR8Hj"
