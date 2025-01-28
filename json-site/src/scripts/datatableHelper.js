@@ -49,6 +49,7 @@ const datatableHelper = {
             visible: tablePrefs.find(pref => pref.name == column.name).visible,
             orderable: column.orderable != false,
             render: column.render || ((data, type, row) => data || ''),
+            className: column.className || '',
         }));
 
         const defaultTableOptions = {
@@ -128,6 +129,9 @@ const datatableHelper = {
 
             if (options && options.rowSelect) {
                 $(`#${name}`).DataTable().on('click', 'tbody tr', (e) => {
+                    if (e.target.classList.contains('notSelectRow')) {
+                        return;
+                    }
                     const row = $(`#${name}`).DataTable().row(e.currentTarget).data();
                     const isSelected = e.currentTarget.classList.contains('selected');
 
@@ -152,7 +156,7 @@ const datatableHelper = {
                 
             }
             if (options && options.key) {
-                $(`#${name}`).DataTable().on('key', function (e, datatable, key, cell, originalEvent) {
+                $(`#${name}`).DataTable().on('keydown', function (e, datatable, key, cell, originalEvent) {
                     options.key(e, datatable, key, cell, originalEvent);
                 });
             }

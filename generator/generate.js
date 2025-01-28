@@ -104,7 +104,7 @@ function createViews() {
       let thisPageScript = script.pages.find(x => x.name === page.name);
       return thisPageScript ? `import ${thisPageScript.import} from '../scripts/custom/${script.name}.js';` : '';
     }).join('\n');
-    (!page.doms.every(x => x.type != 'datatable')) ? scriptsImports += '\nimport datatableHelper from "../scripts/datatableHelper";' : '';
+    (!page.doms.every(x => x.type != 'datatable')) ? scriptsImports += '\nimport datatableHelper from "../scripts/datatableHelper";\nimport $ from "jquery";' : '';
 
     //Datatable scripts
     const datatableScripts = page.doms.filter(x => x.type === 'datatable').map(item => generateDatatableScript(item)).join('\n');
@@ -135,7 +135,11 @@ function createViews() {
       });
     
       ${page.customScripts}
-    </script>`;
+    </script>
+    
+    <style scoped>
+      ${page.scopedCss || ''}
+    </style>`;
     
     let filePath = path.join(paths.viewsDir, page.file);
     fs.writeFileSync(filePath, content.trim());
@@ -160,7 +164,8 @@ let ${item.id}Columns = [
     name: "${col.name}",
     checkable: ${col.checkable},
     orderable: ${col.orderable},
-    render: ${col.render ? col.render.toString() : 'null'}
+    render: ${col.render ? col.render.toString() : 'null'},
+    className: "${col.className || ''}"
   }`).join(',')}
 ];
 

@@ -1,5 +1,5 @@
 <template>
-      <div class="w-full flex flex-col gap-8">
+      <div class="w-full flex flex-col justify-center items-center gap-8">
         
 <div class="w-full">
   <table id="transferedAutomatTable" class="display stripe hover" style="width:100%"></table>
@@ -7,6 +7,14 @@
 <div class="w-full">
   <table id="createdAutomatTable" class="display stripe hover" style="width:100%"></table>
 </div>
+            <div id="changesModal" class="fixed bottom-0 flex-col justify-center items-center gap-8 w-[400px] px-8 py-4 max-w-full bg-bg text-darkBg rounded-lg">
+                <h1 class="text-2xl font-bold">Some changes were noticed</h1>
+                <div class="flex gap-8 w-full">
+                    <button @click="saveCellChanges" class="w-1/2 px-4 py-2 bg-green-600 text-white shadow-md text-xl font-bold rounded-lg">Save</button>
+                    <button @click="cancelCellChanges" class="w-1/2 px-4 py-2 bg-red-600 text-white shadow-md text-xl font-bold rounded-lg">Cancel</button>
+                </div>
+            </div>
+          
       </div>
     </template>
   
@@ -18,6 +26,7 @@
       import commonFunctions from '../scripts/common.js'
       
 import datatableHelper from "../scripts/datatableHelper";
+import $ from "jquery";
     
       
 var transferedAutomatTable;
@@ -37,7 +46,8 @@ let transferedAutomatTableColumns = [
                             </div>`;
                 }
                 else { return '<div class="py-2 px-4 flex items-center font-semibold text-second dark:text-fourth">-</div>'; }
-              }
+              },
+    className: ""
   },{
     order: 0,
     title: "Plate",
@@ -52,7 +62,8 @@ let transferedAutomatTableColumns = [
                             </div>`;
                 }
                 else { return '<div class="p-2 flex items-center font-bold text-xl">-</div>'; }
-              }
+              },
+    className: ""
   },{
     order: 2,
     title: "Customer",
@@ -60,7 +71,8 @@ let transferedAutomatTableColumns = [
     name: "customerName",
     checkable: true,
     orderable: false,
-    render: null
+    render: null,
+    className: ""
   },{
     order: 3,
     title: "Location",
@@ -68,7 +80,8 @@ let transferedAutomatTableColumns = [
     name: "location",
     checkable: true,
     orderable: false,
-    render: null
+    render: null,
+    className: ""
   },{
     order: 4,
     title: "Date",
@@ -81,7 +94,8 @@ let transferedAutomatTableColumns = [
                     return dateTrFormat(data);  
                 }
                 else { return ''; }
-              }
+              },
+    className: ""
   }
 ];
 
@@ -142,7 +156,8 @@ let createdAutomatTableColumns = [
                             </div>`;
                 }
                 else { return '<div class="p-2 flex items-center font-bold text-xl">-</div>'; }
-              }
+              },
+    className: ""
   },{
     order: 1,
     title: "Model",
@@ -157,7 +172,8 @@ let createdAutomatTableColumns = [
                             </div>`;
                 }
                 else { return '<div class="py-2 px-4 flex items-center font-semibold text-second dark:text-fourth">-</div>'; }
-              }
+              },
+    className: ""
   },{
     order: 2,
     title: "Android Imei",
@@ -165,7 +181,16 @@ let createdAutomatTableColumns = [
     name: "imeiAndroid",
     checkable: true,
     orderable: false,
-    render: null
+    render: function (data, type, row) {
+                if (data != null) {
+                    return `<div class="notSelectRow py-2 px-4 flex items-center">
+                              <input type="text" class="editableTdInput hidden notSelectRow w-full h-full border-none bg-transparent p-2" value="${data}" data-temp=${data} data-first=${data} data-name="androidImei" />
+                              <span class="editableText notSelectRow p-2" data-name="imeiAndroid">${data}</span>
+                            </div>`;
+                }
+                else { return '-'; }
+              },
+    className: "notSelectRow"
   },{
     order: 3,
     title: "Android Mac",
@@ -173,7 +198,16 @@ let createdAutomatTableColumns = [
     name: "macAndroid",
     checkable: true,
     orderable: false,
-    render: null
+    render: function (data, type, row) {
+                if (data != null) {
+                    return `<div class="notSelectRow py-2 px-4 flex items-center">
+                              <input type="text" class="editableTdInput hidden notSelectRow w-full h-full border-none bg-transparent p-2" value="${data}" data-first=${data} data-temp=${data} data-name="androidMac" />
+                              <span class="editableText  notSelectRow p-2" data-name="macAndroid">${data}</span>
+                            </div>`;
+                }
+                else { return '-'; }
+              },
+    className: "notSelectRow"
   },{
     order: 4,
     title: "Modem Imei",
@@ -181,7 +215,8 @@ let createdAutomatTableColumns = [
     name: "imeimodem",
     checkable: true,
     orderable: false,
-    render: null
+    render: null,
+    className: ""
   },{
     order: 5,
     title: "Modem Mac",
@@ -189,7 +224,8 @@ let createdAutomatTableColumns = [
     name: "macmodem",
     checkable: true,
     orderable: false,
-    render: null
+    render: null,
+    className: ""
   },{
     order: 6,
     title: "PLC Imei",
@@ -197,7 +233,8 @@ let createdAutomatTableColumns = [
     name: "imeiplc",
     checkable: true,
     orderable: false,
-    render: null
+    render: null,
+    className: ""
   },{
     order: 7,
     title: "PLC Mac",
@@ -205,7 +242,8 @@ let createdAutomatTableColumns = [
     name: "macplc",
     checkable: true,
     orderable: false,
-    render: null
+    render: null,
+    className: ""
   }
 ];
 
@@ -222,7 +260,23 @@ let createdAutomatTableAjax = {
 
 let createdAutomatTableTableOptions = {
   drawCallback: function (settings, data) {
-              console.log('test');
+              if (createdAutomatTableCellUpdates != '') {
+                createdAutomatTable.rows((idx, data, row) => {
+                  $(createdAutomatTableCellUpdates).each(function () {
+                      if (data.manufactId == this.id) {
+                          let rowElement = $(row).get(0);
+                          //input
+                          let cellInput = $(rowElement).find(`.editableTdInput[data-name="${this.name}"]`);
+                          cellInput.val(this.value);
+                          cellInput.data("temp", this.value);
+                          // text
+                          $(rowElement).find(`.editableText[data-name="${this.name}"]`).text(this.value);
+                          // cell
+                          cellInput.closest('td').addClass('border-2 border-green-500 bg-green-500 bg-opacity-10');
+                      }
+                  });
+                });
+              }
             },
 fnRowCallBack: function (nRow, data, iDisplayIndex, iDisplayIndexFull) {},
 fnInitComplete: function () {},
@@ -240,15 +294,72 @@ let createdAutomatTableRightClick = [{'name': "Edit", 'click': function(rowData)
                   commonFunctions.openModal(500, 600, rowData.manufactId);
                 }}];
 let createdAutomatTableKeyFocusFunction = function (e, datatable, cell, originalEvent) {
-              console.log('Key focus on: ', cell.index());
+              $(".editableTdInput").blur();
+
+              let input = (cell.node != undefined) ? $(cell.node()).find(".editableTdInput") : '';
+              if (input.length) {
+                input.removeClass("hidden");
+                input.siblings(".editableText").addClass("hidden");
+                input.focus().select();
+
+                let firstVal = input.data("first");
+                let tempVal = input.data("temp");
+                let updateName = input.data("name");
+                let rowData = datatable.row(cell.index().row).data();
+
+                input.off("keydown").on("keydown", function (e) {
+                  if (e.keyCode === 13 || e.keyCode === 9) {
+                    e.preventDefault();
+                    input.blur();
+                  } else if (e.keyCode === 27) {
+                    e.preventDefault();
+                    input.val(tempVal);
+                    input.blur();
+                  } else if (
+                    (e.keyCode >= 48 && e.keyCode <= 57) || // Numbers
+                    (e.keyCode >= 96 && e.keyCode <= 105) || // Numpad
+                    e.keyCode === 8 || // Backspace
+                    e.keyCode === 46 || // Delete
+                    e.keyCode === 37 || // Left Arrow
+                    e.keyCode === 38 || // Up Arrow
+                    e.keyCode === 39 || // Right Arrow
+                    e.keyCode === 40 // Down Arrow
+                  ) {
+                    return true;
+                  } else {
+                    e.preventDefault();
+                    return false;
+                  }
+                });
+
+                input.off("blur").on("blur", function () {
+                  input.addClass("hidden");
+                  input.siblings(".editableText").removeClass("hidden");
+                  let inputVal = input.val();
+                  console.log(String(firstVal), String(inputVal), String(inputVal) != String(firstVal));
+                  if (inputVal === null || inputVal === "") {
+                    input.val(firstVal);
+                  }
+                  if (String(inputVal) != String(firstVal)) {
+                    add2UpdatedCells(updateName, rowData.manufactId, inputVal, rowData);
+                    input.data("temp", inputVal);
+                    input.siblings(".editableText").text(inputVal);
+                    $(cell.node()).addClass("border-2 border-green-500 bg-green-500 bg-opacity-10");
+                  } else {
+                    remove2UpdatedCells(updateName, rowData.manufactId);
+                    $(cell.node()).removeClass("border-2 border-green-500 bg-green-500 bg-opacity-10");
+                  }
+                });
+              }
             };
 let createdAutomatTableKeyFunction = function (e, datatable, key, cell, originalEvent) {
-              let columnIndex = cell.index().column;
-              let rowIndex = cell.index().row
-              // let input = $(cell.node()).find(".priceInput");
-              // let text = myInput.siblings(".fontPrice");
-              if (key === 13 || (key >= 48 && key <= 57) || (key >= 96 && key <= 105)) {
-                  alert("Enter pressed");
+              let input = (cell != undefined) ? $(cell.node()).find(".editableTdInput") : '';
+              if (input.length) {
+                if (key === 13) {
+                  if (!input.is(":focus")) {
+                    input.focus().select();
+                  }
+                }
               }
             };
 let createdAutomatTableOptions = {"rowSelect":true,"rightClick":[{"name":"Edit"},{"name":"Delete"},{"name":"Test"}]}
@@ -267,9 +378,77 @@ createdAutomatTable = datatableHelper.initializeDataTable('createdAutomatTable',
         
       });
     
+       import { toast } from "vue3-toastify";
+      var createdAutomatTableCellUpdates = [];
+      function add2UpdatedCells(name, id, value, rowData) { 
+          document.getElementById('changesModal').classList.add('show');
+          let index = createdAutomatTableCellUpdates.findIndex(x => x.name == name && x.id == id);
+          if (index == -1) {
+              createdAutomatTableCellUpdates.push({ name: name, id: id, value: value, rowData: rowData });
+          }
+          else {
+              createdAutomatTableCellUpdates[index].value = value;
+          }
+      }
+      function remove2UpdatedCells(name, id) { 
+          let index = createdAutomatTableCellUpdates.findIndex(x => x.name == name && x.id == id);
+          if (index != -1) {
+              createdAutomatTableCellUpdates.splice(index, 1);
+          }
+
+          if (createdAutomatTableCellUpdates.length == 0) {
+              document.getElementById('changesModal').classList.remove('show');
+          }
+      }
+      function saveCellChanges() { 
+        console.log(createdAutomatTableCellUpdates[0].rowData);
+        let data = {
+          manufactId: createdAutomatTableCellUpdates[0].id,
+          plaka: createdAutomatTableCellUpdates[0].rowData.plate,
+          model: createdAutomatTableCellUpdates[0].rowData.model,
+          androidMac: createdAutomatTableCellUpdates[0].rowData.macAndroid,
+          androidImei: createdAutomatTableCellUpdates[0].rowData.imeiAndroid,
+          modemImei: createdAutomatTableCellUpdates[0].rowData.imeimodem,
+          modemMac: createdAutomatTableCellUpdates[0].rowData.macmodem,
+          plcImei: createdAutomatTableCellUpdates[0].rowData.imeiplc,
+          plcMac: createdAutomatTableCellUpdates[0].rowData.macplc,
+          serialNumber: createdAutomatTableCellUpdates[0].rowData.snAndroid
+        };
+        data[createdAutomatTableCellUpdates[0].name] = createdAutomatTableCellUpdates[0].value;
+        $.ajax({
+          url: "http://localhost:44350/production/update-automat",
+          method: "POST",
+          data: data,
+          success: function (response) {
+            toast.success(response.description || "İşlem başarılı");
+            createdAutomatTableCellUpdates = [];
+            createdAutomatTable.ajax.reload(null, false);
+            document.getElementById('changesModal').classList.remove('show');
+          },
+          error: function (xhr, status, error) {
+            console.log(error);
+          }
+        });
+      }
+      function cancelCellChanges() {
+        createdAutomatTableCellUpdates = [];
+        document.getElementById('changesModal').classList.remove('show');
+        createdAutomatTable.ajax.reload(null, false);
+      }
       function dateTrFormat(data) {
           let options = { timeZone: 'Europe/Istanbul', year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: false };
           let formattedDate = new Date(data).toLocaleString('tr-TR', options);
           return formattedDate;
       }
     </script>
+    
+    <style scoped>
+      
+        #changesModal { 
+          display:none;     
+        }
+        #changesModal.show { 
+          display:flex;     
+        }
+      
+    </style>

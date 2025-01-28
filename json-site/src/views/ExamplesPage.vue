@@ -20,6 +20,7 @@
       import commonFunctions from '../scripts/common.js'
       import { sharedFunctions } from '../scripts/custom/shared.js';
 import datatableHelper from "../scripts/datatableHelper";
+import $ from "jquery";
     
       
 var messagesTable;
@@ -39,7 +40,8 @@ let messagesTableColumns = [
                             </div>`;
                 }
                 else { return ''; }
-              }
+              },
+    className: ""
   },{
     order: 1,
     title: "Name",
@@ -54,7 +56,8 @@ let messagesTableColumns = [
                             </div>`;
                 }
                 else { return ''; }
-              }
+              },
+    className: ""
   },{
     order: 2,
     title: "Mail",
@@ -69,7 +72,8 @@ let messagesTableColumns = [
                             </div>`;
                 }
                 else { return ''; }
-              }
+              },
+    className: ""
   },{
     order: 3,
     title: "Message",
@@ -84,7 +88,8 @@ let messagesTableColumns = [
                             </div>`;
                 }
                 else { return ''; }
-              }
+              },
+    className: ""
   }
 ];
 
@@ -134,3 +139,7 @@ let messagesTableOperations = {}
         }
       
     </script>
+    
+    <style scoped>
+      
+    </style>

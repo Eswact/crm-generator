@@ -69,4 +69,12 @@ div.dt-container .dt-paging .dt-paging-button.current, div.dt-container .dt-pagi
 div.dt-container .dt-paging .dt-paging-button:hover {
   @apply bg-[#191919] text-white cursor-default;
 }
+table.dataTable tbody th.focus,table.dataTable tbody td.focus {
+  @apply outline-third outline-offset-[-2px] !important;
+  outline: 2px solid;
+}
+div.dtk-focus-alt table.dataTable tbody th.focus,div.dtk-focus-alt table.dataTable tbody td.focus {
+  @apply outline-main outline-offset-[-2px] !important;
+  outline: 2px solid;
+}
 /* datatable end */
