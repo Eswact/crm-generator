@@ -336,7 +336,6 @@ let createdAutomatTableKeyFocusFunction = function (e, datatable, cell, original
                   input.addClass("hidden");
                   input.siblings(".editableText").removeClass("hidden");
                   let inputVal = input.val();
-                  console.log(String(firstVal), String(inputVal), String(inputVal) != String(firstVal));
                   if (inputVal === null || inputVal === "") {
                     input.val(firstVal);
                   }

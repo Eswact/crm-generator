@@ -1,27 +1,6 @@
 <template>
       <div class="w-full flex flex-col gap-1">
-        <div class="w-full py-0  md:px-0 mt-2 flex justify-center items-center">
-<div class="p-6 w-full max-w-[1000px]">
-    <h1 class="text-3xl font-bold text-center mb-6">Getting Started</h1>
-    <ol class="list-decimal list-inside space-y-4">
-        <li>
-            <strong>Install Dependencies</strong>
-            <p>Open your terminal and run the following command in both the <code>generator</code> and <code>json-site</code> folders:</p>
-            <pre class="bg-darkBg text-bg dark:bg-black p-4 mt-2 rounded-md overflow-hidden"><code>npm install</code></pre>
-        </li>
-        <li>
-            <strong>Edit <code>data.js</code> in the <code>generator</code> Folder</strong>
-            <p>Navigate to the <code>generator</code> folder, open <code>data.js</code>, and make the necessary adjustments to the data.</p>
-        </li>
-        <li>
-            <strong>Generate JSON Files</strong>
-            <p>Run the following command in the <code>json-site</code> folder:</p>
-            <pre class="bg-darkBg text-bg dark:bg-black p-4 mt-2 rounded-md overflow-hidden"><code>npm run generate</code></pre>
-        </li>
-    </ol>
-</div>
-</div>
-<div class="w-full py-0  md:px-0 mt-2 flex justify-center items-center">
+        <div class="w-full py-0  md:px-0 mt-2 flex justify-center items-center"><div class="p-6 w-full max-w-[1000px]"><h1 class="text-3xl font-bold text-center mb-6">Getting Started</h1><ol class="list-decimal list-inside space-y-4"><li><strong>Install Dependencies</strong><p>Open your terminal and run the following command in both the <code>generator</code> and <code>json-site</code> folders:</p><pre class="bg-darkBg text-bg dark:bg-black p-4 mt-2 rounded-md overflow-hidden"><code>npm install</code></pre></li><li><strong>Edit <code>data.js</code> in the <code>generator</code> Folder</strong><p>Navigate to the <code>generator</code> folder, open <code>data.js</code>, and make the necessary adjustments to the data.</p></li><li><strong>Generate JSON Files</strong><p>Run the following command in the <code>json-site</code> folder:</p><pre class="bg-darkBg text-bg dark:bg-black p-4 mt-2 rounded-md overflow-hidden"><code>npm run generate</code></pre></li></ol></div></div><div class="w-full py-0  md:px-0 mt-2 flex justify-center items-center">
 <div class="p-6 w-full max-w-[1000px]">
     <h1 class="text-3xl font-bold text-center mb-6">Configuration</h1>
     <ol class="list-decimal list-inside space-y-4">

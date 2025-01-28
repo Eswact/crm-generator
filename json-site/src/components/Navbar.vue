@@ -69,6 +69,9 @@ const darkModeEnabled = (pagesData.theme.darkModeEnabled == true || pagesData.th
           >
             <i class="fa-solid fa-bars"></i>
           </button>
+          <!-- <button class="text-white text-[2rem] px-[4px]">
+            <i class="fa-solid fa-question"></i>
+          </button> -->
         </div>
         <div class="flex gap-[34px] md:gap-[20px] items-center justify-end">
           <DarkModeToggle v-if="darkModeEnabled" />

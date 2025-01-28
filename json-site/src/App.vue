@@ -1,15 +1,20 @@
 <script setup>
-  import { computed, onMounted, onUnmounted } from 'vue';
+  import { computed, onMounted, onUnmounted, watch } from 'vue';
   import { useRoute } from 'vue-router';
+  import siteData from '../siteData.json'
+  import commonFunctions from './scripts/common';
+  import { useHelpStore } from './store/pageHelper';
+
   import Navbar from './components/Navbar.vue';
   import SplashScreen from './components/SplashScreen.vue';
-  import commonFunctions from './scripts/common';
-  import siteData from '../siteData.json'
+  import HelpModal from './components/HelpModal.vue';
 
   const route = useRoute();
   const showNavbar = computed(() => {
     return route.name !== 'notFound';
   });
+
+  const helpStore = useHelpStore();
 
   function setWebsiteIcon() {
     const link = document.querySelector("link[rel~='icon']") || document.createElement('link');
@@ -22,16 +27,42 @@
     if (event.key === 'Escape') {
       commonFunctions.closeModal();
       commonFunctions.closeFilter();
+      helpStore.$state.isHelpVisible = false;
+    }
+  }
+
+  function handleF1Key(evt) {
+    if (evt.keyCode == 112) {
+      evt.preventDefault();
+      helpStore.toggleHelpModal();
+    }
+  }
+
+  function setHelperModal() {
+    const helpData = siteData.pages.find(page => page.path === route.path)?.help || null;
+    console.log(helpData);
+    if (helpData) {
+      helpStore.$state.helpData = helpData;
+      window.addEventListener('keydown', handleF1Key);
+    } else {
+      helpStore.$state.helpData = null;
+      helpStore.$state.isHelpVisible = false;
+      window.removeEventListener('keydown', handleF1Key);
     }
   }
 
   onMounted(() => {
     setWebsiteIcon();
+    setHelperModal();
     window.addEventListener('keydown', handleEscKey);
   });
 
   onUnmounted(() => {
     window.removeEventListener('keydown', handleEscKey);
+  });
+
+  watch(() => route.path, () => {
+    setHelperModal();
   });
 </script>
 
@@ -68,6 +99,8 @@
         </div>
       </div>
     </div>
+
+    <HelpModal v-if="helpStore.$state.isHelpVisible" :helpData="helpStore.$state.helpData" />
   </div>
 </template>
 
