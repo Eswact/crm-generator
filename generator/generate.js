@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const siteData = require('./src/data.js');
 
-// paths
+// Paths
 const paths = {
   jsonFilePath: path.join(__dirname, '../json-site/siteData.json'),
   viewsDir: path.join(__dirname, '../json-site/src/views'),

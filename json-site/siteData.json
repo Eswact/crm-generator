@@ -195,8 +195,8 @@
       "path": "/datatables",
       "icon": "fa-solid fa-table",
       "seo": {
-        "title": "Datatable - My CRM",
-        "description": "Datatable",
+        "title": "Datatables - My CRM",
+        "description": "In this page you can see datatable examples.",
         "keywords": [
           "datatable",
           "example",

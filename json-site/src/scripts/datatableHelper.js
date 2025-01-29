@@ -91,14 +91,14 @@ const datatableHelper = {
         tableOptions.fnInitComplete = function () {
             $(`.${name}Toolbar`).html(`<div class="flex items-center gap-2">
                 <button id="open${name}CT" class="p-2 px-4 flex items-center gap-2 bg-main hover:bg-opacity-80 duration-200 dark:bg-opacity-70 dark:hover:bg-opacity-100 text-white shadow-md text-xl rounded-lg">
-                    <i class="fa-solid fa-eye"></i>
+                    <i class="fa-solid fa-eye text-xl"></i>
                     <span class="font-semibold md:hidden">Visibility</span>
                 </button>
                 ${tableFilters
                     ? `<button id="open${name}Filters" class="p-2 px-4 flex items-center gap-2 bg-main hover:bg-opacity-80 duration-200 dark:bg-opacity-70 dark:hover:bg-opacity-100 text-white shadow-md text-xl rounded-lg">
-                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <i class="fa-solid fa-magnifying-glass text-xl"></i>
                             <span class="font-semibold md:hidden">Filters</span>
-                            <span class="filterCounter font-semibold"></span>
+                            <span class="filterCounter font-semibold hidden"></span>
                         </button>`
                     :''
                 }
@@ -319,7 +319,13 @@ const datatableHelper = {
         }).join(';');
 
         let filterCounter = filters.filter(filter => filter.visible && filter.value != '' && filter.value != null).reduce((i, e) => (e.value != e.default) ? i + 1 : 0, 0);
-        $(`#open${name}Filters .filterCounter`).html((filterCounter > 0) ? `(${filterCounter})` : '');
+        if (filterCounter > 0) {
+            $(`#open${name}Filters .filterCounter`).html(`(${filterCounter})`);
+            $(`#open${name}Filters .filterCounter`).removeClass('hidden');
+        } else {
+            $(`#open${name}Filters .filterCounter`).html(``);
+            $(`#open${name}Filters .filterCounter`).addClass('hidden');
+        }
     },
     fillFiltersModal: function(table, tableFilters) {
         let filterHtml = '';

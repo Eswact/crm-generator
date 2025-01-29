@@ -362,8 +362,8 @@ module.exports = {
       "path": "/datatables",
       "icon": 'fa-solid fa-table',
       "seo": {
-        "title": "Datatable - My CRM",
-        "description": "Datatable",
+        "title": "Datatables - My CRM",
+        "description": "In this page you can see datatable examples.",
         "keywords": ["datatable", "example", "table"]
       },
       "pageCss": "w-full flex flex-col justify-center items-center gap-8",
@@ -1218,7 +1218,7 @@ module.exports = {
         ],
         "link": null
       }
-    }
+    },
   ],
   "scripts": [
     {

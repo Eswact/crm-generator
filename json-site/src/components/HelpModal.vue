@@ -10,7 +10,7 @@
 <template>
     <div @click.self="closeHelp" class="z-40 fixed top-0 left-0 w-full h-full bg-black bg-opacity-60 flex flex-col justify-end items-center">
         <div class="relative w-full h-[300px] md:h-full md:rounded-t-none md:overflow-y-auto md:items-start md:justify-start px-[5%] 2xl:px-4 py-6 md:py-4 flex justify-center items-center bg-bg dark:bg-darkBg text-darkBg dark:text-bg rounded-t-xl shadow-md border border-second">
-            <div @click="closeHelp" class="absolute right-4 top-4 px-3 text-xl aspect-square flex justify-center items-center bg-cancel text-white rounded-full"><i class="fa-solid fa-x"></i></div>
+            <button @click="closeHelp" class="absolute right-4 top-4 px-3 text-xl aspect-square flex justify-center items-center bg-cancel text-white rounded-full"><i class="fa-solid fa-x"></i></button>
             <div class="w-full h-full flex md:flex-col justify-center items-center md:justify-start md:items-start">
                 <div class="helpSection w-full h-full flex flex-col gap-2 items-center border-r-2 md:border-r-0 md:border-b-2 border-main/50 dark:border-third/50 md:pt-4">
                     <div class="text-main dark:text-third w-full relative flex justify-center gap-4 items-center text-2xl font-semibold">
