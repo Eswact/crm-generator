@@ -153,7 +153,7 @@
         }
       ],
       "customScripts": "\n        import { toast } from \"vue3-toastify\";\n        function gettingStarted() {\n          router.push({ path: '/configuration' });\n        }\n      ",
-      "customReadyScripts": "\n        toast.success(\"Toast Test!\");\n      ",
+      "customReadyScripts": "\n        toast.success(\"Toast Test!\");\n        commonFunctions.useSplashScreen({\"title\": \"Example Splash\", \"description\": \"This is an example splash screen. This splash close automatically in 3 seconds.\", \"buttons\": [{\"text\": \"Close Now\", \"action\": commonFunctions.hideSplashScreen}], \"timeout\": 3000});\n      ",
       "help": {
         "page": "Examples Page",
         "info": "In this page, you can see a list of examples. Example Dom types are: DataTable and custom. If you want to see this page's json you can click the 'this page' button at the bottom of the page.",

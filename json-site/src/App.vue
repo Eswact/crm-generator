@@ -40,7 +40,6 @@
 
   function setHelperModal() {
     const helpData = siteData.pages.find(page => page.path === route.path)?.help || null;
-    console.log(helpData);
     if (helpData) {
       helpStore.$state.helpData = helpData;
       window.addEventListener('keydown', handleF1Key);

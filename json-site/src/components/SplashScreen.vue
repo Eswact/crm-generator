@@ -4,10 +4,10 @@
 </script>
 
 <template>
-  <div v-if="splash.visible" id="splashScreen" class="z-50 fixed top-0 left-0 w-full h-full bg-black bg-opacity-65 flex flex-col gap-4 justify-center items-center text-center">
+  <div v-if="splash.visible" id="splashScreen" class="z-50 fixed top-0 left-0 w-full h-full bg-black bg-opacity-75 flex flex-col gap-4 justify-center items-center text-center">
     <div v-html="splash.defaultHtml"></div>
     <h1 v-if="splash.title" class="font-bold text-3xl text-white">{{ splash.title }}</h1>
-    <p v-if="splash.description" class="font-semibold text-lg text-main">{{ splash.description }}</p>
+    <p v-if="splash.description" class="font-semibold text-lg text-white dark:text-main">{{ splash.description }}</p>
     <div v-if="splash.buttons.length" class="flex items-center justify-center gap-2 mt-6">
       <button
         v-for="(button, index) in splash.buttons"

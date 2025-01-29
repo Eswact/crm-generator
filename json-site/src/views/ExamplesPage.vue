@@ -129,6 +129,7 @@ let messagesTableOperations = {}
     
         
         toast.success("Toast Test!");
+        commonFunctions.useSplashScreen({"title": "Example Splash", "description": "This is an example splash screen. This splash close automatically in 3 seconds.", "buttons": [{"text": "Close Now", "action": commonFunctions.hideSplashScreen}], "timeout": 3000});
       
       });
     

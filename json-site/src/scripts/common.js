@@ -7,8 +7,10 @@ const defaultSplash = {
   title: null,
   description: null,
   buttons: [],
+  timeout: null,
 };
 const splash = ref({ ...defaultSplash });
+let splashTimeout = null;
 
 const commonFunctions = {
   openModal: function(width, height, html) {
@@ -63,9 +65,24 @@ const commonFunctions = {
     document.getElementById('tableFilterModal').classList.remove('show');
   },
   useSplashScreen: function (options) {
+    if (splashTimeout) {
+      clearTimeout(splashTimeout);
+      splashTimeout = null;
+    }
+
     Object.assign(splash.value, { ...defaultSplash, ...options, visible: true });
+
+    if (options.timeout) {
+      splashTimeout = setTimeout(() => {
+        splash.value.visible = false;
+      }, options.timeout);
+    }
   },
   hideSplashScreen: function() {
+    if (splashTimeout) {
+      clearTimeout(splashTimeout);
+      splashTimeout = null;
+    }
     splash.value.visible = false;
   },
   getSplashScreen: function() {
