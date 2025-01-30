@@ -430,6 +430,39 @@ const datatableHelper = {
                             <button type="button" id="addRowButton" class="w-full text-xl font-bold py-2 rounded-md bg-main text-white tracking-widest">Ekle</button>
                         </form>`;
         commonFunctions.openModal(500, 640, modalHtml);
+
+        // input keydowns
+        addOperation.data.forEach(item => {
+            if (item.visible) {
+                const input = document.getElementById(item.name);
+                if (item.keydown) {
+                    if (item.keydown.maxLength) {
+                        let maxLength = item.keydown.maxLength;
+                        $(input).on("keydown.maxLenght", function (e) {
+                            let currentLength = e.target.value.length;
+                            let allowedKeys = ["Backspace", "Delete", "ArrowLeft", "ArrowRight"];
+                            if (currentLength >= maxLength && !allowedKeys.includes(e.key)) {
+                                e.preventDefault();
+                            }
+                        });
+                        $(input).on("paste.maxLenght", function (e) {
+                            let pastedText = e.originalEvent.clipboardData.getData("text");
+                            if (e.target.value.length + pastedText.length > maxLength) {
+                                e.preventDefault();
+                            }
+                        });
+                    }
+                    if (item.keydown.bannedKeys) {
+                        let parsedBannedKeys = commonFunctions.parseBannedKeys(item.keydown.bannedKeys);
+                        $(input).on("keydown.bannedKeys", function (e) {
+                            if (parsedBannedKeys.includes(e.keyCode)) {
+                                e.preventDefault();
+                            }
+                        });
+                    }
+                }
+            }
+        });
     
         // addRowButtonClick
         document.getElementById("addRowButton").addEventListener("click", function () {
@@ -440,6 +473,7 @@ const datatableHelper = {
                 if (incorrectEntries.length > 0) { return; }
 
                 if (item.visible) {
+                    console.log(item);
                     const input = document.getElementById(item.name);
                     input.classList.remove("border-red-500");
                     $(input).siblings(".itemError").addClass('hidden').text('');
@@ -510,7 +544,6 @@ const datatableHelper = {
 
         let editOpData = JSON.parse(JSON.stringify(editOperation.data));
         editOpData =  thisHelper.resolveDeep(editOpData, table, `selectedRow`);
-        console.log(editOpData);
 
         let modalHtml = ``;
         let formHtml = '';
@@ -549,6 +582,40 @@ const datatableHelper = {
                             <button type="button" id="addRowButton" class="w-full text-xl font-bold py-2 rounded-md bg-main text-white tracking-widest">Kaydet</button>
                         </form>`;
         commonFunctions.openModal(500, 640, modalHtml);
+
+         // input keydowns
+         editOpData.forEach(item => {
+            if (item.visible) {
+                const input = document.getElementById(item.name);
+                if (item.keydown) {
+                    if (item.keydown.maxLength) {
+                        let maxLength = item.keydown.maxLength;
+                        $(input).on("keydown.maxLenght", function (e) {
+                            let currentLength = e.target.value.length;
+                            let allowedKeys = ["Backspace", "Delete", "ArrowLeft", "ArrowRight"];
+                            if (currentLength >= maxLength && !allowedKeys.includes(e.key)) {
+                                e.preventDefault();
+                            }
+                        });
+
+                        $(input).on("paste.maxLenght", function (e) {
+                            let pastedText = e.originalEvent.clipboardData.getData("text");
+                            if (e.target.value.length + pastedText.length > maxLength) {
+                                e.preventDefault();
+                            }
+                        });
+                    }
+                    if (item.keydown.bannedKeys) {
+                        let parsedBannedKeys = commonFunctions.parseBannedKeys(item.keydown.bannedKeys);
+                        $(input).on("keydown.bannedKeys", function (e) {
+                            if (parsedBannedKeys.includes(e.keyCode)) {
+                                e.preventDefault();
+                            }
+                        });
+                    }
+                }
+            }
+        });
     
         // editRowButtonClick
         document.getElementById("addRowButton").addEventListener("click", function () {

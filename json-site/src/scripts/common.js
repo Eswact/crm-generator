@@ -120,6 +120,22 @@ const commonFunctions = {
     });
 
   },
+  parseBannedKeys: function (bannedKeys) {
+    let parsedKeys = [];
+    
+    bannedKeys.forEach(key => {
+      if (typeof key === "string" && key.includes("-")) {
+        let [start, end] = key.split("-").map(Number);
+        for (let i = start; i <= end; i++) {
+          parsedKeys.push(i);
+        }
+      } else {
+        parsedKeys.push(Number(key));
+      }
+    });
+  
+    return parsedKeys;
+  },
 }
 
 export default commonFunctions;

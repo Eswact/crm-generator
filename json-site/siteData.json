@@ -495,6 +495,9 @@
                       "errMessage": "Plate must be longer than 4 characters."
                     }
                   ],
+                  "keydown": {
+                    "maxLength": 14
+                  },
                   "visible": true
                 },
                 {
@@ -543,6 +546,13 @@
                       "errMessage": "Serial number cannot start with 000."
                     }
                   ],
+                  "keydown": {
+                    "maxLength": 14,
+                    "bannedKeys": [
+                      "68-90",
+                      32
+                    ]
+                  },
                   "visible": true
                 },
                 {
@@ -559,6 +569,9 @@
                       "errMessage": "Android imei must be longer than 4 characters."
                     }
                   ],
+                  "keydown": {
+                    "maxLength": 10
+                  },
                   "visible": true
                 },
                 {
@@ -575,6 +588,9 @@
                       "errMessage": "Android mac must be longer than 4 characters."
                     }
                   ],
+                  "keydown": {
+                    "maxLength": 10
+                  },
                   "visible": true
                 },
                 {
@@ -590,6 +606,9 @@
                       "errMessage": "Modem imei must be longer than 4 characters."
                     }
                   ],
+                  "keydown": {
+                    "maxLength": 10
+                  },
                   "visible": true
                 },
                 {
@@ -605,6 +624,9 @@
                       "errMessage": "Modem mac must be longer than 4 characters."
                     }
                   ],
+                  "keydown": {
+                    "maxLength": 10
+                  },
                   "visible": true
                 },
                 {
@@ -620,6 +642,9 @@
                       "errMessage": "Plc imei must be longer than 4 characters."
                     }
                   ],
+                  "keydown": {
+                    "maxLength": 10
+                  },
                   "visible": true
                 },
                 {
@@ -635,11 +660,17 @@
                       "errMessage": "Serial number cannot start with 000."
                     }
                   ],
+                  "keydown": {
+                    "maxLength": 10
+                  },
                   "visible": true
                 },
                 {
                   "name": "defaultData",
                   "value": true,
+                  "keydown": {
+                    "maxLength": 10
+                  },
                   "visible": false
                 }
               ]
@@ -707,6 +738,9 @@
                       "errMessage": "Android imei must be longer than 4 characters."
                     }
                   ],
+                  "keydown": {
+                    "maxLength": 10
+                  },
                   "visible": true
                 },
                 {
@@ -723,6 +757,9 @@
                       "errMessage": "Android mac must be longer than 4 characters."
                     }
                   ],
+                  "keydown": {
+                    "maxLength": 10
+                  },
                   "visible": true
                 },
                 {
@@ -738,6 +775,9 @@
                       "errMessage": "Modem imei must be longer than 4 characters."
                     }
                   ],
+                  "keydown": {
+                    "maxLength": 10
+                  },
                   "visible": true
                 },
                 {
@@ -753,6 +793,9 @@
                       "errMessage": "Modem mac must be longer than 4 characters."
                     }
                   ],
+                  "keydown": {
+                    "maxLength": 10
+                  },
                   "visible": true
                 },
                 {
@@ -768,6 +811,9 @@
                       "errMessage": "Plc imei must be longer than 4 characters."
                     }
                   ],
+                  "keydown": {
+                    "maxLength": 10
+                  },
                   "visible": true
                 },
                 {
@@ -783,6 +829,9 @@
                       "errMessage": "Plc mac must be longer than 4 characters."
                     }
                   ],
+                  "keydown": {
+                    "maxLength": 10
+                  },
                   "visible": true
                 }
               ]

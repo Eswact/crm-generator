@@ -829,6 +829,9 @@ module.exports = {
                       errMessage: "Plate must be longer than 4 characters."
                     },
                   ],
+                  "keydown": {
+                    "maxLength": 14,
+                  },
                   "visible": true
                 },
                 {
@@ -877,6 +880,10 @@ module.exports = {
                       errMessage: "Serial number cannot start with 000."
                     },
                   ],
+                  "keydown": {
+                    "maxLength": 14,
+                    "bannedKeys": ["68-90", 32]
+                  },
                   "visible": true
                 },
                 {
@@ -893,6 +900,9 @@ module.exports = {
                       errMessage: "Android imei must be longer than 4 characters."
                     },
                   ],
+                  "keydown": {
+                    "maxLength": 10,
+                  },
                   "visible": true
                 },
                 {
@@ -909,6 +919,9 @@ module.exports = {
                       errMessage: "Android mac must be longer than 4 characters."
                     },
                   ],
+                  "keydown": {
+                    "maxLength": 10,
+                  },
                   "visible": true
                 },
                 {
@@ -924,6 +937,9 @@ module.exports = {
                       errMessage: "Modem imei must be longer than 4 characters."
                     },
                   ],
+                  "keydown": {
+                    "maxLength": 10,
+                  },
                   "visible": true
                 },
                 {
@@ -939,6 +955,9 @@ module.exports = {
                       errMessage: "Modem mac must be longer than 4 characters."
                     },
                   ],
+                  "keydown": {
+                    "maxLength": 10,
+                  },
                   "visible": true
                 },
                 {
@@ -954,6 +973,9 @@ module.exports = {
                       errMessage: "Plc imei must be longer than 4 characters."
                     },
                   ],
+                  "keydown": {
+                    "maxLength": 10,
+                  },
                   "visible": true
                 },
                 {
@@ -969,11 +991,17 @@ module.exports = {
                       errMessage: "Serial number cannot start with 000."
                     },
                   ],
+                  "keydown": {
+                    "maxLength": 10,
+                  },
                   "visible": true
                 },
                 {
                   "name": "defaultData",
                   "value": true,
+                  "keydown": {
+                    "maxLength": 10,
+                  },
                   "visible": false
                 },
               ]
@@ -1041,6 +1069,9 @@ module.exports = {
                       errMessage: "Android imei must be longer than 4 characters."
                     },
                   ],
+                  "keydown": {
+                    "maxLength": 10,
+                  },
                   "visible": true
                 },
                 {
@@ -1057,6 +1088,9 @@ module.exports = {
                       errMessage: "Android mac must be longer than 4 characters."
                     },
                   ],
+                  "keydown": {
+                    "maxLength": 10,
+                  },
                   "visible": true
                 },
                 {
@@ -1072,6 +1106,9 @@ module.exports = {
                       errMessage: "Modem imei must be longer than 4 characters."
                     },
                   ],
+                  "keydown": {
+                    "maxLength": 10,
+                  },
                   "visible": true
                 },
                 {
@@ -1087,6 +1124,9 @@ module.exports = {
                       errMessage: "Modem mac must be longer than 4 characters."
                     },
                   ],
+                  "keydown": {
+                    "maxLength": 10,
+                  },
                   "visible": true
                 },
                 {
@@ -1102,6 +1142,9 @@ module.exports = {
                       errMessage: "Plc imei must be longer than 4 characters."
                     },
                   ],
+                  "keydown": {
+                    "maxLength": 10,
+                  },
                   "visible": true
                 },
                 {
@@ -1117,6 +1160,9 @@ module.exports = {
                       errMessage: "Plc mac must be longer than 4 characters."
                     },
                   ],
+                  "keydown": {
+                    "maxLength": 10,
+                  },
                   "visible": true
                 }
               ]
