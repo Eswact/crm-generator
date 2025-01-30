@@ -247,55 +247,63 @@
               "orderable": true
             }
           ],
-          "filters": [
-            {
-              "data": "IsField",
-              "name": "IsField",
-              "type": "check",
-              "value": true,
-              "default": true,
-              "visible": false
-            },
-            {
-              "data": "plate",
-              "name": "Plate",
-              "type": "text",
-              "value": null,
-              "default": null,
-              "visible": true
-            },
-            {
-              "data": "model",
-              "name": "Model",
-              "type": "select",
-              "options": [
-                {
-                  "value": "AA-91",
-                  "label": "AA-91"
-                }
-              ],
-              "value": null,
-              "default": null,
-              "visible": true
-            },
-            {
-              "data": "customerId",
-              "name": "Customer",
-              "type": "select",
-              "options": [
-                {
-                  "value": "1",
-                  "label": "Eren"
-                }
-              ],
-              "value": null,
-              "default": null,
-              "visible": true
-            }
-          ],
+          "filters": {
+            "data": [
+              {
+                "data": "IsField",
+                "name": "IsField",
+                "type": "check",
+                "value": true,
+                "default": true,
+                "visible": false
+              },
+              {
+                "data": "plate",
+                "name": "Plate",
+                "type": "text",
+                "value": null,
+                "default": null,
+                "visible": true
+              },
+              {
+                "data": "model",
+                "name": "Model",
+                "type": "select",
+                "options": [
+                  {
+                    "value": "AA-91",
+                    "label": "AA-91"
+                  }
+                ],
+                "value": null,
+                "default": null,
+                "visible": true
+              },
+              {
+                "data": "customerId",
+                "name": "Customer",
+                "type": "select",
+                "options": [
+                  {
+                    "value": "1",
+                    "label": "Eren"
+                  }
+                ],
+                "value": null,
+                "default": null,
+                "visible": true
+              }
+            ]
+          },
           "ajax": {
             "url": "http://localhost:44350/warehouse/get-automats",
-            "method": "POST"
+            "method": "POST",
+            "data": [
+              {
+                "name": "forTest",
+                "value": 4
+              }
+            ]
           },
           "serverSide": true,
           "tableOptions": {
@@ -381,81 +389,93 @@
               "orderable": false
             }
           ],
-          "filters": [
-            {
-              "data": "plate",
-              "name": "Plate",
-              "type": "text",
-              "value": null,
-              "default": null,
-              "visible": true
-            },
-            {
-              "data": "model",
-              "name": "Model",
-              "type": "select",
-              "options": [
-                {
-                  "value": "AA-91",
-                  "label": "AA-91"
-                }
-              ],
-              "value": null,
-              "default": null,
-              "visible": true
-            },
-            {
-              "data": "androidImei",
-              "name": "Android Imei",
-              "type": "text",
-              "value": null,
-              "default": null,
-              "visible": true
-            },
-            {
-              "data": "androidMac",
-              "name": "Android Mac",
-              "type": "text",
-              "value": null,
-              "default": null,
-              "visible": true
-            },
-            {
-              "data": "modemImei",
-              "name": "Modem Imei",
-              "type": "text",
-              "value": null,
-              "default": null,
-              "visible": true
-            },
-            {
-              "data": "modemMac",
-              "name": "Modem Mac",
-              "type": "text",
-              "value": null,
-              "default": null,
-              "visible": true
-            },
-            {
-              "data": "plcImei",
-              "name": "PLC Imei",
-              "type": "text",
-              "value": null,
-              "default": null,
-              "visible": true
-            },
-            {
-              "data": "plcMac",
-              "name": "PLC Mac",
-              "type": "text",
-              "value": null,
-              "default": null,
-              "visible": true
-            }
-          ],
+          "filters": {
+            "data": [
+              {
+                "data": "plate",
+                "name": "Plate",
+                "type": "text",
+                "value": null,
+                "default": null,
+                "visible": true
+              },
+              {
+                "data": "model",
+                "name": "Model",
+                "type": "select",
+                "options": [
+                  {
+                    "value": "AA-91",
+                    "label": "AA-91"
+                  }
+                ],
+                "value": null,
+                "default": null,
+                "visible": true
+              },
+              {
+                "data": "androidImei",
+                "name": "Android Imei",
+                "type": "text",
+                "value": null,
+                "default": null,
+                "visible": true
+              },
+              {
+                "data": "androidMac",
+                "name": "Android Mac",
+                "type": "text",
+                "value": null,
+                "default": null,
+                "visible": true
+              },
+              {
+                "data": "modemImei",
+                "name": "Modem Imei",
+                "type": "text",
+                "value": null,
+                "default": null,
+                "visible": true
+              },
+              {
+                "data": "modemMac",
+                "name": "Modem Mac",
+                "type": "text",
+                "value": null,
+                "default": null,
+                "visible": true
+              },
+              {
+                "data": "plcImei",
+                "name": "PLC Imei",
+                "type": "text",
+                "value": null,
+                "default": null,
+                "visible": true
+              },
+              {
+                "data": "plcMac",
+                "name": "PLC Mac",
+                "type": "text",
+                "value": null,
+                "default": null,
+                "visible": true
+              }
+            ]
+          },
           "ajax": {
             "url": "http://localhost:44350/production/get-manufacts",
-            "method": "POST"
+            "method": "POST",
+            "data": [
+              {
+                "name": "changedCells",
+                "value": "$('#showChangedCells').is(':checked') && $('#showChangedCells').is(':visible')  ?  createdAutomatTableCellUpdates.map(item => ({ manufactID: item.id })) : 0"
+              },
+              {
+                "name": "forTest",
+                "value": 4
+              }
+            ]
           },
           "serverSide": true,
           "tableOptions": {
@@ -849,12 +869,12 @@
         },
         {
           "type": "custom",
-          "content": "\n            <div id=\"changesModal\" class=\"fixed bottom-0 flex-col justify-center items-center gap-8 w-[400px] px-8 py-4 max-w-full bg-bg text-darkBg rounded-lg\">\n                <h1 class=\"text-2xl font-bold\">Some changes were noticed</h1>\n                <div class=\"flex gap-8 w-full\">\n                    <button @click=\"saveCellChanges\" class=\"w-1/2 px-4 py-2 bg-green-600 text-white shadow-md text-xl font-bold rounded-lg\">Save</button>\n                    <button @click=\"cancelCellChanges\" class=\"w-1/2 px-4 py-2 bg-red-600 text-white shadow-md text-xl font-bold rounded-lg\">Cancel</button>\n                </div>\n            </div>\n          "
+          "content": "\n            <div id=\"changesModal\" class=\"fixed bottom-0 flex-col justify-center items-center gap-2 w-[400px] px-8 py-4 max-w-full bg-bg text-darkBg rounded-t-lg\">\n                <div class=\"w-full flex justify-center items-center gap-4 text-sm\"><input id=\"showChangedCells\" type=\"checkbox\" /><span>Show changed cells</span></div>\n                <div class=\"flex flex-col justify-center items-center gap-8\">\n                  <h1 class=\"text-2xl font-bold\">Some changes were noticed</h1>\n                  <div class=\"flex gap-4 w-full\">\n                      <button @click=\"saveCellChanges\" class=\"w-1/2 px-4 py-2 bg-green-600 text-white shadow-md text-xl font-bold rounded-lg\">Save</button>\n                      <button @click=\"cancelCellChanges\" class=\"w-1/2 px-4 py-2 bg-red-600 text-white shadow-md text-xl font-bold rounded-lg\">Cancel</button>\n                  </div>\n                </div>\n            </div>\n          "
         }
       ],
       "scopedCss": "\n        #changesModal { \n          display:none;     \n        }\n        #changesModal.show { \n          display:flex;     \n        }\n      ",
-      "customScripts": " import { toast } from \"vue3-toastify\";\n      var createdAutomatTableCellUpdates = [];\n      function add2UpdatedCells(name, id, value, rowData) { \n          document.getElementById('changesModal').classList.add('show');\n          let index = createdAutomatTableCellUpdates.findIndex(x => x.name == name && x.id == id);\n          if (index == -1) {\n              createdAutomatTableCellUpdates.push({ name: name, id: id, value: value, rowData: rowData });\n          }\n          else {\n              createdAutomatTableCellUpdates[index].value = value;\n          }\n      }\n      function remove2UpdatedCells(name, id) { \n          let index = createdAutomatTableCellUpdates.findIndex(x => x.name == name && x.id == id);\n          if (index != -1) {\n              createdAutomatTableCellUpdates.splice(index, 1);\n          }\n\n          if (createdAutomatTableCellUpdates.length == 0) {\n              document.getElementById('changesModal').classList.remove('show');\n          }\n      }\n      function saveCellChanges() { \n        console.log(createdAutomatTableCellUpdates[0].rowData);\n        let data = {\n          manufactId: createdAutomatTableCellUpdates[0].id,\n          plaka: createdAutomatTableCellUpdates[0].rowData.plate,\n          model: createdAutomatTableCellUpdates[0].rowData.model,\n          androidMac: createdAutomatTableCellUpdates[0].rowData.macAndroid,\n          androidImei: createdAutomatTableCellUpdates[0].rowData.imeiAndroid,\n          modemImei: createdAutomatTableCellUpdates[0].rowData.imeimodem,\n          modemMac: createdAutomatTableCellUpdates[0].rowData.macmodem,\n          plcImei: createdAutomatTableCellUpdates[0].rowData.imeiplc,\n          plcMac: createdAutomatTableCellUpdates[0].rowData.macplc,\n          serialNumber: createdAutomatTableCellUpdates[0].rowData.snAndroid\n        };\n        data[createdAutomatTableCellUpdates[0].name] = createdAutomatTableCellUpdates[0].value;\n        $.ajax({\n          url: \"http://localhost:44350/production/update-automat\",\n          method: \"POST\",\n          data: data,\n          success: function (response) {\n            toast.success(response.description || \"İşlem başarılı\");\n            createdAutomatTableCellUpdates = [];\n            createdAutomatTable.ajax.reload(null, false);\n            document.getElementById('changesModal').classList.remove('show');\n          },\n          error: function (xhr, status, error) {\n            console.log(error);\n          }\n        });\n      }\n      function cancelCellChanges() {\n        createdAutomatTableCellUpdates = [];\n        document.getElementById('changesModal').classList.remove('show');\n        createdAutomatTable.ajax.reload(null, false);\n      }\n      function dateTrFormat(data) {\n          let options = { timeZone: 'Europe/Istanbul', year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: false };\n          let formattedDate = new Date(data).toLocaleString('tr-TR', options);\n          return formattedDate;\n      }",
-      "customReadyScripts": "",
+      "customScripts": " import { toast } from \"vue3-toastify\";\n      var createdAutomatTableCellUpdates = [];\n      function add2UpdatedCells(name, id, value, rowData) { \n          document.getElementById('changesModal').classList.add('show');\n          $('#showChangedCells').attr('checked', false);\n          let index = createdAutomatTableCellUpdates.findIndex(x => x.name == name && x.id == id);\n          if (index == -1) {\n              createdAutomatTableCellUpdates.push({ name: name, id: id, value: value, rowData: rowData });\n          }\n          else {\n              createdAutomatTableCellUpdates[index].value = value;\n          }\n      }\n      function remove2UpdatedCells(name, id) { \n          let index = createdAutomatTableCellUpdates.findIndex(x => x.name == name && x.id == id);\n          if (index != -1) {\n              createdAutomatTableCellUpdates.splice(index, 1);\n          }\n\n          if (createdAutomatTableCellUpdates.length == 0) {\n              document.getElementById('changesModal').classList.remove('show');\n          }\n      }\n      function saveCellChanges() { \n        console.log(createdAutomatTableCellUpdates[0].rowData);\n        let data = {\n          manufactId: createdAutomatTableCellUpdates[0].id,\n          plaka: createdAutomatTableCellUpdates[0].rowData.plate,\n          model: createdAutomatTableCellUpdates[0].rowData.model,\n          androidMac: createdAutomatTableCellUpdates[0].rowData.macAndroid,\n          androidImei: createdAutomatTableCellUpdates[0].rowData.imeiAndroid,\n          modemImei: createdAutomatTableCellUpdates[0].rowData.imeimodem,\n          modemMac: createdAutomatTableCellUpdates[0].rowData.macmodem,\n          plcImei: createdAutomatTableCellUpdates[0].rowData.imeiplc,\n          plcMac: createdAutomatTableCellUpdates[0].rowData.macplc,\n          serialNumber: createdAutomatTableCellUpdates[0].rowData.snAndroid\n        };\n        data[createdAutomatTableCellUpdates[0].name] = createdAutomatTableCellUpdates[0].value;\n        $.ajax({\n          url: \"http://localhost:44350/production/update-automat\",\n          method: \"POST\",\n          data: data,\n          success: function (response) {\n            toast.success(response.description || \"İşlem başarılı\");\n            createdAutomatTableCellUpdates = [];\n            createdAutomatTable.ajax.reload(null, false);\n            document.getElementById('changesModal').classList.remove('show');\n          },\n          error: function (xhr, status, error) {\n            console.log(error);\n          }\n        });\n      }\n      function cancelCellChanges() {\n        createdAutomatTableCellUpdates = [];\n        document.getElementById('changesModal').classList.remove('show');\n        createdAutomatTable.ajax.reload(null, false);\n      }\n      function dateTrFormat(data) {\n          let options = { timeZone: 'Europe/Istanbul', year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: false };\n          let formattedDate = new Date(data).toLocaleString('tr-TR', options);\n          return formattedDate;\n      }",
+      "customReadyScripts": "\n        $('#showChangedCells').on('change', function () {\n            createdAutomatTable.ajax.reload();\n        });\n      ",
       "help": {
         "page": "Datatables Page",
         "info": "In this page, you can see example datatables. There are two datatables in this page and both have filtering. Second datatable has operations (add, edit, delete) and right-click context menu. If you want delete or edit a row, first you click on the row to select it, then click on the edit or delete button above the datatable",

@@ -329,7 +329,7 @@ const datatableHelper = {
     },
     fillFiltersModal: function(table, tableFilters) {
         let filterHtml = '';
-        tableFilters.map(function(filter, index){
+        tableFilters.data.map(function(filter, index){
             if(filter.visible) {
                 switch(filter.type) {
                     case 'text':
@@ -362,7 +362,10 @@ const datatableHelper = {
         $('#filterModalReset').off('click').on('click', () => this.resetFilters(table, tableFilters));
     },
     applyFilters: function(table, tableFilters) {
-        tableFilters.map(function(filter, index){
+        if (tableFilters.beforeApply) {
+            tableFilters.beforeApply();
+        }
+        tableFilters.data.map(function(filter, index){
             if(filter.visible) {
                 switch(filter.type) {
                     case 'text':
@@ -382,7 +385,10 @@ const datatableHelper = {
         commonFunctions.closeFilter();
     },
     resetFilters: function(table, tableFilters) {
-        tableFilters.map(function(filter, index){
+        if (tableFilters.beforeReset) {
+            tableFilters.beforeReset();
+        }
+        tableFilters.data.map(function(filter, index){
             filter.value = filter.default;
         });
         this.reloadTable(table);

@@ -432,7 +432,8 @@ module.exports = {
               },
             }
           ],
-          "filters": [
+          "filters": {
+            "data": [
             {
               "data":"IsField",
               "name":"IsField",
@@ -477,11 +478,18 @@ module.exports = {
               "default": null,
               "visible": true
             }
-          ],
+            ],
+          },
           "ajax": { 
             url: "http://localhost:44350/warehouse/get-automats", 
             method: "POST", 
             dataSrc: function (json) { return json.data; },
+            data: [
+              {
+                "name": "forTest",
+                "value": 4
+              }
+            ]
           },
           "serverSide": true,
           "tableOptions": {
@@ -612,7 +620,8 @@ module.exports = {
               },
             }
           ],
-          "filters": [
+          "filters": {
+            "data": [
             {
               "data":"plate",
               "name":"Plate",
@@ -683,11 +692,30 @@ module.exports = {
               "default": null,
               "visible": true
             }
-          ],
+            ],
+            "beforeApply": function () { 
+              console.log('test apply');
+              console.log('test apply');
+            },
+            "beforeReset": function () { 
+              console.log('test reset');
+              console.log('test reset');
+            },
+          },
           "ajax": { 
             url: "http://localhost:44350/production/get-manufacts", 
             method: "POST", 
             dataSrc: function (json) { return json.responseData; },
+            data: [
+              {
+                "name": "changedCells",
+                "value": "$('#showChangedCells').is(':checked') && $('#showChangedCells').is(':visible')  ?  createdAutomatTableCellUpdates.map(item => ({ manufactID: item.id })) : 0"
+              },
+              {
+                "name": "forTest",
+                "value": 4
+              }
+            ]
           },
           "serverSide": true,
           "tableOptions": {
@@ -1179,11 +1207,14 @@ module.exports = {
         {
           "type": "custom",
           "content": `
-            <div id="changesModal" class="fixed bottom-0 flex-col justify-center items-center gap-8 w-[400px] px-8 py-4 max-w-full bg-bg text-darkBg rounded-lg">
-                <h1 class="text-2xl font-bold">Some changes were noticed</h1>
-                <div class="flex gap-8 w-full">
-                    <button @click="saveCellChanges" class="w-1/2 px-4 py-2 bg-green-600 text-white shadow-md text-xl font-bold rounded-lg">Save</button>
-                    <button @click="cancelCellChanges" class="w-1/2 px-4 py-2 bg-red-600 text-white shadow-md text-xl font-bold rounded-lg">Cancel</button>
+            <div id="changesModal" class="fixed bottom-0 flex-col justify-center items-center gap-2 w-[400px] px-8 py-4 max-w-full bg-bg text-darkBg rounded-t-lg">
+                <div class="w-full flex justify-center items-center gap-4 text-sm"><input id="showChangedCells" type="checkbox" /><span>Show changed cells</span></div>
+                <div class="flex flex-col justify-center items-center gap-8">
+                  <h1 class="text-2xl font-bold">Some changes were noticed</h1>
+                  <div class="flex gap-4 w-full">
+                      <button @click="saveCellChanges" class="w-1/2 px-4 py-2 bg-green-600 text-white shadow-md text-xl font-bold rounded-lg">Save</button>
+                      <button @click="cancelCellChanges" class="w-1/2 px-4 py-2 bg-red-600 text-white shadow-md text-xl font-bold rounded-lg">Cancel</button>
+                  </div>
                 </div>
             </div>
           `
@@ -1201,6 +1232,7 @@ module.exports = {
       var createdAutomatTableCellUpdates = [];
       function add2UpdatedCells(name, id, value, rowData) { 
           document.getElementById('changesModal').classList.add('show');
+          $('#showChangedCells').attr('checked', false);
           let index = createdAutomatTableCellUpdates.findIndex(x => x.name == name && x.id == id);
           if (index == -1) {
               createdAutomatTableCellUpdates.push({ name: name, id: id, value: value, rowData: rowData });
@@ -1259,7 +1291,11 @@ module.exports = {
           let formattedDate = new Date(data).toLocaleString('tr-TR', options);
           return formattedDate;
       }`,
-      "customReadyScripts": ``,
+      "customReadyScripts": `
+        $('#showChangedCells').on('change', function () {
+            createdAutomatTable.ajax.reload();
+        });
+      `,
       "help": {
         "page": "Datatables Page",
         "info": "In this page, you can see example datatables. There are two datatables in this page and both have filtering. Second datatable has operations (add, edit, delete) and right-click context menu. If you want delete or edit a row, first you click on the row to select it, then click on the edit or delete button above the datatable",

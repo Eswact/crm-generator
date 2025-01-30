@@ -128,7 +128,7 @@ function createViews() {
     
       onMounted(() => {
         ${page.doms.filter(x => x.type == 'datatable').map(function(item, index) {
-          return `${item.name} = datatableHelper.initializeDataTable('${item.name}', '#${item.id}', ${item.id}Ajax, ${item.id}Columns, ${(item.filters && item.filters.length > 0) ? `${item.id}Filters`: null}, ${item.id}TableOptions, ${item.id}Operations, ${item.id}Options);`;
+          return `${item.name} = datatableHelper.initializeDataTable('${item.name}', '#${item.id}', ${item.id}Ajax, ${item.id}Columns, ${(item.filters && item.filters.data && item.filters.data.length > 0) ? `${item.id}Filters`: null}, ${item.id}TableOptions, ${item.id}Operations, ${item.id}Options);`;
         }).join('\n')}
     
         ${page.customReadyScripts}
@@ -169,17 +169,28 @@ let ${item.id}Columns = [
   }`).join(',')}
 ];
 
-${(item.filters && item.filters.length > 0) 
-  ? `let ${item.id}Filters = [${item.filters.map(filter => JSON.stringify(filter)).join(',')}]`
+${(item.filters && item.filters.data && item.filters.data.length > 0) 
+  ? `let ${item.id}Filters = { data: [${item.filters.data.map(filter => JSON.stringify(filter)).join(',')}] }`
   : ''}
+${(item.filters && item.filters.beforeApply) 
+  ? `${item.id}Filters.beforeApply = ${item.filters.beforeApply.toString()};`
+  : ''}
+${(item.filters && item.filters.beforeReset) 
+  ? `${item.id}Filters.beforeReset = ${item.filters.beforeReset.toString()};`
+  : ''}
+
 
 let ${item.id}Ajax = {
   url: "${item.ajax.url}",
   type: "${item.ajax.method || 'GET'}",
   dataSrc: ${item.ajax.dataSrc || "''"},
   data: function(d) {
-    ${(item.filters && item.filters.length > 0)
-    ? `datatableHelper.updateTableAjaxData("${item.name}", d, ${item.id}Filters);`
+    ${item.ajax.data && item.ajax.data.length > 0
+      ? `${item.ajax.data.map(x => `d.${x.name} = ${x.value}`).join(';\n')}`
+      : ''
+    }
+    ${(item.filters && item.filters.data && item.filters.data.length > 0)
+    ? `datatableHelper.updateTableAjaxData("${item.name}", d, ${item.id}Filters.data);`
     : ''}
   }
 };

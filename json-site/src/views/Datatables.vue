@@ -7,11 +7,14 @@
 <div class="w-full">
   <table id="createdAutomatTable" class="display stripe hover" style="width:100%"></table>
 </div>
-            <div id="changesModal" class="fixed bottom-0 flex-col justify-center items-center gap-8 w-[400px] px-8 py-4 max-w-full bg-bg text-darkBg rounded-lg">
-                <h1 class="text-2xl font-bold">Some changes were noticed</h1>
-                <div class="flex gap-8 w-full">
-                    <button @click="saveCellChanges" class="w-1/2 px-4 py-2 bg-green-600 text-white shadow-md text-xl font-bold rounded-lg">Save</button>
-                    <button @click="cancelCellChanges" class="w-1/2 px-4 py-2 bg-red-600 text-white shadow-md text-xl font-bold rounded-lg">Cancel</button>
+            <div id="changesModal" class="fixed bottom-0 flex-col justify-center items-center gap-2 w-[400px] px-8 py-4 max-w-full bg-bg text-darkBg rounded-t-lg">
+                <div class="w-full flex justify-center items-center gap-4 text-sm"><input id="showChangedCells" type="checkbox" /><span>Show changed cells</span></div>
+                <div class="flex flex-col justify-center items-center gap-8">
+                  <h1 class="text-2xl font-bold">Some changes were noticed</h1>
+                  <div class="flex gap-4 w-full">
+                      <button @click="saveCellChanges" class="w-1/2 px-4 py-2 bg-green-600 text-white shadow-md text-xl font-bold rounded-lg">Save</button>
+                      <button @click="cancelCellChanges" class="w-1/2 px-4 py-2 bg-red-600 text-white shadow-md text-xl font-bold rounded-lg">Cancel</button>
+                  </div>
                 </div>
             </div>
           
@@ -99,14 +102,18 @@ let transferedAutomatTableColumns = [
   }
 ];
 
-let transferedAutomatTableFilters = [{"data":"IsField","name":"IsField","type":"check","value":true,"default":true,"visible":false},{"data":"plate","name":"Plate","type":"text","value":null,"default":null,"visible":true},{"data":"model","name":"Model","type":"select","options":[{"value":"AA-91","label":"AA-91"}],"value":null,"default":null,"visible":true},{"data":"customerId","name":"Customer","type":"select","options":[{"value":"1","label":"Eren"}],"value":null,"default":null,"visible":true}]
+let transferedAutomatTableFilters = { data: [{"data":"IsField","name":"IsField","type":"check","value":true,"default":true,"visible":false},{"data":"plate","name":"Plate","type":"text","value":null,"default":null,"visible":true},{"data":"model","name":"Model","type":"select","options":[{"value":"AA-91","label":"AA-91"}],"value":null,"default":null,"visible":true},{"data":"customerId","name":"Customer","type":"select","options":[{"value":"1","label":"Eren"}],"value":null,"default":null,"visible":true}] }
+
+
+
 
 let transferedAutomatTableAjax = {
   url: "http://localhost:44350/warehouse/get-automats",
   type: "POST",
   dataSrc: function (json) { return json.data; },
   data: function(d) {
-    datatableHelper.updateTableAjaxData("transferedAutomatTable", d, transferedAutomatTableFilters);
+    d.forTest = 4
+    datatableHelper.updateTableAjaxData("transferedAutomatTable", d, transferedAutomatTableFilters.data);
   }
 };
 
@@ -258,14 +265,25 @@ let createdAutomatTableColumns = [
   }
 ];
 
-let createdAutomatTableFilters = [{"data":"plate","name":"Plate","type":"text","value":null,"default":null,"visible":true},{"data":"model","name":"Model","type":"select","options":[{"value":"AA-91","label":"AA-91"}],"value":null,"default":null,"visible":true},{"data":"androidImei","name":"Android Imei","type":"text","value":null,"default":null,"visible":true},{"data":"androidMac","name":"Android Mac","type":"text","value":null,"default":null,"visible":true},{"data":"modemImei","name":"Modem Imei","type":"text","value":null,"default":null,"visible":true},{"data":"modemMac","name":"Modem Mac","type":"text","value":null,"default":null,"visible":true},{"data":"plcImei","name":"PLC Imei","type":"text","value":null,"default":null,"visible":true},{"data":"plcMac","name":"PLC Mac","type":"text","value":null,"default":null,"visible":true}]
+let createdAutomatTableFilters = { data: [{"data":"plate","name":"Plate","type":"text","value":null,"default":null,"visible":true},{"data":"model","name":"Model","type":"select","options":[{"value":"AA-91","label":"AA-91"}],"value":null,"default":null,"visible":true},{"data":"androidImei","name":"Android Imei","type":"text","value":null,"default":null,"visible":true},{"data":"androidMac","name":"Android Mac","type":"text","value":null,"default":null,"visible":true},{"data":"modemImei","name":"Modem Imei","type":"text","value":null,"default":null,"visible":true},{"data":"modemMac","name":"Modem Mac","type":"text","value":null,"default":null,"visible":true},{"data":"plcImei","name":"PLC Imei","type":"text","value":null,"default":null,"visible":true},{"data":"plcMac","name":"PLC Mac","type":"text","value":null,"default":null,"visible":true}] }
+createdAutomatTableFilters.beforeApply = function () { 
+              console.log('test apply');
+              console.log('test apply');
+            };
+createdAutomatTableFilters.beforeReset = function () { 
+              console.log('test reset');
+              console.log('test reset');
+            };
+
 
 let createdAutomatTableAjax = {
   url: "http://localhost:44350/production/get-manufacts",
   type: "POST",
   dataSrc: function (json) { return json.responseData; },
   data: function(d) {
-    datatableHelper.updateTableAjaxData("createdAutomatTable", d, createdAutomatTableFilters);
+    d.changedCells = $('#showChangedCells').is(':checked') && $('#showChangedCells').is(':visible')  ?  createdAutomatTableCellUpdates.map(item => ({ manufactID: item.id })) : 0;
+d.forTest = 4
+    datatableHelper.updateTableAjaxData("createdAutomatTable", d, createdAutomatTableFilters.data);
   }
 };
 
@@ -390,12 +408,17 @@ let createdAutomatTableOperations = {"add":{"title":"Yeni Otomat Oluştur","url"
 createdAutomatTable = datatableHelper.initializeDataTable('createdAutomatTable', '#createdAutomatTable', createdAutomatTableAjax, createdAutomatTableColumns, createdAutomatTableFilters, createdAutomatTableTableOptions, createdAutomatTableOperations, createdAutomatTableOptions);
     
         
+        $('#showChangedCells').on('change', function () {
+            createdAutomatTable.ajax.reload();
+        });
+      
       });
     
        import { toast } from "vue3-toastify";
       var createdAutomatTableCellUpdates = [];
       function add2UpdatedCells(name, id, value, rowData) { 
           document.getElementById('changesModal').classList.add('show');
+          $('#showChangedCells').attr('checked', false);
           let index = createdAutomatTableCellUpdates.findIndex(x => x.name == name && x.id == id);
           if (index == -1) {
               createdAutomatTableCellUpdates.push({ name: name, id: id, value: value, rowData: rowData });

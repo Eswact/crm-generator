@@ -95,11 +95,15 @@ let messagesTableColumns = [
 
 
 
+
+
+
 let messagesTableAjax = {
   url: "https://jsonplaceholder.typicode.com/comments",
   type: "GET",
   dataSrc: '',
   data: function(d) {
+    
     
   }
 };
