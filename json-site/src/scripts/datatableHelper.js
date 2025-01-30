@@ -400,7 +400,7 @@ const datatableHelper = {
                 if (item.type === "string" || item.type === "number") {
                     formHtml += `
                         <div class="w-full flex flex-col">
-                            <label for="${item.name}" class="font-semibold">${item.controlFunction ? `* ${item.title}`: `${item.title}`}</label>
+                            <label for="${item.name}" class="font-semibold">${item.required ? `* ${item.title}`: `${item.title}`}</label>
                             <input 
                                 type="${item.type}" 
                                 id="${item.name}" 
@@ -408,16 +408,18 @@ const datatableHelper = {
                                 value="${item.value}" 
                                 class="py-2 px-4 border border-darkBg text-darkBg rounded-lg" 
                                 ${item.placeholder ? `placeholder=${item.placeholder}`: ''} />
+                            <span class="itemError hidden text-sm text-red-600 p-1"></span>
                         </div>`;
                 } else if (item.type === "select") {
                     formHtml += `
                         <div class="w-full flex flex-col">
-                            <label for="${item.name}" class="font-semibold">${item.controlFunction ? `* ${item.title}`: `${item.title}`}</label>
+                            <label for="${item.name}" class="font-semibold">${item.required ? `* ${item.title}`: `${item.title}`}</label>
                             <select id="${item.name}" name="${item.name}" class="p-2 border border-darkBg text-darkBg rounded-lg">
                                 ${item.options.map(option => `
                                     <option value="${option.value}">${option.label}</option>
                                 `).join('')}
                             </select>
+                            <span class="itemError hidden text-sm text-red-600 p-1"></span>
                         </div>`;
                 }
             }
@@ -440,22 +442,33 @@ const datatableHelper = {
                 if (item.visible) {
                     const input = document.getElementById(item.name);
                     input.classList.remove("border-red-500");
+                    $(input).siblings(".itemError").addClass('hidden').text('');
             
                     // add to formData
                     formData[item.name] = input ? input.value : null;
             
                     // input controls
-                    item.errorChecks.forEach(errorCheck => {
-                        if (!errorCheck.control) { return; }
-                        const controlFunction = new Function("value", `return ${errorCheck.control};`);
-                        if (!controlFunction(input.value)) {
-                            input.classList.add("border-red-500");
-                            incorrectEntries.push(errorCheck.errMessage || 'Hatalı giriş yapıldı');
-                            if (!item.showAllErrors) {
-                                return;
-                            }
+                    if (item.required && (input.value == null || input.value == "")) {
+                        input.classList.add("border-red-500");
+                        incorrectEntries.push('Zorunlu alanlar boş bırakılamaz');
+                        if (!item.showAllErrors) {
+                            return;
                         }
-                    });
+                    }
+                    if (item.errorChecks && item.errorChecks.length > 0) {
+                        item.errorChecks.forEach(errorCheck => {
+                            if (!errorCheck.control) { return; }
+                            const controlFunction = new Function("value", `${errorCheck.control};`);
+                            if (!controlFunction(input.value)) {
+                                input.classList.add("border-red-500");
+                                $(input).siblings(".itemError").removeClass('hidden').text(errorCheck.errMessage || 'Hatalı giriş yapıldı');
+                                incorrectEntries.push(errorCheck.errMessage || 'Hatalı giriş yapıldı');
+                                if (!item.showAllErrors) {
+                                    return;
+                                }
+                            }
+                        });
+                    }
                 }
                 else {
                     formData[item.name] = item.value;
@@ -506,7 +519,7 @@ const datatableHelper = {
                 if (item.type === "string" || item.type === "number") {
                     formHtml += `
                         <div class="w-full flex flex-col">
-                            <label for="${item.name}" class="font-semibold">${item.controlFunction ? `* ${item.title}`: `${item.title}`}</label>
+                            <label for="${item.name}" class="font-semibold">${item.required ? `* ${item.title}`: `${item.title}`}</label>
                             <input 
                                 type="${item.type}" 
                                 id="${item.name}" 
@@ -514,16 +527,18 @@ const datatableHelper = {
                                 value="${item.value}" 
                                 class="py-2 px-4 border border-darkBg text-darkBg rounded-lg" 
                                 ${item.placeholder ? `placeholder=${item.placeholder}`: ''} />
+                            <span class="itemError hidden text-sm text-red-600 p-1"></span>
                         </div>`;
                 } else if (item.type === "select") {
                     formHtml += `
                         <div class="w-full flex flex-col">
-                            <label for="${item.name}" class="font-semibold">${item.controlFunction ? `* ${item.title}`: `${item.title}`}</label>
+                            <label for="${item.name}" class="font-semibold">${item.required ? `* ${item.title}`: `${item.title}`}</label>
                             <select id="${item.name}" name="${item.name}" class="p-2 border border-darkBg text-darkBg rounded-lg">
                                 ${item.options.map(option => `
                                     <option value="${option.value}" ${String(option.value).toLowerCase() == String(item.value).toLowerCase() ? 'selected' : ''}>${option.label}</option>
                                 `).join('')}
                             </select>
+                            <span class="itemError hidden text-sm text-red-600 p-1"></span>
                         </div>`;
                 }
             }
@@ -546,22 +561,33 @@ const datatableHelper = {
                 if (item.visible) {
                     const input = document.getElementById(item.name);
                     input.classList.remove("border-red-500");
+                    $(input).siblings(".itemError").addClass('hidden').text('');
             
                     // add to formData
                     formData[item.name] = input ? input.value : null;
             
                     // input controls
-                    item.errorChecks.forEach(errorCheck => {
-                        if (!errorCheck.control) { return; }
-                        const controlFunction = new Function("value", `return ${errorCheck.control};`);
-                        if (!controlFunction(input.value)) {
-                            input.classList.add("border-red-500");
-                            incorrectEntries.push(errorCheck.errMessage || 'Hatalı giriş yapıldı');
-                            if (!item.showAllErrors) {
-                                return;
-                            }
+                    if (item.required && (input.value == null || input.value == "")) {
+                        input.classList.add("border-red-500");
+                        incorrectEntries.push('Zorunlu alanlar boş bırakılamaz');
+                        if (!item.showAllErrors) {
+                            return;
                         }
-                    });
+                    }
+                    if (item.errorChecks && item.errorChecks.length > 0) {
+                        item.errorChecks.forEach(errorCheck => {
+                            if (!errorCheck.control) { return; }
+                            const controlFunction = new Function("value", `${errorCheck.control};`);
+                            if (!controlFunction(input.value)) {
+                                input.classList.add("border-red-500");
+                                $(input).siblings(".itemError").removeClass('hidden').text(errorCheck.errMessage || 'Hatalı giriş yapıldı');
+                                incorrectEntries.push(errorCheck.errMessage || 'Hatalı giriş yapıldı');
+                                if (!item.showAllErrors) {
+                                    return;
+                                }
+                            }
+                        });
+                    }
                 }
                 else {
                     formData[item.name] = item.value;

@@ -601,6 +601,16 @@ module.exports = {
               checkable: true,
               orderable: false,
             },
+            {
+              order: 8,
+              name: null,
+              title: 'Test',
+              checkable: true,
+              orderable: false,
+              render: function (data, type, row) {
+                return `<div class="w-full h-full flex px-2 items-center"><button data-manufactid='${row.manufactId}' class="alertManufactIdButton notSelectRow px-4 py-2 bg-main text-white shadow-md text-xl font-bold rounded-lg">Test</button></div>`;
+              },
+            }
           ],
           "filters": [
             {
@@ -692,13 +702,17 @@ module.exports = {
                           cellInput.val(this.value);
                           cellInput.data("temp", this.value);
                           // text
-                          $(rowElement).find(`.editableText[data-name="${this.name}"]`).text(this.value);
+                          $(cellInput).siblings(`.editableText`).text(this.value);
                           // cell
                           cellInput.closest('td').addClass('border-2 border-green-500 bg-green-500 bg-opacity-10');
                       }
                   });
                 });
               }
+
+              $('.alertManufactIdButton').off('click').on('click', function () {
+                alert($(this).data('manufactid'));
+              });
             },
             fnRowCallBack: function (nRow, data, iDisplayIndex, iDisplayIndexFull) {},
             fnInitComplete: function () {},
@@ -741,7 +755,7 @@ module.exports = {
                 let updateName = input.data("name");
                 let rowData = datatable.row(cell.index().row).data();
 
-                input.off("keydown").on("keydown", function (e) {
+                input.off("keydown.tdInputKeydown").on("keydown.tdInputKeydown", function (e) {
                   if (e.keyCode === 13 || e.keyCode === 9) {
                     e.preventDefault();
                     input.blur();
@@ -766,7 +780,7 @@ module.exports = {
                   }
                 });
 
-                input.off("blur").on("blur", function () {
+                input.off("blur.tdInputBlur").on("blur.tdInputBlur", function () {
                   input.addClass("hidden");
                   input.siblings(".editableText").removeClass("hidden");
                   let inputVal = input.val();
@@ -806,11 +820,12 @@ module.exports = {
                   "name": "plaka",
                   "title": "Plate",
                   "type": "string",
+                  "required": true,
                   "value": "",
                   "placeholder": "xxx-xx-xxx",
                   "errorChecks": [
                     {
-                      control: "value != null && value != '' && value.length > 4;",
+                      control: "return value != null && value != '' && value.length > 4;",
                       errMessage: "Plate must be longer than 4 characters."
                     },
                   ],
@@ -820,6 +835,7 @@ module.exports = {
                   "name": "model",
                   "title": "Model",
                   "type": "select",
+                  "required": true,
                   "options": [
                     {
                       "value": "",
@@ -837,7 +853,7 @@ module.exports = {
                   "showAllErrors": false,
                   "errorChecks": [
                     {
-                      control: "value != null && value != ''",
+                      control: "return value != null && value != ''",
                       errMessage: "Model cannot be null."
                     },
                   ],
@@ -847,16 +863,17 @@ module.exports = {
                   "name": "serialNumber",
                   "title": "Serial number",
                   "type": "number",
+                  "required": true,
                   "value": "",
                   "placeholder": "xxxxxxxxxxx",
                   "showAllErrors": true,
                   "errorChecks": [
                     {
-                      control: "value != null && value != '' && value.length > 7",
+                      control: "return value != null && value != '' && value.length > 7",
                       errMessage: "Serial number must be longer than 7 characters."
                     },
                     {
-                      control: "!value.startsWith('000')",
+                      control: "return !value.startsWith('000')",
                       errMessage: "Serial number cannot start with 000."
                     },
                   ],
@@ -866,12 +883,13 @@ module.exports = {
                   "name": "androidImei",
                   "title": "Android imei",
                   "type": "string",
+                  "required": true,
                   "value": "",
                   "placeholder": "xx-xx-xx-xx",
                   "showAllErrors": false,
                   "errorChecks": [
                     {
-                      control: "value != null && value != '' && value.length > 4;",
+                      control: "return value != null && value != '' && value.length > 4;",
                       errMessage: "Android imei must be longer than 4 characters."
                     },
                   ],
@@ -881,12 +899,13 @@ module.exports = {
                   "name": "androidMac",
                   "title": "Android mac",
                   "type": "string",
+                  "required": true,
                   "value": "",
                   "placeholder": "xx-xx-xx-xx",
                   "showAllErrors": false,
                   "errorChecks": [
                     {
-                      control: "value != null && value != '' && value.length > 4;",
+                      control: "return value != null && value != '' && value.length > 4;",
                       errMessage: "Android mac must be longer than 4 characters."
                     },
                   ],
@@ -896,11 +915,12 @@ module.exports = {
                   "name": "modemImei",
                   "title": "Modem imei",
                   "type": "string",
+                  "required": true,
                   "value": "",
                   "showAllErrors": false,
                   "errorChecks": [
                     {
-                      control: "value != null && value != '' && value.length > 4;",
+                      control: "return value != null && value != '' && value.length > 4;",
                       errMessage: "Modem imei must be longer than 4 characters."
                     },
                   ],
@@ -910,11 +930,12 @@ module.exports = {
                   "name": "modemMac",
                   "title": "Modem mac",
                   "type": "string",
+                  "required": true,
                   "value": "",
                   "showAllErrors": false,
                   "errorChecks": [
                     {
-                      control: "value != null && value != '' && value.length > 4;",
+                      control: "return value != null && value != '' && value.length > 4;",
                       errMessage: "Modem mac must be longer than 4 characters."
                     },
                   ],
@@ -924,11 +945,12 @@ module.exports = {
                   "name": "plcImei",
                   "title": "Plc imei",
                   "type": "string",
+                  "required": false,
                   "value": "",
                   "showAllErrors": false,
                   "errorChecks": [
                     {
-                      control: "value != null && value != '' && value.length > 4;",
+                      control: "return value == '' || value.length > 4;",
                       errMessage: "Plc imei must be longer than 4 characters."
                     },
                   ],
@@ -938,12 +960,13 @@ module.exports = {
                   "name": "plcMac",
                   "title": "Plc mac",
                   "type": "string",
+                  "required": false,
                   "value": "",
                   "showAllErrors": false,
                   "errorChecks": [
                     {
-                      control: "value != null && value != '' && value.length > 4;",
-                      errMessage: "Plc mac must be longer than 4 characters."
+                      control: "return !value.startsWith('000')",
+                      errMessage: "Serial number cannot start with 000."
                     },
                   ],
                   "visible": true
@@ -994,10 +1017,11 @@ module.exports = {
                       "label": "AA-92"
                     },
                   ],
+                  "required": true,
                   "showAllErrors": false,
                   "errorChecks": [
                     {
-                      control: "value != null && value != ''",
+                      control: "return value != null && value != ''",
                       errMessage: "Model cannot be null."
                     },
                   ],
@@ -1009,10 +1033,11 @@ module.exports = {
                   "type": "string",
                   "value": "selectedRow.imeiAndroid",
                   "placeholder": "xx-xx-xx-xx",
+                  "required": true,
                   "showAllErrors": false,
                   "errorChecks": [
                     {
-                      control: "value != null && value != '' && value.length > 4;",
+                      control: "return value != null && value != '' && value.length > 4;",
                       errMessage: "Android imei must be longer than 4 characters."
                     },
                   ],
@@ -1024,10 +1049,11 @@ module.exports = {
                   "type": "string",
                   "value": "selectedRow.macAndroid",
                   "placeholder": "xx-xx-xx-xx",
+                  "required": true,
                   "showAllErrors": false,
                   "errorChecks": [
                     {
-                      control: "value != null && value != '' && value.length > 4;",
+                      control: "return value != null && value != '' && value.length > 4;",
                       errMessage: "Android mac must be longer than 4 characters."
                     },
                   ],
@@ -1038,10 +1064,11 @@ module.exports = {
                   "title": "Modem imei",
                   "type": "string",
                   "value": "selectedRow.imeimodem",
+                  "required": true,
                   "showAllErrors": false,
                   "errorChecks": [
                     {
-                      control: "value != null && value != '' && value.length > 4;",
+                      control: "return value != null && value != '' && value.length > 4;",
                       errMessage: "Modem imei must be longer than 4 characters."
                     },
                   ],
@@ -1052,10 +1079,11 @@ module.exports = {
                   "title": "Modem mac",
                   "type": "string",
                   "value": "selectedRow.macmodem",
+                  "required": true,
                   "showAllErrors": false,
                   "errorChecks": [
                     {
-                      control: "value != null && value != '' && value.length > 4;",
+                      control: "return value != null && value != '' && value.length > 4;",
                       errMessage: "Modem mac must be longer than 4 characters."
                     },
                   ],
@@ -1066,10 +1094,11 @@ module.exports = {
                   "title": "Plc imei",
                   "type": "string",
                   "value": "selectedRow.imeiplc",
+                  "required": true,
                   "showAllErrors": false,
                   "errorChecks": [
                     {
-                      control: "value != null && value != '' && value.length > 4;",
+                      control: "return value != null && value != '' && value.length > 4;",
                       errMessage: "Plc imei must be longer than 4 characters."
                     },
                   ],
@@ -1080,10 +1109,11 @@ module.exports = {
                   "title": "Plc mac",
                   "type": "string",
                   "value": "selectedRow.macplc",
+                  "required": true,
                   "showAllErrors": false,
                   "errorChecks": [
                     {
-                      control: "value != null && value != '' && value.length > 4;",
+                      control: "return value != null && value != '' && value.length > 4;",
                       errMessage: "Plc mac must be longer than 4 characters."
                     },
                   ],
