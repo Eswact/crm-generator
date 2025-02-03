@@ -97,48 +97,54 @@ const datatableHelper = {
             userFnInitComplete = tableOptions.fnInitComplete;
         }
         tableOptions.fnInitComplete = function () {
-            $(`.${name}Toolbar`).html(`<div class="flex items-center gap-2">
-                <button id="open${name}CT" class="p-2 px-4 flex items-center gap-2 bg-main hover:bg-opacity-80 duration-200 dark:bg-opacity-70 dark:hover:bg-opacity-100 text-white shadow-md text-xl rounded-lg">
-                    <i class="fa-solid fa-eye text-xl"></i>
-                    <span class="font-semibold md:hidden">Visibility</span>
-                </button>
-                ${tableFilters
-                    ? `<button id="open${name}Filters" class="p-2 px-4 flex items-center gap-2 bg-main hover:bg-opacity-80 duration-200 dark:bg-opacity-70 dark:hover:bg-opacity-100 text-white shadow-md text-xl rounded-lg">
-                            <i class="fa-solid fa-magnifying-glass text-xl"></i>
-                            <span class="font-semibold md:hidden">Filters</span>
-                            <span class="filterCounter font-semibold hidden"></span>
-                        </button>`
-                    :''
-                }
-                ${operations.add || operations.edit || operations.delete
-                    ? '<div class="w-[2px] h-10 bg-main/75 mx-2"></div>'
+            $(`.${name}Toolbar`).html(`<div class="flex flex-col items-start gap-2">
+                ${options.multiRowSelect == true
+                    ? `<div data-name=${name} class="selectedRowsLabel hidden items-center gap-6 text-lg px-2"><div class="flex items-end gap-2"><span data-name=${name} class="selectedRowsCounter font-bold text-2xl text-third"></span><span class="font-semibold">Rows selected</span></div><button data-table=${name} class="removeSelectedRows px-2 py-1 font-semibold bg-third hover:bg-opacity-80 duration-200 dark:bg-opacity-70 dark:hover:bg-opacity-100 text-white shadow-md rounded-lg">Remove selected</button></div>`
                     : ''
-                }
-                ${operations.add
-                    ? `<button id="add${name}Row" class="p-2 px-4 flex items-center gap-2 bg-main hover:bg-opacity-80 duration-200 dark:bg-opacity-70 dark:hover:bg-opacity-100 text-white shadow-md text-xl rounded-lg">
-                            <i class="fa-solid fa-plus text-xl"></i>
-                        </button>`
-                    :''
-                }
-                ${operations.edit
-                    ? `<button id="edit${name}Row" class="p-2 px-4 flex items-center gap-2 bg-main hover:bg-opacity-80 duration-200 dark:bg-opacity-70 dark:hover:bg-opacity-100 text-white shadow-md text-xl rounded-lg disabled:opacity-50" disabled>
-                            <i class="fa-solid fa-pencil text-xl"></i>
-                        </button>`
-                    :''
-                }
-                ${operations.delete
-                    ? `<button id="delete${name}Row" class="p-2 px-4 flex items-center gap-2 bg-main hover:bg-opacity-80 duration-200 dark:bg-opacity-70 dark:hover:bg-opacity-100 text-white shadow-md text-xl rounded-lg disabled:opacity-50" disabled>
-                            <i class="fa-solid fa-trash-can text-xl"></i>
-                        </button>`
-                    :''
-                }
-                ${options && options.customButtons && options.customButtons.length > 0
-                    ? `<div class="w-[2px] h-10 bg-main/75 mx-2"></div>
-                        ${options.customButtons.map((button, index) => {
-                            return `<button id="${button.id}" data-index="${index}" title=${button.title} class="customButton p-2 px-4 flex items-center gap-2 bg-main hover:bg-opacity-80 duration-200 dark:bg-opacity-70 dark:hover:bg-opacity-100 text-white shadow-md text-xl rounded-lg disabled:opacity-50">${button.html}</button>`
-                        }).join('')}`
-                    : ''
-                }
+                }    
+                <div class="flex items-center gap-2">
+                    <button id="open${name}CT" class="p-2 px-4 flex items-center gap-2 bg-main hover:bg-opacity-80 duration-200 dark:bg-opacity-70 dark:hover:bg-opacity-100 text-white shadow-md text-xl rounded-lg">
+                        <i class="fa-solid fa-eye text-xl"></i>
+                        <span class="font-semibold md:hidden">Visibility</span>
+                    </button>
+                    ${tableFilters
+                        ? `<button id="open${name}Filters" class="p-2 px-4 flex items-center gap-2 bg-main hover:bg-opacity-80 duration-200 dark:bg-opacity-70 dark:hover:bg-opacity-100 text-white shadow-md text-xl rounded-lg">
+                                <i class="fa-solid fa-magnifying-glass text-xl"></i>
+                                <span class="font-semibold md:hidden">Filters</span>
+                                <span class="filterCounter font-semibold hidden"></span>
+                            </button>`
+                        :''
+                    }
+                    ${operations.add || operations.edit || operations.delete
+                        ? '<div class="w-[2px] h-10 bg-main/75 mx-2"></div>'
+                        : ''
+                    }
+                    ${operations.add
+                        ? `<button id="add${name}Row" class="p-2 px-4 flex items-center gap-2 bg-main hover:bg-opacity-80 duration-200 dark:bg-opacity-70 dark:hover:bg-opacity-100 text-white shadow-md text-xl rounded-lg">
+                                <i class="fa-solid fa-plus text-xl"></i>
+                            </button>`
+                        :''
+                    }
+                    ${operations.edit
+                        ? `<button id="edit${name}Row" class="p-2 px-4 flex items-center gap-2 bg-main hover:bg-opacity-80 duration-200 dark:bg-opacity-70 dark:hover:bg-opacity-100 text-white shadow-md text-xl rounded-lg disabled:opacity-50" disabled>
+                                <i class="fa-solid fa-pencil text-xl"></i>
+                            </button>`
+                        :''
+                    }
+                    ${operations.delete
+                        ? `<button id="delete${name}Row" class="p-2 px-4 flex items-center gap-2 bg-main hover:bg-opacity-80 duration-200 dark:bg-opacity-70 dark:hover:bg-opacity-100 text-white shadow-md text-xl rounded-lg disabled:opacity-50" disabled>
+                                <i class="fa-solid fa-trash-can text-xl"></i>
+                            </button>`
+                        :''
+                    }
+                    ${options && options.customButtons && options.customButtons.length > 0
+                        ? `<div class="w-[2px] h-10 bg-main/75 mx-2"></div>
+                            ${options.customButtons.map((button, index) => {
+                                return `<button id="${button.id}" data-index="${index}" data-table="${name}" title=${button.title} class="customButton p-2 px-4 flex items-center gap-2 bg-main hover:bg-opacity-80 duration-200 dark:bg-opacity-70 dark:hover:bg-opacity-100 text-white shadow-md text-xl rounded-lg disabled:opacity-50">${button.html}</button>`
+                            }).join('')}`
+                        : ''
+                    }
+                </div>
             </div>`);
             $(`#open${name}CT`).off('click').on('click', () => thisHelper.openCTModal(name, tableColumns));
             $(`#open${name}Filters`).off('click').on('click', () => thisHelper.openFiltersModal(name, tableFilters));
@@ -148,7 +154,7 @@ const datatableHelper = {
 
             if (options && options.customButtons && options.customButtons.length > 0) {
                 options.customButtons.forEach((button, index) => {
-                    $(`.customButton[data-index=${index}]`).off('click').on('click', button.onclick);
+                    $(`.customButton[data-index=${index}][data-table=${name}]`).off('click').on('click', button.onclick);
                 });
             }
 
@@ -181,6 +187,7 @@ const datatableHelper = {
                     }
                     const row = $(`#${name}`).DataTable().row(e.currentTarget).data();
                     const isSelected = e.currentTarget.classList.contains('selected');
+                    // console.log(isSelected);
 
                     if (!isSelected) {
                         thisHelper.selectedRow[name].length ? thisHelper.selectedRow[name].push(row) : thisHelper.selectedRow[name] = [row];
@@ -189,7 +196,7 @@ const datatableHelper = {
                             ? $(`#edit${name}Row`).prop('disabled', true)
                             : $(`#edit${name}Row`).prop('disabled', false);
                     } else {
-                        thisHelper.selectedRow[name] = thisHelper.selectedRow[name].filter(item => item !== row);
+                        thisHelper.selectedRow[name] = thisHelper.selectedRow[name].filter(item => JSON.stringify(item) !== JSON.stringify(row));
                         if (thisHelper.selectedRow[name].length) {
                             (thisHelper.selectedRow[name].length > 1)
                                 ? $(`#edit${name}Row`).prop('disabled', true)
@@ -201,7 +208,15 @@ const datatableHelper = {
                     }
 
                     e.currentTarget.classList.toggle('selected');
+                    thisHelper.multiRowSelectLabelUpdate(name);
                     // console.log(thisHelper.selectedRow[name]);
+                });
+
+                $(`.removeSelectedRows[data-table=${name}]`).off('click').on('click', () => {
+                    thisHelper.selectedRow[name] = [];
+                    $(`#edit${name}Row, #delete${name}Row`).prop('disabled', true);
+                    thisHelper.multiRowSelectLabelUpdate(name);
+                    $(`#${name}`).DataTable().rows('.selected').nodes().each((row) => row.classList.remove('selected'));
                 });
             }
 
@@ -312,6 +327,17 @@ const datatableHelper = {
         const finalTableOptions = { ...defaultTableOptions, ...tableOptions };
         
         return $(selector).DataTable(finalTableOptions);
+    },
+
+    multiRowSelectLabelUpdate: function (name) {
+        let thisHelper = this;
+        if (thisHelper.selectedRow[name].length) {
+            $(`.selectedRowsLabel[data-name=${name}]`).addClass('flex').removeClass('hidden');
+            $(`.selectedRowsCounter[data-name=${name}]`).text(thisHelper.selectedRow[name].length);
+        }
+        else {
+            $(`.selectedRowsLabel[data-name=${name}]`).removeClass('flex').addClass('hidden');
+        }
     },
 
 
