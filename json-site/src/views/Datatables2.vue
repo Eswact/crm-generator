@@ -60,16 +60,8 @@ let createdAutomatTable2Columns = [
     name: "imeiAndroid",
     checkable: true,
     orderable: false,
-    render: function (data, type, row) {
-                if (data != null) {
-                    return `<div class="notSelectRow py-2 px-4 flex items-center">
-                              <input type="text" class="editableTdInput hidden notSelectRow w-full h-full border-none bg-transparent p-2" value="${data}" data-temp=${data} data-first=${data} data-name="androidImei" />
-                              <span class="editableText notSelectRow p-2" data-name="imeiAndroid">${data}</span>
-                            </div>`;
-                }
-                else { return '-'; }
-              },
-    className: "notSelectRow"
+    render: null,
+    className: ""
   },{
     order: 3,
     title: "Android Mac",
@@ -77,16 +69,8 @@ let createdAutomatTable2Columns = [
     name: "macAndroid",
     checkable: true,
     orderable: false,
-    render: function (data, type, row) {
-                if (data != null) {
-                    return `<div class="notSelectRow py-2 px-4 flex items-center">
-                              <input type="text" class="editableTdInput hidden notSelectRow w-full h-full border-none bg-transparent p-2" value="${data}" data-first=${data} data-temp=${data} data-name="androidMac" />
-                              <span class="editableText  notSelectRow p-2" data-name="macAndroid">${data}</span>
-                            </div>`;
-                }
-                else { return '-'; }
-              },
-    className: "notSelectRow"
+    render: null,
+    className: ""
   },{
     order: 4,
     title: "Modem Imei",
@@ -167,6 +151,10 @@ let createdAutomatTable2TableOptions = {
             },
 fnRowCallBack: function (nRow, data, iDisplayIndex, iDisplayIndexFull) {},
 fnInitComplete: function () {},
+footerCallback: function (row, data, start, end, display) {
+              let api = this.api();
+              $(api.column(1).footer()).html('Total:');
+            },
 order: false
 };
 createdAutomatTable2TableOptions.serverSide = true;
@@ -181,14 +169,13 @@ let createdAutomatTable2RightClick = [{'name': "Edit", 'click': function(rowData
                 }}];
 let createdAutomatTable2KeyFocusFunction = false
 let createdAutomatTable2KeyFunction = false
-let createdAutomatTable2Options = {"customButtons":[{"html":"<i class='fa-solid fa-arrows-rotate text-xl'></i>","title":"Yenile"}],"rowSelect":false,"multiRowSelect":true,"rightClick":[{"name":"Edit"},{"name":"Delete"},{"name":"Test"}]}
+let createdAutomatTable2Options = {"customButtons":[{"html":"<i class='fa-solid fa-arrows-rotate text-xl'></i>","id":"refreshTableButton","title":"Yenile"}],"rowSelect":false,"multiRowSelect":true,"rightClick":[{"name":"Edit"},{"name":"Delete"},{"name":"Test"}]}
 
 createdAutomatTable2Options["rightClick"] = createdAutomatTable2RightClick;
 createdAutomatTable2Options['keyFocus'] = createdAutomatTable2KeyFocusFunction;
 createdAutomatTable2Options['key'] = createdAutomatTable2KeyFunction;
 
 createdAutomatTable2Options.customButtons[0].onclick = function () {
-                  commonFunctions.openModal(200,200, 'test');
                   createdAutomatTable2.ajax.reload();
                 };
 

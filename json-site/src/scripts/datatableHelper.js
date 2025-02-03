@@ -81,6 +81,14 @@ const datatableHelper = {
     
         if (ajaxReq) {
             defaultTableOptions.ajax = ajaxReq
+            if (!defaultTableOptions.ajax.error) {
+                defaultTableOptions.ajax.error = function(xhr, error, thrown) {
+                    console.error("API Hatası:", error, thrown);
+                    toast.error("Veriler yüklenirken bir hata oluştu! Tablo oluşturulamadı! Tekrar denemek için sayfayı yenileyebilirsiniz.");
+                    $(`#${name}`).DataTable().destroy();
+                    $(`#${name}`).addClass('hidden');
+                }
+            }
         }
     
         //fnInitComplete
@@ -127,7 +135,7 @@ const datatableHelper = {
                 ${options && options.customButtons && options.customButtons.length > 0
                     ? `<div class="w-[2px] h-10 bg-main/75 mx-2"></div>
                         ${options.customButtons.map((button, index) => {
-                            return `<button id="customButton${index}" title=${button.title} class="p-2 px-4 flex items-center gap-2 bg-main hover:bg-opacity-80 duration-200 dark:bg-opacity-70 dark:hover:bg-opacity-100 text-white shadow-md text-xl rounded-lg disabled:opacity-50">${button.html}</button>`
+                            return `<button id="${button.id}" data-index="${index}" title=${button.title} class="customButton p-2 px-4 flex items-center gap-2 bg-main hover:bg-opacity-80 duration-200 dark:bg-opacity-70 dark:hover:bg-opacity-100 text-white shadow-md text-xl rounded-lg disabled:opacity-50">${button.html}</button>`
                         }).join('')}`
                     : ''
                 }
@@ -140,11 +148,11 @@ const datatableHelper = {
 
             if (options && options.customButtons && options.customButtons.length > 0) {
                 options.customButtons.forEach((button, index) => {
-                    $(`#customButton${index}`).off('click').on('click', button.onclick);
+                    $(`.customButton[data-index=${index}]`).off('click').on('click', button.onclick);
                 });
             }
 
-            if (options && options.rowSelect) {
+            if (options && options.rowSelect && !options.multiRowSelect) {
                 $(`#${name}`).DataTable().on('click', 'tbody tr', (e) => {
                     if (e.target.classList.contains('notSelectRow')) {
                         return;
@@ -166,6 +174,37 @@ const datatableHelper = {
                 });
             }
 
+            if (options && options.multiRowSelect) {
+                $(`#${name}`).DataTable().on('click', 'tbody tr', (e) => {
+                    if (e.target.classList.contains('notSelectRow')) {
+                        return;
+                    }
+                    const row = $(`#${name}`).DataTable().row(e.currentTarget).data();
+                    const isSelected = e.currentTarget.classList.contains('selected');
+
+                    if (!isSelected) {
+                        thisHelper.selectedRow[name].length ? thisHelper.selectedRow[name].push(row) : thisHelper.selectedRow[name] = [row];
+                        $(`#delete${name}Row`).prop('disabled', false);
+                        (thisHelper.selectedRow[name].length > 1)
+                            ? $(`#edit${name}Row`).prop('disabled', true)
+                            : $(`#edit${name}Row`).prop('disabled', false);
+                    } else {
+                        thisHelper.selectedRow[name] = thisHelper.selectedRow[name].filter(item => item !== row);
+                        if (thisHelper.selectedRow[name].length) {
+                            (thisHelper.selectedRow[name].length > 1)
+                                ? $(`#edit${name}Row`).prop('disabled', true)
+                                : $(`#edit${name}Row`).prop('disabled', false);
+                        }
+                        else {
+                            $(`#edit${name}Row, #delete${name}Row`).prop('disabled', true);
+                        }
+                    }
+
+                    e.currentTarget.classList.toggle('selected');
+                    console.log(thisHelper.selectedRow[name]);
+                });
+            }
+
             if (options && options.keyFocus) {
                 $(`#${name}`).DataTable().on('key-focus', function (e, datatable, cell, originalEvent) {
                     options.keyFocus(e, datatable, cell, originalEvent);
@@ -178,7 +217,6 @@ const datatableHelper = {
                 });
             }
 
-
             if (userFnInitComplete) {
                 userFnInitComplete.apply(this, arguments);
             }
@@ -190,7 +228,7 @@ const datatableHelper = {
             userDrawCallback = tableOptions.drawCallback;
         }
         tableOptions.drawCallback = function () {
-            if (options && options.rowSelect) {
+            if (options && options.rowSelect && !options.multiRowSelect) {
                 const table = $(`#${name}`).DataTable();
                 const selected = thisHelper.selectedRow[name];
                 (JSON.stringify(selected) === JSON.stringify({})) ? $(`#edit${name}Row, #delete${name}Row`).prop('disabled', true) : null;
@@ -199,6 +237,31 @@ const datatableHelper = {
                     const row = this.data();
                     if (JSON.stringify(selected) == JSON.stringify(row)) {
                         $(this.node()).addClass('selected');
+                    }
+                });
+            }
+
+            if (options && options.multiRowSelect) {
+                const table = $(`#${name}`).DataTable();
+                const selectedRows = thisHelper.selectedRow[name];
+                if (selectedRows.length) {
+                    $(`#delete${name}Row`).prop('disabled', false)
+                    selectedRows.length > 1
+                        ? $(`#edit${name}Row`).prop('disabled', true)
+                        : $(`#edit${name}Row`).prop('disabled', false);
+                }
+                else {
+                    $(`#edit${name}Row, #delete${name}Row`).prop('disabled', true);
+                }
+
+                table.rows().every(function () {
+                    const row = this.data();
+                    if (selectedRows.length) {
+                        selectedRows.forEach(selected => {
+                            if (JSON.stringify(selected) == JSON.stringify(row)) {
+                                $(this.node()).addClass('selected');
+                            }
+                        });
                     }
                 });
             }
@@ -240,6 +303,11 @@ const datatableHelper = {
                 userFnRowCallBack.apply(this, arguments);
             }
         };
+
+        //footerCallback
+        if (tableOptions.footerCallback) {
+            tableOptions.footerCallback = tableOptions.footerCallback;
+        }
     
         const finalTableOptions = { ...defaultTableOptions, ...tableOptions };
         
@@ -749,7 +817,7 @@ const datatableHelper = {
     // utilities
     resolveDeep: function (data, table, resolvedString) {
         let thisHelper = this;
-        let tableData = thisHelper.selectedRow[table];
+        let tableData = Array.isArray(thisHelper.selectedRow[table]) ? thisHelper.selectedRow[table][0] : thisHelper.selectedRow[table];
         if (Array.isArray(data)) {
             data.forEach((item, index) => {
                 data[index] = this.resolveDeep(item, table, resolvedString);
@@ -762,7 +830,6 @@ const datatableHelper = {
             }
         } else if (typeof data === 'string') {
           if (data.includes(resolvedString)) {
-            // get selectedRow data
             data = tableData[data.split('.')[1]];
           }
         }

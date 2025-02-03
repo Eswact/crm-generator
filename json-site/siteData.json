@@ -951,16 +951,14 @@
               "name": "imeiAndroid",
               "title": "Android Imei",
               "checkable": true,
-              "orderable": false,
-              "className": "notSelectRow"
+              "orderable": false
             },
             {
               "order": 3,
               "name": "macAndroid",
               "title": "Android Mac",
               "checkable": true,
-              "orderable": false,
-              "className": "notSelectRow"
+              "orderable": false
             },
             {
               "order": 4,
@@ -1094,6 +1092,7 @@
             "customButtons": [
               {
                 "html": "<i class='fa-solid fa-arrows-rotate text-xl'></i>",
+                "id": "refreshTableButton",
                 "title": "Yenile"
               }
             ],

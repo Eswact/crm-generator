@@ -1385,16 +1385,6 @@ module.exports = {
               title: 'Android Imei',
               checkable: true,
               orderable: false,
-              className: 'notSelectRow',
-              render: function (data, type, row) {
-                if (data != null) {
-                    return `<div class="notSelectRow py-2 px-4 flex items-center">
-                              <input type="text" class="editableTdInput hidden notSelectRow w-full h-full border-none bg-transparent p-2" value="${data}" data-temp=${data} data-first=${data} data-name="androidImei" />
-                              <span class="editableText notSelectRow p-2" data-name="imeiAndroid">${data}</span>
-                            </div>`;
-                }
-                else { return '-'; }
-              },
             },
             {
               order: 3,
@@ -1402,16 +1392,6 @@ module.exports = {
               title: 'Android Mac',
               checkable: true,
               orderable: false,
-              className: 'notSelectRow',
-              render: function (data, type, row) {
-                if (data != null) {
-                    return `<div class="notSelectRow py-2 px-4 flex items-center">
-                              <input type="text" class="editableTdInput hidden notSelectRow w-full h-full border-none bg-transparent p-2" value="${data}" data-first=${data} data-temp=${data} data-name="androidMac" />
-                              <span class="editableText  notSelectRow p-2" data-name="macAndroid">${data}</span>
-                            </div>`;
-                }
-                else { return '-'; }
-              },
             },
             {
               order: 4,
@@ -1558,12 +1538,17 @@ module.exports = {
             },
             fnRowCallBack: function (nRow, data, iDisplayIndex, iDisplayIndexFull) {},
             fnInitComplete: function () {},
+            footerCallback: function (row, data, start, end, display) {
+              let api = this.api();
+              $(api.column(1).footer()).html('Total:');
+            },
             order: false,
           },
           "options": {
             "customButtons": [
               {
                 "html": "<i class='fa-solid fa-arrows-rotate text-xl'></i>",
+                "id": "refreshTableButton",
                 "title": "Yenile",
                 "onclick": function () {
                   createdAutomatTable2.ajax.reload();
