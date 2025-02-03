@@ -220,6 +220,13 @@ ${item.id}Options["rightClick"] = ${item.id}RightClick;
 ${item.id}Options['keyFocus'] = ${item.id}KeyFocusFunction;
 ${item.id}Options['key'] = ${item.id}KeyFunction;
 
+${item.options && item.options.customButtons && item.options.customButtons.length > 0
+  ? item.options.customButtons.map((element, index) => {
+    return `${item.id}Options.customButtons[${index}].onclick = ${element.onclick.toString()};`;
+  }).join('\n')
+  : ''
+}
+
 ${(item.operations) 
   ? `let ${item.id}Operations = ${JSON.stringify(item.operations)}`
   : `let ${item.id}Operations = {}`}

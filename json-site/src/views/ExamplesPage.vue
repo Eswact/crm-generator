@@ -125,6 +125,8 @@ messagesTableOptions["rightClick"] = messagesTableRightClick;
 messagesTableOptions['keyFocus'] = messagesTableKeyFocusFunction;
 messagesTableOptions['key'] = messagesTableKeyFunction;
 
+
+
 let messagesTableOperations = {}
 
     

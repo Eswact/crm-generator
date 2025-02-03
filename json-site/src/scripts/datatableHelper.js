@@ -102,6 +102,10 @@ const datatableHelper = {
                         </button>`
                     :''
                 }
+                ${operations.add || operations.edit || operations.delete
+                    ? '<div class="w-[2px] h-10 bg-main/75 mx-2"></div>'
+                    : ''
+                }
                 ${operations.add
                     ? `<button id="add${name}Row" class="p-2 px-4 flex items-center gap-2 bg-main hover:bg-opacity-80 duration-200 dark:bg-opacity-70 dark:hover:bg-opacity-100 text-white shadow-md text-xl rounded-lg">
                             <i class="fa-solid fa-plus text-xl"></i>
@@ -120,12 +124,25 @@ const datatableHelper = {
                         </button>`
                     :''
                 }
+                ${options && options.customButtons && options.customButtons.length > 0
+                    ? `<div class="w-[2px] h-10 bg-main/75 mx-2"></div>
+                        ${options.customButtons.map((button, index) => {
+                            return `<button id="customButton${index}" title=${button.title} class="p-2 px-4 flex items-center gap-2 bg-main hover:bg-opacity-80 duration-200 dark:bg-opacity-70 dark:hover:bg-opacity-100 text-white shadow-md text-xl rounded-lg disabled:opacity-50">${button.html}</button>`
+                        }).join('')}`
+                    : ''
+                }
             </div>`);
             $(`#open${name}CT`).off('click').on('click', () => thisHelper.openCTModal(name, tableColumns));
             $(`#open${name}Filters`).off('click').on('click', () => thisHelper.openFiltersModal(name, tableFilters));
             $(`#add${name}Row`).off('click').on('click', () => thisHelper.openAddRowModal(name, operations.add));
             $(`#edit${name}Row`).off('click').on('click', () => thisHelper.editRowModal(name, operations.edit));
             $(`#delete${name}Row`).off('click').on('click', () => thisHelper.deleteRow(name, operations.delete));
+
+            if (options && options.customButtons && options.customButtons.length > 0) {
+                options.customButtons.forEach((button, index) => {
+                    $(`#customButton${index}`).off('click').on('click', button.onclick);
+                });
+            }
 
             if (options && options.rowSelect) {
                 $(`#${name}`).DataTable().on('click', 'tbody tr', (e) => {

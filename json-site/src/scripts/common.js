@@ -1,6 +1,7 @@
 import { ref } from "vue";
 import siteDataJson from "../../siteData.json";
 
+const defaultUnit = '₺';
 const defaultSplash = {
   visible: false,
   defaultHtml: siteDataJson.splashDefaultContext || `<img class="defaultImg" src="/defaults/images/loading.gif" />`,
@@ -136,6 +137,28 @@ const commonFunctions = {
   
     return parsedKeys;
   },
+  convert2PriceWithUnit: function (value, unit) {
+    let unitName = defaultUnit;
+    if (unit != null) unitName = unit;
+    if (value != null) {
+      let str = value.toLocaleString("en-US", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      });
+      str = str.replace(/\./, "x").replace(/,/g, ".").replace(/x/, ",");
+      return `${str} ${unitName}`;
+    }
+    return `0,00 ${unitName}`;
+  },
+  reverseConvertFromPrice: function (value) {
+    if (value != null && value != undefined) {
+        let str = value.replace(/\./g, "");
+        str = str.replace(/,/, ".");
+        return parseFloat(str);
+    } else {
+        return 0;
+    }
+  }
 }
 
 export default commonFunctions;
