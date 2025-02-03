@@ -170,7 +170,7 @@ const datatableHelper = {
                     }
 
                     e.currentTarget.classList.toggle('selected');
-                    console.log(thisHelper.selectedRow[name]);
+                    // console.log(thisHelper.selectedRow[name]);
                 });
             }
 
@@ -201,7 +201,7 @@ const datatableHelper = {
                     }
 
                     e.currentTarget.classList.toggle('selected');
-                    console.log(thisHelper.selectedRow[name]);
+                    // console.log(thisHelper.selectedRow[name]);
                 });
             }
 
@@ -281,7 +281,7 @@ const datatableHelper = {
                             data: rowData
                         };
                     });
-                    console.log(rightClickMenu);
+                    // console.log(rightClickMenu);
 
                     commonFunctions.createRightClickMenu(e, rightClickMenu);
                 });
@@ -465,7 +465,7 @@ const datatableHelper = {
                 }
             }
         });
-        console.log(tableFilters);
+        // console.log(tableFilters);
         this.reloadTable(table);
         commonFunctions.closeFilter();
     },
@@ -564,7 +564,6 @@ const datatableHelper = {
                 if (incorrectEntries.length > 0) { return; }
 
                 if (item.visible) {
-                    console.log(item);
                     const input = document.getElementById(item.name);
                     input.classList.remove("border-red-500");
                     $(input).siblings(".itemError").addClass('hidden').text('');
@@ -648,7 +647,7 @@ const datatableHelper = {
                                 type="${item.type}" 
                                 id="${item.name}" 
                                 name="${item.name}" 
-                                value="${item.value}" 
+                                value="${Array.isArray(item.value) ? item.value[0] : item.value}" 
                                 class="py-2 px-4 border border-darkBg text-darkBg rounded-lg" 
                                 ${item.placeholder ? `placeholder=${item.placeholder}`: ''} />
                             <span class="itemError hidden text-sm text-red-600 p-1"></span>
@@ -659,7 +658,7 @@ const datatableHelper = {
                             <label for="${item.name}" class="font-semibold">${item.required ? `* ${item.title}`: `${item.title}`}</label>
                             <select id="${item.name}" name="${item.name}" class="p-2 border border-darkBg text-darkBg rounded-lg">
                                 ${item.options.map(option => `
-                                    <option value="${option.value}" ${String(option.value).toLowerCase() == String(item.value).toLowerCase() ? 'selected' : ''}>${option.label}</option>
+                                    <option value="${option.value}" ${String(option.value).toLowerCase() == String(Array.isArray(item.value) ? item.value[0] : item.value).toLowerCase() ? 'selected' : ''}>${option.label}</option>
                                 `).join('')}
                             </select>
                             <span class="itemError hidden text-sm text-red-600 p-1"></span>
@@ -788,7 +787,6 @@ const datatableHelper = {
 
         let formData = JSON.parse(JSON.stringify(deleteOperation.data));
         formData = thisHelper.resolveDeep(formData, table, `selectedRow`);
-        // console.log(formData);
         
         let onClick = function () {
             $.ajax({
@@ -817,7 +815,7 @@ const datatableHelper = {
     // utilities
     resolveDeep: function (data, table, resolvedString) {
         let thisHelper = this;
-        let tableData = Array.isArray(thisHelper.selectedRow[table]) ? thisHelper.selectedRow[table][0] : thisHelper.selectedRow[table];
+        let tableData = thisHelper.selectedRow[table];
         if (Array.isArray(data)) {
             data.forEach((item, index) => {
                 data[index] = this.resolveDeep(item, table, resolvedString);
@@ -830,7 +828,12 @@ const datatableHelper = {
             }
         } else if (typeof data === 'string') {
           if (data.includes(resolvedString)) {
-            data = tableData[data.split('.')[1]];
+            if (Array.isArray(tableData)) {
+                data = tableData.map(item => item[data.split('.')[1]]);
+            }
+            else {
+                data = tableData[data.split('.')[1]];
+            }
           }
         }
         return data;
