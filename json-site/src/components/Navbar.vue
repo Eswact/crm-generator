@@ -52,7 +52,7 @@ const darkModeEnabled = (pagesData.theme.darkModeEnabled == true || pagesData.th
             <span :class="['p-[8px] w-[44px] border-box flex justify-center items-center', { 'bg-main rounded-lg': isActive(page.path) }]">
               <i :class=page.icon class="min-w-[30px] flex justify-center items-center text-[26px]"></i>
             </span>
-            <span class="text-[1.45rem] font-semibold">{{ page.name }}</span>
+            <span class="text-[1.45rem] font-semibold threeDots">{{ page.name }}</span>
           </router-link>
         </li>
       </ul>
