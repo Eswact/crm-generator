@@ -4,11 +4,12 @@ import 'datatables.net-colreorder';
 import 'datatables.net-keytable';
 import '../styles/dataTables.dataTables.css';
 import Sortable from 'sortablejs';
-import commonFunctions from './common';
+import commonFunctions from '../scripts/common';
 import { toast } from "vue3-toastify";
+import select2Service from './select2Service';
 
 
-const datatableHelper = {
+const datatableService = {
     selectedRow: {},
     reloadTable: function (name, stayOnPage = false) {
         const table = $(`#${name}`).DataTable();
@@ -331,6 +332,8 @@ const datatableHelper = {
 
     multiRowSelectLabelUpdate: function (name) {
         let thisHelper = this;
+        console.log(thisHelper.selectedRow[name]);
+        //control
         if (thisHelper.selectedRow[name].length) {
             $(`.selectedRowsLabel[data-name=${name}]`).addClass('flex').removeClass('hidden');
             $(`.selectedRowsCounter[data-name=${name}]`).text(thisHelper.selectedRow[name].length);
@@ -458,6 +461,14 @@ const datatableHelper = {
                                             </select>
                                         </div>`;
                         break;
+                    case 'select2':
+                        filterHtml += `<div class="w-full flex flex-col">
+                                            <label class="font-semibold text-second text-md pl-1">${filter.name}</label>
+                                            <select data-filter="${filter.data}" class="filterInput text-lg w-full h-[50px] md:h-auto border border-darkBg text-darkBg rounded-xl  px-4 py-3 md:py-2 md:px-3">
+                                                <option value=""></option>
+                                            </select>
+                                        </div>`;
+                        break;
                     case 'check':
                         filterHtml += `<div class="w-full flex flex-col">
                                             <label class="font-semibold text-second text-md pl-1">${filter.name}</label>
@@ -468,6 +479,12 @@ const datatableHelper = {
             }
         });
         $('#tableFilterList').html(filterHtml);
+
+        $(tableFilters.data.filter(filter => filter.type == 'select2' && filter.visible)).each((i, f) => {
+            (f.value && f.selectedText)
+                ? select2Service.createSelect2(`.filterInput[data-filter="${f.data}"]`, f.options, {id: f.value, text: f.selectedText})
+                : select2Service.createSelect2(`.filterInput[data-filter="${f.data}"]`, f.options);
+        });
 
         $('#filterModalApply').off('click').on('click', () => this.applyFilters(table, tableFilters));
         $('#filterModalReset').off('click').on('click', () => this.resetFilters(table, tableFilters));
@@ -484,6 +501,10 @@ const datatableHelper = {
                         break;
                     case 'select':
                         filter.value = $(`.filterInput[data-filter="${filter.data}"]`).val();
+                        break;
+                    case 'select2':
+                        filter.value = $(`.filterInput[data-filter="${filter.data}"]`).val();
+                        filter.selectedText = $(`.filterInput[data-filter="${filter.data}"]`).text();
                         break;
                     case 'check':
                         filter.value = $(`.filterInput[data-filter="${filter.data}"]`).prop('checked');
@@ -797,6 +818,7 @@ const datatableHelper = {
                     else {
                         toast.success(data.description || "İşlem başarılı");
                         thisHelper.selectedRow[table] = {};
+                        // thisHelper.multiRowSelectLabelUpdate();
                         thisHelper.reloadTable(table, true);
                         commonFunctions.closeModal();
                     }
@@ -826,6 +848,7 @@ const datatableHelper = {
                     } else {
                         toast.success(data.description || "İşlem başarılı");
                         thisHelper.selectedRow[table] = {};
+                        // thisHelper.multiRowSelectLabelUpdate();
                         thisHelper.reloadTable(table, true);
                     }
                 },
@@ -866,4 +889,4 @@ const datatableHelper = {
     },
 };
 
-export default datatableHelper;
+export default datatableService;

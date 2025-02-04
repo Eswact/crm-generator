@@ -14,7 +14,7 @@
       const router = useRouter();
       import commonFunctions from '../scripts/common.js'
       
-import datatableHelper from "../scripts/datatableHelper";
+import datatableService from "../services/datatableService";
 import $ from "jquery";
     
       
@@ -121,7 +121,7 @@ let createdAutomatTable2Columns = [
   }
 ];
 
-let createdAutomatTable2Filters = { data: [{"data":"plate","name":"Plate","type":"text","value":null,"default":null,"visible":true},{"data":"model","name":"Model","type":"select","options":[{"value":"AA-91","label":"AA-91"}],"value":null,"default":null,"visible":true},{"data":"androidImei","name":"Android Imei","type":"text","value":null,"default":null,"visible":true},{"data":"androidMac","name":"Android Mac","type":"text","value":null,"default":null,"visible":true},{"data":"modemImei","name":"Modem Imei","type":"text","value":null,"default":null,"visible":true},{"data":"modemMac","name":"Modem Mac","type":"text","value":null,"default":null,"visible":true},{"data":"plcImei","name":"PLC Imei","type":"text","value":null,"default":null,"visible":true},{"data":"plcMac","name":"PLC Mac","type":"text","value":null,"default":null,"visible":true}] }
+let createdAutomatTable2Filters = { data: [{"data":"plate","name":"Plate","type":"text","value":null,"default":null,"visible":true},{"data":"model","name":"Model","type":"select2","options":{"width":"100%","minimumInputLength":-1,"placeholder":"Model Selection","allowClear":true,"language":{"noResults":"Eşleşen bir Model bulunamadı.","inputTooShort":"En az 1 Karakter giriniz.","searching":"Aranıyor..."},"ajax":{"url":"http://localhost:44350/production/get-models","delay":250,"type":"POST","dataType":"json","contentType":"application/json; charset=utf-8"}},"value":null,"default":null,"visible":true},{"data":"androidImei","name":"Android Imei","type":"text","value":null,"default":null,"visible":true},{"data":"androidMac","name":"Android Mac","type":"text","value":null,"default":null,"visible":true},{"data":"modemImei","name":"Modem Imei","type":"text","value":null,"default":null,"visible":true},{"data":"modemMac","name":"Modem Mac","type":"text","value":null,"default":null,"visible":true},{"data":"plcImei","name":"PLC Imei","type":"text","value":null,"default":null,"visible":true},{"data":"plcMac","name":"PLC Mac","type":"text","value":null,"default":null,"visible":true}] }
 createdAutomatTable2Filters.beforeApply = function () { 
               console.log('test apply');
               console.log('test apply');
@@ -139,7 +139,7 @@ let createdAutomatTable2Ajax = {
   data: function(d) {
     d.changedCells = $('#showChangedCells').is(':checked') && $('#showChangedCells').is(':visible')  ?  createdAutomatTableCellUpdates.map(item => (item.id)) : null;
 d.forTest = 4
-    datatableHelper.updateTableAjaxData("createdAutomatTable2", d, createdAutomatTable2Filters.data);
+    datatableService.updateTableAjaxData("createdAutomatTable2", d, createdAutomatTable2Filters.data);
   }
 };
 
@@ -183,7 +183,7 @@ let createdAutomatTable2Operations = {"add":{"title":"Yeni Otomat Oluştur","url
 
     
       onMounted(() => {
-        createdAutomatTable2 = datatableHelper.initializeDataTable('createdAutomatTable2', '#createdAutomatTable2', createdAutomatTable2Ajax, createdAutomatTable2Columns, createdAutomatTable2Filters, createdAutomatTable2TableOptions, createdAutomatTable2Operations, createdAutomatTable2Options);
+        createdAutomatTable2 = datatableService.initializeDataTable('createdAutomatTable2', '#createdAutomatTable2', createdAutomatTable2Ajax, createdAutomatTable2Columns, createdAutomatTable2Filters, createdAutomatTable2TableOptions, createdAutomatTable2Operations, createdAutomatTable2Options);
     
         
       });

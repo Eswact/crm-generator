@@ -19,7 +19,7 @@
       const router = useRouter();
       import commonFunctions from '../scripts/common.js'
       import { sharedFunctions } from '../scripts/custom/shared.js';
-import datatableHelper from "../scripts/datatableHelper";
+import datatableService from "../services/datatableService";
 import $ from "jquery";
     
       
@@ -131,7 +131,7 @@ let messagesTableOperations = {}
 
     
       onMounted(() => {
-        messagesTable = datatableHelper.initializeDataTable('messagesTable', '#messagesTable', messagesTableAjax, messagesTableColumns, null, messagesTableTableOptions, messagesTableOperations, messagesTableOptions);
+        messagesTable = datatableService.initializeDataTable('messagesTable', '#messagesTable', messagesTableAjax, messagesTableColumns, null, messagesTableTableOptions, messagesTableOperations, messagesTableOptions);
     
         
         toast.success("Toast Test!");

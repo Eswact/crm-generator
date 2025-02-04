@@ -1,7 +1,5 @@
 import { createApp } from 'vue';
-import './styles/base.css';
-import './styles/index.css';
-import './styles/fonts.css';
+import './styles/main.css';
 import "vue3-toastify/dist/index.css";
 
 import App from './App.vue';

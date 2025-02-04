@@ -104,7 +104,7 @@ function createViews() {
       let thisPageScript = script.pages.find(x => x.name === page.name);
       return thisPageScript ? `import ${thisPageScript.import} from '../scripts/custom/${script.name}.js';` : '';
     }).join('\n');
-    (!page.doms.every(x => x.type != 'datatable')) ? scriptsImports += '\nimport datatableHelper from "../scripts/datatableHelper";\nimport $ from "jquery";' : '';
+    (!page.doms.every(x => x.type != 'datatable')) ? scriptsImports += '\nimport datatableService from "../services/datatableService";\nimport $ from "jquery";' : '';
 
     //Datatable scripts
     const datatableScripts = page.doms.filter(x => x.type === 'datatable').map(item => generateDatatableScript(item)).join('\n');
@@ -128,7 +128,7 @@ function createViews() {
     
       onMounted(() => {
         ${page.doms.filter(x => x.type == 'datatable').map(function(item, index) {
-          return `${item.name} = datatableHelper.initializeDataTable('${item.name}', '#${item.id}', ${item.id}Ajax, ${item.id}Columns, ${(item.filters && item.filters.data && item.filters.data.length > 0) ? `${item.id}Filters`: null}, ${item.id}TableOptions, ${item.id}Operations, ${item.id}Options);`;
+          return `${item.name} = datatableService.initializeDataTable('${item.name}', '#${item.id}', ${item.id}Ajax, ${item.id}Columns, ${(item.filters && item.filters.data && item.filters.data.length > 0) ? `${item.id}Filters`: null}, ${item.id}TableOptions, ${item.id}Operations, ${item.id}Options);`;
         }).join('\n')}
     
         ${page.customReadyScripts}
@@ -190,7 +190,7 @@ let ${item.id}Ajax = {
       : ''
     }
     ${(item.filters && item.filters.data && item.filters.data.length > 0)
-    ? `datatableHelper.updateTableAjaxData("${item.name}", d, ${item.id}Filters.data);`
+    ? `datatableService.updateTableAjaxData("${item.name}", d, ${item.id}Filters.data);`
     : ''}
   }
 };

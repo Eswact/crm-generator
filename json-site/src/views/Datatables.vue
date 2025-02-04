@@ -28,7 +28,7 @@
       const router = useRouter();
       import commonFunctions from '../scripts/common.js'
       
-import datatableHelper from "../scripts/datatableHelper";
+import datatableService from "../services/datatableService";
 import $ from "jquery";
     
       
@@ -113,7 +113,7 @@ let transferedAutomatTableAjax = {
   dataSrc: function (json) { return json.data; },
   data: function(d) {
     d.forTest = 4
-    datatableHelper.updateTableAjaxData("transferedAutomatTable", d, transferedAutomatTableFilters.data);
+    datatableService.updateTableAjaxData("transferedAutomatTable", d, transferedAutomatTableFilters.data);
   }
 };
 
@@ -285,7 +285,7 @@ let createdAutomatTableAjax = {
   data: function(d) {
     d.changedCells = $('#showChangedCells').is(':checked') && $('#showChangedCells').is(':visible')  ?  createdAutomatTableCellUpdates.map(item => (item.id)) : null;
 d.forTest = 4
-    datatableHelper.updateTableAjaxData("createdAutomatTable", d, createdAutomatTableFilters.data);
+    datatableService.updateTableAjaxData("createdAutomatTable", d, createdAutomatTableFilters.data);
   }
 };
 
@@ -408,8 +408,8 @@ let createdAutomatTableOperations = {"add":{"title":"Yeni Otomat Oluştur","url"
 
     
       onMounted(() => {
-        transferedAutomatTable = datatableHelper.initializeDataTable('transferedAutomatTable', '#transferedAutomatTable', transferedAutomatTableAjax, transferedAutomatTableColumns, transferedAutomatTableFilters, transferedAutomatTableTableOptions, transferedAutomatTableOperations, transferedAutomatTableOptions);
-createdAutomatTable = datatableHelper.initializeDataTable('createdAutomatTable', '#createdAutomatTable', createdAutomatTableAjax, createdAutomatTableColumns, createdAutomatTableFilters, createdAutomatTableTableOptions, createdAutomatTableOperations, createdAutomatTableOptions);
+        transferedAutomatTable = datatableService.initializeDataTable('transferedAutomatTable', '#transferedAutomatTable', transferedAutomatTableAjax, transferedAutomatTableColumns, transferedAutomatTableFilters, transferedAutomatTableTableOptions, transferedAutomatTableOperations, transferedAutomatTableOptions);
+createdAutomatTable = datatableService.initializeDataTable('createdAutomatTable', '#createdAutomatTable', createdAutomatTableAjax, createdAutomatTableColumns, createdAutomatTableFilters, createdAutomatTableTableOptions, createdAutomatTableOperations, createdAutomatTableOptions);
     
         
         $('#showChangedCells').on('change', function () {

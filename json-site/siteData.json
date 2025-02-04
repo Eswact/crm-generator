@@ -1009,13 +1009,25 @@
               {
                 "data": "model",
                 "name": "Model",
-                "type": "select",
-                "options": [
-                  {
-                    "value": "AA-91",
-                    "label": "AA-91"
+                "type": "select2",
+                "options": {
+                  "width": "100%",
+                  "minimumInputLength": -1,
+                  "placeholder": "Model Selection",
+                  "allowClear": true,
+                  "language": {
+                    "noResults": "Eşleşen bir Model bulunamadı.",
+                    "inputTooShort": "En az 1 Karakter giriniz.",
+                    "searching": "Aranıyor..."
+                  },
+                  "ajax": {
+                    "url": "http://localhost:44350/production/get-models",
+                    "delay": 250,
+                    "type": "POST",
+                    "dataType": "json",
+                    "contentType": "application/json; charset=utf-8"
                   }
-                ],
+                },
                 "value": null,
                 "default": null,
                 "visible": true
