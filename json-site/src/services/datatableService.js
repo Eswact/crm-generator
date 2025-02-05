@@ -103,7 +103,7 @@ const datatableService = {
                     ? `<div data-name=${name} class="selectedRowsLabel hidden items-center gap-6 text-lg px-2">
                         <div class="flex items-end gap-2"><span data-name=${name} class="selectedRowsCounter font-bold text-2xl text-third"></span><span class="font-semibold">Rows selected</span></div>
                         <button data-table=${name} class="removeSelectedRows px-2 py-1 font-semibold bg-third hover:bg-opacity-80 duration-200 dark:bg-opacity-70 dark:hover:bg-opacity-100 text-white shadow-md rounded-lg">Remove selected</button>
-                        ${options.showSelectedRows ? `<label for="${name}ShowSelected" class="flex items-center gap-2 px-2 py-1 bg-gray-600 text-bg rounded-lg"><input id="${name}ShowSelected" name="${name}ShowSelected" class="showSelectedRow" type="checkbox"></input><span class="font-semibold select-none">Show selected rows</span></label>` : ''}
+                        ${options.showSelectedRows ? `<label for="${name}ShowSelected" class="flex items-center gap-2 px-2 py-1 bg-second/75 hover:bg-second text-bg rounded-lg"><input id="${name}ShowSelected" name="${name}ShowSelected" class="showSelectedRow" type="checkbox"></input><span class="font-semibold select-none">Show selected rows</span></label>` : ''}
                     </div>`
                     : ''
                 }    
@@ -354,6 +354,10 @@ const datatableService = {
         }
         else {
             $(`.selectedRowsLabel[data-name=${name}]`).removeClass('flex').addClass('hidden');
+            if ($(`#${name}ShowSelected`).length && $(`#${name}ShowSelected`).prop('checked')) {
+                $(`#${name}ShowSelected`).prop('checked', false);
+                thisHelper.reloadTable(name);
+            }
         }
     },
 
