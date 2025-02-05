@@ -332,9 +332,8 @@ const datatableService = {
 
     multiRowSelectLabelUpdate: function (name) {
         let thisHelper = this;
-        console.log(thisHelper.selectedRow[name]);
         //control
-        if (thisHelper.selectedRow[name].length) {
+        if (Array.isArray(thisHelper.selectedRow[name]) && thisHelper.selectedRow[name]?.length > 0) {
             $(`.selectedRowsLabel[data-name=${name}]`).addClass('flex').removeClass('hidden');
             $(`.selectedRowsCounter[data-name=${name}]`).text(thisHelper.selectedRow[name].length);
         }
@@ -818,7 +817,7 @@ const datatableService = {
                     else {
                         toast.success(data.description || "İşlem başarılı");
                         thisHelper.selectedRow[table] = {};
-                        // thisHelper.multiRowSelectLabelUpdate();
+                        thisHelper.multiRowSelectLabelUpdate(table);
                         thisHelper.reloadTable(table, true);
                         commonFunctions.closeModal();
                     }
@@ -848,7 +847,7 @@ const datatableService = {
                     } else {
                         toast.success(data.description || "İşlem başarılı");
                         thisHelper.selectedRow[table] = {};
-                        // thisHelper.multiRowSelectLabelUpdate();
+                        thisHelper.multiRowSelectLabelUpdate(table);
                         thisHelper.reloadTable(table, true);
                     }
                 },

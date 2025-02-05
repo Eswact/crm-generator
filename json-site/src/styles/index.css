@@ -68,6 +68,28 @@ div.dtk-focus-alt table.dataTable tbody th.focus,div.dtk-focus-alt table.dataTab
   @apply outline-main outline-offset-[-2px] !important;
   outline: 2px solid;
 }
+table.dataTable > tbody > tr.selected > * {
+  @apply bg-main/75 text-white;
+}
+table.dataTable.stripe > tbody > tr:nth-child(odd).selected > *, table.dataTable.display > tbody > tr:nth-child(odd).selected > * {
+  @apply bg-main/80 text-white;
+}
+table.dataTable.row-border > tbody > tr.selected + tr.selected > td, table.dataTable.display > tbody > tr.selected + tr.selected > td {
+  @apply bg-main/65 text-white;
+}
+table.dataTable.hover > tbody > tr.selected:hover > *, table.dataTable.display > tbody > tr.selected:hover > * {
+  @apply bg-main text-white;
+}
+table.dataTable.order-column > tbody tr.selected > .sorting_1,
+table.dataTable.order-column > tbody tr.selected > .sorting_2,
+table.dataTable.order-column > tbody tr.selected > .sorting_3, table.dataTable.display > tbody tr.selected > .sorting_1,
+table.dataTable.display > tbody tr.selected > .sorting_2,
+table.dataTable.display > tbody tr.selected > .sorting_3 {
+  @apply bg-main/90 text-white;
+}
+html.dark table.dataTable.row-border > tbody > tr.selected + tr.selected > td, html.dark table.dataTable.display > tbody > tr.selected + tr.selected > td {
+  @apply border-t-main/75;
+}
 /* datatable end */
 
 /* select2 start */
