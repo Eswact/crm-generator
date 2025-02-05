@@ -210,6 +210,9 @@ let ${item.id}Ajax = {
     ${(item.filters && item.filters.data && item.filters.data.length > 0)
     ? `datatableService.updateTableAjaxData("${item.name}", d, ${item.id}Filters.data);`
     : ''}
+    ${(item.options && item.options.multiRowSelect && item.options.showSelectedRows)
+      ? `datatableService.showSelectedRowsAjaxData("${item.name}", d, ${JSON.stringify(item.options.showSelectedRows)});`
+      : ''}
   }
 };
 

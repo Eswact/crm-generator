@@ -100,7 +100,11 @@ const datatableService = {
         tableOptions.fnInitComplete = function () {
             $(`.${name}Toolbar`).html(`<div class="flex flex-col items-start gap-2">
                 ${options.multiRowSelect == true
-                    ? `<div data-name=${name} class="selectedRowsLabel hidden items-center gap-6 text-lg px-2"><div class="flex items-end gap-2"><span data-name=${name} class="selectedRowsCounter font-bold text-2xl text-third"></span><span class="font-semibold">Rows selected</span></div><button data-table=${name} class="removeSelectedRows px-2 py-1 font-semibold bg-third hover:bg-opacity-80 duration-200 dark:bg-opacity-70 dark:hover:bg-opacity-100 text-white shadow-md rounded-lg">Remove selected</button></div>`
+                    ? `<div data-name=${name} class="selectedRowsLabel hidden items-center gap-6 text-lg px-2">
+                        <div class="flex items-end gap-2"><span data-name=${name} class="selectedRowsCounter font-bold text-2xl text-third"></span><span class="font-semibold">Rows selected</span></div>
+                        <button data-table=${name} class="removeSelectedRows px-2 py-1 font-semibold bg-third hover:bg-opacity-80 duration-200 dark:bg-opacity-70 dark:hover:bg-opacity-100 text-white shadow-md rounded-lg">Remove selected</button>
+                        ${options.showSelectedRows ? `<label for="${name}ShowSelected" class="flex items-center gap-2 px-2 py-1 bg-gray-600 text-bg rounded-lg"><input id="${name}ShowSelected" name="${name}ShowSelected" class="showSelectedRow" type="checkbox"></input><span class="font-semibold select-none">Show selected rows</span></label>` : ''}
+                    </div>`
                     : ''
                 }    
                 <div class="flex items-center gap-2">
@@ -218,6 +222,12 @@ const datatableService = {
                     $(`#edit${name}Row, #delete${name}Row`).prop('disabled', true);
                     thisHelper.multiRowSelectLabelUpdate(name);
                     $(`#${name}`).DataTable().rows('.selected').nodes().each((row) => row.classList.remove('selected'));
+                });
+            }
+
+            if (options && options.showSelectedRows) {
+                $(`#${name}ShowSelected`).off('change').on('change', () => {
+                   thisHelper.reloadTable(name); 
                 });
             }
 
@@ -444,6 +454,15 @@ const datatableService = {
             $(`#open${name}Filters .filterCounter`).html(``);
             $(`#open${name}Filters .filterCounter`).addClass('hidden');
         }
+    },
+    showSelectedRowsAjaxData: function(name, d, showSelectedRows) {
+        let thisHelper = this;
+        let returnData = [];
+        if ($(`#${name}ShowSelected`).is(':checked') && (Array.isArray(thisHelper.selectedRow[name]) && thisHelper.selectedRow[name]?.length > 0)) {
+            console.log(thisHelper.selectedRow[name][0][showSelectedRows.targetData]);  
+            thisHelper.selectedRow[name].map((row, index) => returnData.push(row[showSelectedRows.targetData]));
+        }
+        d[showSelectedRows.dataName] = returnData;
     },
     fillFiltersModal: function(table, tableFilters) {
         let filterHtml = '';

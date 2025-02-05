@@ -114,6 +114,7 @@ let transferedAutomatTableAjax = {
   data: function(d) {
     d.forTest = 4
     datatableService.updateTableAjaxData("transferedAutomatTable", d, transferedAutomatTableFilters.data);
+    
   }
 };
 
@@ -286,6 +287,7 @@ let createdAutomatTableAjax = {
     d.changedCells = $('#showChangedCells').is(':checked') && $('#showChangedCells').is(':visible')  ?  createdAutomatTableCellUpdates.map(item => (item.id)) : null;
 d.forTest = 4
     datatableService.updateTableAjaxData("createdAutomatTable", d, createdAutomatTableFilters.data);
+    
   }
 };
 

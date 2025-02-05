@@ -1577,6 +1577,10 @@ module.exports = {
             ],
             "rowSelect": false,
             "multiRowSelect": true,
+            "showSelectedRows": {
+              "dataName": "selectedRows",
+              "targetData": "manufactId",
+            },
             "rightClick": [
               {
                 "name": "Edit",

@@ -140,6 +140,7 @@ let createdAutomatTable2Ajax = {
     d.changedCells = $('#showChangedCells').is(':checked') && $('#showChangedCells').is(':visible')  ?  createdAutomatTableCellUpdates.map(item => (item.id)) : null;
 d.forTest = 4
     datatableService.updateTableAjaxData("createdAutomatTable2", d, createdAutomatTable2Filters.data);
+    datatableService.showSelectedRowsAjaxData("createdAutomatTable2", d, {"dataName":"selectedRows","targetData":"manufactId"});
   }
 };
 
@@ -177,7 +178,7 @@ let createdAutomatTable2RightClick = [{'name': "Edit", 'click': function(rowData
                 }}];
 let createdAutomatTable2KeyFocusFunction = false
 let createdAutomatTable2KeyFunction = false
-let createdAutomatTable2Options = {"customButtons":[{"html":"<i class='fa-solid fa-arrows-rotate text-xl'></i>","id":"refreshTableButton","title":"Yenile"}],"rowSelect":false,"multiRowSelect":true,"rightClick":[{"name":"Edit"},{"name":"Delete"},{"name":"Test"}],"footerColumns":[{"column":0,"colspan":2},{"column":3,"colspan":3}]}
+let createdAutomatTable2Options = {"customButtons":[{"html":"<i class='fa-solid fa-arrows-rotate text-xl'></i>","id":"refreshTableButton","title":"Yenile"}],"rowSelect":false,"multiRowSelect":true,"showSelectedRows":{"dataName":"selectedRows","targetData":"manufactId"},"rightClick":[{"name":"Edit"},{"name":"Delete"},{"name":"Test"}],"footerColumns":[{"column":0,"colspan":2},{"column":3,"colspan":3}]}
 
 createdAutomatTable2Options["rightClick"] = createdAutomatTable2RightClick;
 createdAutomatTable2Options['keyFocus'] = createdAutomatTable2KeyFocusFunction;
