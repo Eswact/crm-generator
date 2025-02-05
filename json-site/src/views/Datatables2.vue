@@ -1,9 +1,9 @@
 <template>
       <div class="w-full flex flex-col justify-center items-center gap-8">
         
-<div class="w-full">
-  <table id="createdAutomatTable2" class="display stripe hover" style="width:100%"></table>
-</div>
+    <div class="w-full">
+      <table id="createdAutomatTable2" class="display stripe hover" style="width:100%"><tfoot><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tfoot></table>
+    </div>
       </div>
     </template>
   
@@ -153,7 +153,15 @@ fnRowCallBack: function (nRow, data, iDisplayIndex, iDisplayIndexFull) {},
 fnInitComplete: function () {},
 footerCallback: function (row, data, start, end, display) {
               let api = this.api();
-              $(api.column(1).footer()).html('Total:');
+              if (api) {
+                let total = api
+                  .column(2, { page: 'current' })
+                  .data()
+                  .reduce((a, b) => a + b.length, 0);
+
+                $(api.column(0).footer()).html('<span class="font-bold text-sm inline-block w-full max-w-64">Total number of characters in the third column:</span>');
+                $(api.column(1).footer()).html(`<span class="font-bold text-lg px-4 text-main dark:text-third">${total.toFixed(1)}</span>`);
+              }
             },
 order: false
 };

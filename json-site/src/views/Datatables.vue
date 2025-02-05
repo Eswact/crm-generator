@@ -1,12 +1,12 @@
 <template>
       <div class="w-full flex flex-col justify-center items-center gap-8">
         
-<div class="w-full">
-  <table id="transferedAutomatTable" class="display stripe hover" style="width:100%"></table>
-</div>
-<div class="w-full">
-  <table id="createdAutomatTable" class="display stripe hover" style="width:100%"></table>
-</div>
+    <div class="w-full">
+      <table id="transferedAutomatTable" class="display stripe hover" style="width:100%"></table>
+    </div>
+    <div class="w-full">
+      <table id="createdAutomatTable" class="display stripe hover" style="width:100%"></table>
+    </div>
             <div id="changesModal" class="fixed bottom-0 flex-col justify-center items-center gap-2 w-[400px] px-8 py-4 max-w-full bg-bg text-darkBg rounded-t-lg">
                 <div class="w-full flex justify-center items-center gap-4 text-sm"><input id="showChangedCells" type="checkbox" /><span>Show changed cells</span></div>
                 <div class="flex flex-col justify-center items-center gap-8">

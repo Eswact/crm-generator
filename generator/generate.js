@@ -147,10 +147,18 @@ function createViews() {
   });
 }
 function createDatatableDom(item) {
+  let tfoot = '';
+  if (item.tableOptions.footerCallback) {
+    tfoot += '<tfoot><tr>';
+    for(i = 0; i < item.columns.length; i++) {
+      tfoot += '<td></td>';
+    }
+    tfoot += '</tr></tfoot>';
+  }
   return `
-<div class="${item.containerClass}">
-  <table id="${item.id}" class="display stripe hover" style="width:100%"></table>
-</div>`;
+    <div class="${item.containerClass}">
+      <table id="${item.id}" class="display stripe hover" style="width:100%">${tfoot}</table>
+    </div>`;
 }
 function generateDatatableScript(item) {
   return `

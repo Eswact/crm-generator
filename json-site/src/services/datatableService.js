@@ -232,7 +232,6 @@ const datatableService = {
                     options.key(e, datatable, key, cell, originalEvent);
                 });
             }
-
             if (userFnInitComplete) {
                 userFnInitComplete.apply(this, arguments);
             }
@@ -321,9 +320,15 @@ const datatableService = {
         };
 
         //footerCallback
+        let userFooterCallback = false;
         if (tableOptions.footerCallback) {
-            tableOptions.footerCallback = tableOptions.footerCallback;
+            userFooterCallback = tableOptions.footerCallback;
         }
+        tableOptions.footerCallback = function () {
+            if (userFooterCallback) {
+                userFooterCallback.apply(this, arguments);
+            }
+        };
     
         const finalTableOptions = { ...defaultTableOptions, ...tableOptions };
         
