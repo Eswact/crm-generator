@@ -149,9 +149,19 @@ function createViews() {
 function createDatatableDom(item) {
   let tfoot = '';
   if (item.tableOptions.footerCallback) {
+    let totalColumns = item.columns.length;
+    let footerLayout = item.options.footerColumns || [];
+    
     tfoot += '<tfoot><tr>';
-    for(i = 0; i < item.columns.length; i++) {
-      tfoot += '<td></td>';
+    for (let i = 0; i < totalColumns; i++) {
+      let footerCol = footerLayout.find(col => col.column === i);
+      if (footerCol) {
+          tfoot += `<td colspan="${footerCol.colspan}"></td>`;
+          i += footerCol.colspan - 1;
+      }
+      else {
+        tfoot += `<td></td>`;
+      }
     }
     tfoot += '</tr></tfoot>';
   }

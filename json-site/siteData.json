@@ -1120,6 +1120,16 @@
               {
                 "name": "Test"
               }
+            ],
+            "footerColumns": [
+              {
+                "column": 0,
+                "colspan": 2
+              },
+              {
+                "column": 3,
+                "colspan": 3
+              }
             ]
           },
           "operations": {

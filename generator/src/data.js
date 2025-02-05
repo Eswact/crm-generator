@@ -1558,8 +1558,8 @@ module.exports = {
                   .data()
                   .reduce((a, b) => a + b.length, 0);
 
-                $(api.column(0).footer()).html('<span class="font-bold text-sm inline-block w-full max-w-64">Total number of characters in the third column:</span>');
-                $(api.column(1).footer()).html(`<span class="font-bold text-lg px-4 text-main dark:text-third">${total.toFixed(1)}</span>`);
+                $(api.column(0).footer()).html('<span class="font-bold text-sm inline-block">Total number of characters in the third column:</span>');
+                $(api.column(2).footer()).html(`<span class="font-bold text-lg px-4 text-main dark:text-third">${total.toFixed(0)}</span>`);
               }
             },
             order: false,
@@ -1597,6 +1597,16 @@ module.exports = {
                 }
               }
             ],
+            "footerColumns": [
+              {
+                column: 0,
+                colspan: 2
+              },
+              {
+                column: 3,
+                colspan: 3
+              }
+            ]
           },
           "operations": {
             "add": {

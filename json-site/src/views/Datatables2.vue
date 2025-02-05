@@ -2,7 +2,7 @@
       <div class="w-full flex flex-col justify-center items-center gap-8">
         
     <div class="w-full">
-      <table id="createdAutomatTable2" class="display stripe hover" style="width:100%"><tfoot><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tfoot></table>
+      <table id="createdAutomatTable2" class="display stripe hover" style="width:100%"><tfoot><tr><td colspan="2"></td><td></td><td colspan="3"></td><td></td><td></td><td></td></tr></tfoot></table>
     </div>
       </div>
     </template>
@@ -159,8 +159,8 @@ footerCallback: function (row, data, start, end, display) {
                   .data()
                   .reduce((a, b) => a + b.length, 0);
 
-                $(api.column(0).footer()).html('<span class="font-bold text-sm inline-block w-full max-w-64">Total number of characters in the third column:</span>');
-                $(api.column(1).footer()).html(`<span class="font-bold text-lg px-4 text-main dark:text-third">${total.toFixed(1)}</span>`);
+                $(api.column(0).footer()).html('<span class="font-bold text-sm inline-block">Total number of characters in the third column:</span>');
+                $(api.column(2).footer()).html(`<span class="font-bold text-lg px-4 text-main dark:text-third">${total.toFixed(0)}</span>`);
               }
             },
 order: false
@@ -177,7 +177,7 @@ let createdAutomatTable2RightClick = [{'name': "Edit", 'click': function(rowData
                 }}];
 let createdAutomatTable2KeyFocusFunction = false
 let createdAutomatTable2KeyFunction = false
-let createdAutomatTable2Options = {"customButtons":[{"html":"<i class='fa-solid fa-arrows-rotate text-xl'></i>","id":"refreshTableButton","title":"Yenile"}],"rowSelect":false,"multiRowSelect":true,"rightClick":[{"name":"Edit"},{"name":"Delete"},{"name":"Test"}]}
+let createdAutomatTable2Options = {"customButtons":[{"html":"<i class='fa-solid fa-arrows-rotate text-xl'></i>","id":"refreshTableButton","title":"Yenile"}],"rowSelect":false,"multiRowSelect":true,"rightClick":[{"name":"Edit"},{"name":"Delete"},{"name":"Test"}],"footerColumns":[{"column":0,"colspan":2},{"column":3,"colspan":3}]}
 
 createdAutomatTable2Options["rightClick"] = createdAutomatTable2RightClick;
 createdAutomatTable2Options['keyFocus'] = createdAutomatTable2KeyFocusFunction;
