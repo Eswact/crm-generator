@@ -2016,6 +2016,75 @@ module.exports = {
         ],
         "link": null
       }
+    },
+    {
+      "file": "Shopping.vue",
+      "name": "Shopping",
+      "path": "/shopping",
+      "icon": 'fa-solid fa-cart-shopping',
+      "seo": {
+        "title": "Shopping - My CRM",
+        "description": "In this page you can see shopping card examples.",
+        "keywords": ["shopping", "shopping", "card", "basket"]
+      },
+      "pageCss": "w-full flex flex-col justify-center items-center gap-8",
+      "doms": [
+        {
+          "type": "cards",
+          "containerClass": "w-full",
+          "id": "shoppingCards",
+          "name": "shoppingCards",
+          "ajax": {
+            "url": "../../cardTest.json",
+            "method": "GET",
+          },
+          // "paging": {
+          //   "type": 0, //with number buttons / with scroll
+          //   "currentPageName": "currentPage",
+          // },
+          "ordering": {
+            "name": "orderType",
+            "options": [
+              {
+                "name": "A to Z",
+                "id": "aToZ",
+                "value": 1,
+              },
+              {
+                "name": "Lowest price",
+                "id": "lowestPrice",
+                "value": 2,
+              },
+              {
+                "name": "Highest price",
+                "id": "highestPrice",
+                "value": 3,
+              }
+            ]
+          },
+          "searchBar": {
+            "name": "searchValue",
+            "placeholder": "Search Products...",
+            "delay": 300
+          },
+          "filters": [],
+          "cardLayout": {
+            "type": 2,
+            "card": {
+              "id": "ID",
+              "title": "UrunAdi",
+              "img": "Resimler[0]",
+              "envanter": "Envanter",
+              "barcode": "Barkodlar[0].Barkodu",
+              "price": "Tutar"
+            },
+            "viewMode": {
+              "changeable": true,
+              "default": "grid",
+            },
+          }
+        }
+      ]
     }
   ],
   "scripts": [

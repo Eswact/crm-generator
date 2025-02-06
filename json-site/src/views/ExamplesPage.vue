@@ -13,14 +13,14 @@
     </template>
   
     <script setup>
-      import { ref, onMounted } from 'vue';
+      import { ref, onMounted, computed, watch } from 'vue';
       import { useRoute, useRouter } from 'vue-router';
       const route = useRoute();
       const router = useRouter();
       import commonFunctions from '../scripts/common.js'
       import { sharedFunctions } from '../scripts/custom/shared.js';
-import datatableService from "../services/datatableService";
 import $ from "jquery";
+import datatableService from "../services/datatableService";
     
       
 var messagesTable;
@@ -130,9 +130,11 @@ messagesTableOptions['key'] = messagesTableKeyFunction;
 
 let messagesTableOperations = {}
 
+      
     
       onMounted(() => {
         messagesTable = datatableService.initializeDataTable('messagesTable', '#messagesTable', messagesTableAjax, messagesTableColumns, null, messagesTableTableOptions, messagesTableOperations, messagesTableOptions);
+        
     
         
         toast.success("Toast Test!");

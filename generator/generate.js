@@ -92,6 +92,8 @@ function createViews() {
       switch (item.type) {
         case 'datatable':
           return createDatatableDom(item);
+        case 'cards':
+          return generateCardsDom(item);
         case 'custom':
           return item.content;
         default:
@@ -104,10 +106,12 @@ function createViews() {
       let thisPageScript = script.pages.find(x => x.name === page.name);
       return thisPageScript ? `import ${thisPageScript.import} from '../scripts/custom/${script.name}.js';` : '';
     }).join('\n');
-    (!page.doms.every(x => x.type != 'datatable')) ? scriptsImports += '\nimport datatableService from "../services/datatableService";\nimport $ from "jquery";' : '';
+    scriptsImports += '\nimport $ from "jquery";';
+    (!page.doms.every(x => x.type != 'datatable')) ? scriptsImports += '\nimport datatableService from "../services/datatableService";' : '';
 
     //Datatable scripts
     const datatableScripts = page.doms.filter(x => x.type === 'datatable').map(item => generateDatatableScript(item)).join('\n');
+    const cardsScripts = page.doms.filter(x => x.type === 'cards').map(item => generateCardsScript(item)).join('\n');
   
     let content = `
     <template>
@@ -117,7 +121,7 @@ function createViews() {
     </template>
   
     <script setup>
-      import { ref, onMounted } from 'vue';
+      import { ref, onMounted, computed, watch } from 'vue';
       import { useRoute, useRouter } from 'vue-router';
       const route = useRoute();
       const router = useRouter();
@@ -125,16 +129,24 @@ function createViews() {
       ${scriptsImports}
     
       ${datatableScripts}
+      ${cardsScripts}
     
       onMounted(() => {
         ${page.doms.filter(x => x.type == 'datatable').map(function(item, index) {
           return `${item.name} = datatableService.initializeDataTable('${item.name}', '#${item.id}', ${item.id}Ajax, ${item.id}Columns, ${(item.filters && item.filters.data && item.filters.data.length > 0) ? `${item.id}Filters`: null}, ${item.id}TableOptions, ${item.id}Operations, ${item.id}Options);`;
         }).join('\n')}
+        ${page.doms.filter(x => x.type == 'cards').map(function(item, index) {
+          return `get${item.name}();
+          ${item. ordering 
+            ? `$('#${item.name}OrderModalButton').off('click').on('click', ${item.name}ToggleOrderVisibility)`
+            : ''
+          }`;
+        }).join('\n')}
     
-        ${page.customReadyScripts}
+        ${page.customReadyScripts || ''}
       });
     
-      ${page.customScripts}
+      ${page.customScripts || ''}
     </script>
     
     <style scoped>
@@ -146,6 +158,7 @@ function createViews() {
     console.log(`Created: ${filePath}`);
   });
 }
+//Datatable
 function createDatatableDom(item) {
   let tfoot = '';
   if (item.tableOptions.footerCallback) {
@@ -252,6 +265,145 @@ ${(item.operations)
   ? `let ${item.id}Operations = ${JSON.stringify(item.operations)}`
   : `let ${item.id}Operations = {}`}
 `; 
+}
+//Cards
+function generateCardsDom(item) {
+  let cardsDom = '';
+  let topBar = '';
+  let modals = '';
+  let cardData = item.cardLayout.card;
+  switch (item.cardLayout.type) {
+    case 1:
+      cardsDom = `<div class="w-full flex items-center gap-2 flex-wrap">
+        <div
+          v-for="card in ${item.name}"
+          :key="card.${cardData.id}"
+          class="relative w-[calc(20%-0.4rem)] xl:w-[calc(25%-0.4rem)] md:w-[calc(50%-0.4rem)] h-[340px] sm:h-[300px] py-2 px-4 bg-white dark:bg-black text-center flex flex-col items-center justify-around rounded-md shadow-lg"
+        >
+          <img
+            :src="card.${cardData.img} || '/defaults/images/no-image.png'"
+            class="w-full h-[50%] sm:h-[45%] object-contain object-center rounded-lg overflow-hidden"
+            :alt="card.${cardData.title}"
+            onerror="this.src='/defaults/images/no-image.png'"
+          />
+          <div class="h-[3.5rem] flex justify-center items-center">
+            <h2 class="w-full text-xl sm:text-lg font-semibold truncatedText2">{{ card.${cardData.title} }}</h2>
+          </div>
+          <span class="text-lg sm:text-base font-bold text-fourth">{{ commonFunctions.convert2PriceWithUnit(card.${cardData.price}) }}</span>
+        </div>
+      </div>`
+      break;
+      case 2:
+      cardsDom = `<div class="w-full flex items-center gap-2 flex-wrap">
+        <div
+          v-for="card in ${item.name}"
+          :key="card.${cardData.id}"
+          class="relative w-[calc(20%-0.4rem)] xl:w-[calc(25%-0.4rem)] md:w-[calc(50%-0.4rem)] h-[340px] sm:h-[300px] py-2 px-4 bg-white dark:bg-black text-center flex flex-col items-center justify-around rounded-md shadow-lg"
+          :data-envanter=card.${cardData.envanter}
+        >
+          <img
+            :src="card.${cardData.img} || '/defaults/images/no-image.png'"
+            class="w-full h-[50%] sm:h-[45%] object-contain object-center rounded-lg overflow-hidden"
+            :alt="card.${cardData.title}"
+            onerror="this.src='/defaults/images/no-image.png'"
+          />
+          <div class="h-[3.5rem] flex justify-center items-center">
+            <h2 class="w-full text-xl sm:text-lg font-semibold truncatedText2">{{ card.${cardData.title} }}</h2>
+          </div>
+          <span class="text-lg sm:text-base font-bold text-fourth">{{ commonFunctions.convert2PriceWithUnit(card.${cardData.price}) }}</span>
+          <button  class="w-full bg-third border-2 border-third text-white p-1 text-lg font-semibold rounded-lg">Add to basket</button>
+        </div>
+      </div>`
+      break;
+  }
+
+  if (item.searchBar || item.ordering || item.filters) {
+    topBar = `<div class="w-full flex justify-between items-center gap-4 md:flex-col md:justify-center">
+      <div class="flex items-center">
+        ${item.searchBar ? `<div class="w-[300px] md:w-full relative max-w-full flex items-center justify-end"> <input v-model="${item.name}SearchBar" type="text" placeholder="${item.searchBar.placeholder || 'Search...'}" class="peer w-full pl-4 pr-8 py-2 bg-white dark:bg-opacity-10 border-2 border-second dark:border-white rounded-xl placeholder:text-second dark:placeholder:text-white font-bold md:font-semibold text-lg focus:placeholder:text-fourth focus:border-fourth dark:focus:placeholder:text-fourth dark:focus:border-fourth focus:outline-none"/><i class="fa-solid fa-magnifying-glass absolute right-4 text-lg text-second dark:text-white peer-focus:text-fourth"></i></div>` : ''}
+      </div>
+      <div class="w-[400px] max-w-full md:w-full flex items-center justify-end gap-4">
+        ${item.filters ? `<button class="w-[calc(50%-0.5rem)] bg-white dark:bg-opacity-10 border-2 border-second text-second dark:border-white dark:text-white hover:border-fourth hover:text-fourth dark:hover:border-fourth dark:hover:text-fourth text-lg py-2 px-4 rounded-xl flex items-center justify-between duration-200">
+          <span class="font-bold md:font-semibold">Filters</span>
+          <i class="fa-solid fa-filter"></i>
+        </button>` : ''}
+        ${item.ordering ? `<button id="${item.name}OrderModalButton" class="w-[calc(50%-0.5rem)] bg-white dark:bg-opacity-10 border-2 border-second text-second dark:border-white dark:text-white hover:border-fourth hover:text-fourth dark:hover:border-fourth dark:hover:text-fourth text-lg py-2 px-4 rounded-xl flex items-center justify-between duration-200">
+          <span class="font-bold md:font-semibold">Sort</span>
+          <i class="fa-solid fa-sort"></i>
+        </button>` : ''}
+      </div>
+    </div>`
+  }
+
+  if (item.ordering || item.filters) {
+    modals = `<div v-show="${item.name}OrderModalVisibility" id="${item.name}OrderModal" @click.self="${item.name}ToggleOrderVisibility()" class="z-30 fixed w-full h-full top-0 left-0 bg-black bg-opacity-65 flex justify-center items-center md:items-end">
+      <div class="bg-bg text-dark p-4 max-h-full max-w-full min-w-[400px] overflow-y-auto md:w-full md:min-w-[unset] md:pb-8 rounded-lg md:rounded-b-none md:rounded-t-2xl flex flex-col gap-4">
+        <div class="w-full flex items-center justify-between mb-1">
+          <h2 class="text-2xl font-bold dark:text-darkBg">Sorting</h2>
+          <button @click="${item.name}ToggleOrderVisibility()" class="px-2 text-3xl text-red-600"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <label v-for="option in ${item.name}OrderOptions" :key="option.id" :for="option.id" class="w-full px-6 py-3 border border-gray-400 flex items-center gap-4 text-lg font-semibold rounded-md">
+          <input
+            type="radio"
+            :id="option.id"
+            name="ordering"
+            :checked="${item.name}Ordering === option.value"
+            @change="${item.name}Ordering = option.value"
+          />
+          <span class="dark:text-darkBg">{{ option.name }}</span>
+        </label>
+      </div>
+    </div>`
+  }
+
+  return `<div class="w-full flex flex-col gap-4">
+            ${topBar}
+            ${cardsDom}
+            ${modals}
+          </div>`;
+}
+function generateCardsScript(item) {
+  if (item.ajax) {
+    return `
+    const ${item.name} = ref([]);
+    ${item.ordering ? `const ${item.name}Ordering = ref(${item.ordering.options[0].value});\n const ${item.name}OrderOptions = ref(${JSON.stringify(item.ordering.options)});\n const ${item.name}OrderModalVisibility = ref(false);` : ''}
+    ${item.searchBar ? `const ${item.name}SearchBar = ref('');` : ''}
+    ${item.filters ? `const ${item.name}Filters = ref({});` : ''}
+    const ${item.name}ViewMode = ref('${item.cardLayout.viewMode?.defaultView || "grid"}');
+    const ${item.name}CurrentPage = ref(1);
+
+    const get${item.name} = function () {
+      const params = {
+        ${item.paging ? `${item.paging.currentPageName}: ${item.name}CurrentPage.value,` : ''}
+        ${item.ordering ? `${item.ordering.name}: ${item.name}Ordering.value,` : ''}
+        ${item.searchBar ? `${item.searchBar.name}: ${item.name}SearchBar.value,` : ''}
+        ${item.filters ? `...${item.name}Filters.value,` : ''}
+      };
+
+      $.ajax({
+        url: "${item.ajax.url}",
+        type: "${item.ajax.method}",
+        data: params,
+        success: function(res) {
+          console.log(res);
+          ${item.name}.value = res;
+        },
+        error: function(err) {
+          console.log(err);
+        }
+      })
+    };
+    
+    ${item.ordering 
+      ? `function ${item.name}ToggleOrderVisibility() { ${item.name}OrderModalVisibility.value = !${item.name}OrderModalVisibility.value };
+      watch(${item.name}Ordering, () => { get${item.name}(); });`
+      : ''
+    }
+    ${item.searchBar 
+      ? `watch(${item.name}SearchBar, commonFunctions.debounce((value) => { ${item.name}SearchBar.value = value; get${item.name}(); }, ${item.searchBar.delay}));`
+      : ''
+    }`
+  }
 }
 
 //Generate

@@ -158,7 +158,14 @@ const commonFunctions = {
     } else {
         return 0;
     }
-  }
+  },
+  debounce(func, delay) {
+    let timeout;
+    return (...args) => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => func(...args), delay);
+    };
+  },
 }
 
 export default commonFunctions;
