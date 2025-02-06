@@ -272,6 +272,7 @@ function generateCardsDom(item) {
   let topBar = '';
   let modals = '';
   let cardData = item.cardLayout.card;
+  console.log(cardData);
   switch (item.cardLayout.type) {
     case 1:
       cardsDom = `<div class="w-full flex items-center gap-2 flex-wrap">
@@ -300,6 +301,7 @@ function generateCardsDom(item) {
           :key="card.${cardData.id}"
           class="relative w-[calc(20%-0.4rem)] xl:w-[calc(25%-0.4rem)] md:w-[calc(50%-0.4rem)] h-[340px] sm:h-[300px] py-2 px-4 bg-white dark:bg-black text-center flex flex-col items-center justify-around rounded-md shadow-lg"
           :data-envanter=card.${cardData.envanter}
+          :data-barcode=card.${cardData.barcode}
         >
           <img
             :src="card.${cardData.img} || '/defaults/images/no-image.png'"
@@ -383,7 +385,9 @@ function generateCardsScript(item) {
       $.ajax({
         url: "${item.ajax.url}",
         type: "${item.ajax.method}",
-        data: params,
+        ${item.ajax.dataType ? `dataType: "${item.ajax.dataType}",` : ""}
+        ${item.ajax.contentType ? `contentType: "${item.ajax.contentType}",` : ""}
+        data: ${item.ajax.stringifyData ? "JSON.stringify(params)" : "params"},
         success: function(res) {
           console.log(res);
           ${item.name}.value = res;

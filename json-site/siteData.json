@@ -1567,8 +1567,11 @@
           "id": "shoppingCards",
           "name": "shoppingCards",
           "ajax": {
-            "url": "../../cardTest.json",
-            "method": "GET"
+            "url": "http://localhost:3000/products",
+            "method": "POST",
+            "dataType": "json",
+            "contentType": "application/json",
+            "stringifyData": true
           },
           "ordering": {
             "name": "orderType",

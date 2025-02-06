@@ -22,6 +22,7 @@
           :key="card.ID"
           class="relative w-[calc(20%-0.4rem)] xl:w-[calc(25%-0.4rem)] md:w-[calc(50%-0.4rem)] h-[340px] sm:h-[300px] py-2 px-4 bg-white dark:bg-black text-center flex flex-col items-center justify-around rounded-md shadow-lg"
           :data-envanter=card.Envanter
+          :data-barcode=card.Barkodlar[0].Barkodu
         >
           <img
             :src="card.Resimler[0] || '/defaults/images/no-image.png'"
@@ -87,9 +88,11 @@ import $ from "jquery";
       };
 
       $.ajax({
-        url: "../../cardTest.json",
-        type: "GET",
-        data: params,
+        url: "http://localhost:3000/products",
+        type: "POST",
+        dataType: "json",
+        contentType: "application/json",
+        data: JSON.stringify(params),
         success: function(res) {
           console.log(res);
           shoppingCards.value = res;

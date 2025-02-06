@@ -2035,8 +2035,11 @@ module.exports = {
           "id": "shoppingCards",
           "name": "shoppingCards",
           "ajax": {
-            "url": "../../cardTest.json",
-            "method": "GET",
+            "url": "http://localhost:3000/products",
+            "method": "POST",
+            "dataType": 'json',
+            "contentType": 'application/json',
+            "stringifyData": true
           },
           // "paging": {
           //   "type": 0, //with number buttons / with scroll
