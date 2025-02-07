@@ -2041,10 +2041,10 @@ module.exports = {
             "contentType": 'application/json',
             "stringifyData": true
           },
-          // "paging": {
-          //   "type": 0, //with number buttons / with scroll
-          //   "currentPageName": "currentPage",
-          // },
+          "paging": {
+            "type": 0, //with number buttons / with scroll ??
+            "size": 20,
+          },
           "ordering": {
             "name": "orderType",
             "options": [
@@ -2070,7 +2070,9 @@ module.exports = {
             "placeholder": "Search Products...",
             "delay": 300
           },
-          "filters": [],
+          "filters": [
+
+          ],
           "cardLayout": {
             "type": 2,
             "card": {

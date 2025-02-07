@@ -1573,6 +1573,10 @@
             "contentType": "application/json",
             "stringifyData": true
           },
+          "paging": {
+            "type": 0,
+            "size": 20
+          },
           "ordering": {
             "name": "orderType",
             "options": [

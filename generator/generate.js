@@ -269,10 +269,10 @@ ${(item.operations)
 //Cards
 function generateCardsDom(item) {
   let cardsDom = '';
+  let pagingDom = '';
   let topBar = '';
   let modals = '';
   let cardData = item.cardLayout.card;
-  console.log(cardData);
   switch (item.cardLayout.type) {
     case 1:
       cardsDom = `<div class="w-full flex items-center gap-2 flex-wrap">
@@ -337,7 +337,7 @@ function generateCardsDom(item) {
     </div>`
   }
 
-  if (item.ordering || item.filters) {
+  if (item.ordering) {
     modals = `<div v-show="${item.name}OrderModalVisibility" id="${item.name}OrderModal" @click.self="${item.name}ToggleOrderVisibility()" class="z-30 fixed w-full h-full top-0 left-0 bg-black bg-opacity-65 flex justify-center items-center md:items-end">
       <div class="bg-bg text-dark p-4 max-h-full max-w-full min-w-[400px] overflow-y-auto md:w-full md:min-w-[unset] md:pb-8 rounded-lg md:rounded-b-none md:rounded-t-2xl flex flex-col gap-4">
         <div class="w-full flex items-center justify-between mb-1">
@@ -358,9 +358,18 @@ function generateCardsDom(item) {
     </div>`
   }
 
-  return `<div class="w-full flex flex-col gap-4">
+  if (item.paging) {
+    pagingDom = `<div class="flex justify-between items-center">
+                <button @click="prevPage" :disabled="shoppingCardsCurrentPage === 1" class="bg-second text-white hover:bg-main duration-200 py-2 w-28 rounded-lg disabled:bg-second/50 dark:disabled:bg-second/20">Previous</button>
+                <span>Sayfa {{ shoppingCardsCurrentPage }} / {{ shoppingCardsTotalPages }}</span>
+                <button @click="nextPage" :disabled="shoppingCardsCurrentPage === shoppingCardsTotalPages" class="bg-second text-white hover:bg-main duration-200 py-2 w-28 rounded-lg disabled:bg-second/50 dark:disabled:bg-second/20">Next</button>
+              </div>`
+  }
+
+  return `<div class="w disabled:bg-second/50-full flex flex-col gap-4">
             ${topBar}
             ${cardsDom}
+            ${pagingDom}
             ${modals}
           </div>`;
 }
@@ -372,11 +381,11 @@ function generateCardsScript(item) {
     ${item.searchBar ? `const ${item.name}SearchBar = ref('');` : ''}
     ${item.filters ? `const ${item.name}Filters = ref({});` : ''}
     const ${item.name}ViewMode = ref('${item.cardLayout.viewMode?.defaultView || "grid"}');
-    const ${item.name}CurrentPage = ref(1);
+    ${item.paging ? `const ${item.name}CurrentPage = ref(1);\nconst ${item.name}TotalPages = ref(1);` : ''}
 
     const get${item.name} = function () {
       const params = {
-        ${item.paging ? `${item.paging.currentPageName}: ${item.name}CurrentPage.value,` : ''}
+        ${item.paging ? `currentPage: ${item.name}CurrentPage.value,\n itemsPerPage: ${item.paging.size},` : ''}
         ${item.ordering ? `${item.ordering.name}: ${item.name}Ordering.value,` : ''}
         ${item.searchBar ? `${item.searchBar.name}: ${item.name}SearchBar.value,` : ''}
         ${item.filters ? `...${item.name}Filters.value,` : ''}
@@ -390,13 +399,27 @@ function generateCardsScript(item) {
         data: ${item.ajax.stringifyData ? "JSON.stringify(params)" : "params"},
         success: function(res) {
           console.log(res);
-          ${item.name}.value = res;
+          ${item.name}.value = res.data;
+          ${item.name}TotalPages.value = res.totalPages;
         },
         error: function(err) {
           console.log(err);
         }
       })
     };
+
+    function nextPage() {
+      if (${item.name}CurrentPage.value < ${item.name}TotalPages.value) {
+        ${item.name}CurrentPage.value++;
+        get${item.name}();
+      }
+    }
+    function prevPage() {
+      if (${item.name}CurrentPage.value > 1) {
+        ${item.name}CurrentPage.value--;
+        get${item.name}();
+      }
+    }
     
     ${item.ordering 
       ? `function ${item.name}ToggleOrderVisibility() { ${item.name}OrderModalVisibility.value = !${item.name}OrderModalVisibility.value };

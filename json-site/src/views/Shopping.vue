@@ -1,6 +1,6 @@
 <template>
       <div class="w-full flex flex-col justify-center items-center gap-8">
-        <div class="w-full flex flex-col gap-4">
+        <div class="w disabled:bg-second/50-full flex flex-col gap-4">
             <div class="w-full flex justify-between items-center gap-4 md:flex-col md:justify-center">
       <div class="flex items-center">
         <div class="w-[300px] md:w-full relative max-w-full flex items-center justify-end"> <input v-model="shoppingCardsSearchBar" type="text" placeholder="Search Products..." class="peer w-full pl-4 pr-8 py-2 bg-white dark:bg-opacity-10 border-2 border-second dark:border-white rounded-xl placeholder:text-second dark:placeholder:text-white font-bold md:font-semibold text-lg focus:placeholder:text-fourth focus:border-fourth dark:focus:placeholder:text-fourth dark:focus:border-fourth focus:outline-none"/><i class="fa-solid fa-magnifying-glass absolute right-4 text-lg text-second dark:text-white peer-focus:text-fourth"></i></div>
@@ -37,6 +37,11 @@
           <button  class="w-full bg-third border-2 border-third text-white p-1 text-lg font-semibold rounded-lg">Add to basket</button>
         </div>
       </div>
+            <div class="flex justify-between items-center">
+                <button @click="prevPage" :disabled="shoppingCardsCurrentPage === 1" class="bg-second text-white hover:bg-main duration-200 py-2 w-28 rounded-lg disabled:bg-second/50 dark:disabled:bg-second/20">Previous</button>
+                <span>Sayfa {{ shoppingCardsCurrentPage }} / {{ shoppingCardsTotalPages }}</span>
+                <button @click="nextPage" :disabled="shoppingCardsCurrentPage === shoppingCardsTotalPages" class="bg-second text-white hover:bg-main duration-200 py-2 w-28 rounded-lg disabled:bg-second/50 dark:disabled:bg-second/20">Next</button>
+              </div>
             <div v-show="shoppingCardsOrderModalVisibility" id="shoppingCardsOrderModal" @click.self="shoppingCardsToggleOrderVisibility()" class="z-30 fixed w-full h-full top-0 left-0 bg-black bg-opacity-65 flex justify-center items-center md:items-end">
       <div class="bg-bg text-dark p-4 max-h-full max-w-full min-w-[400px] overflow-y-auto md:w-full md:min-w-[unset] md:pb-8 rounded-lg md:rounded-b-none md:rounded-t-2xl flex flex-col gap-4">
         <div class="w-full flex items-center justify-between mb-1">
@@ -78,10 +83,12 @@ import $ from "jquery";
     const shoppingCardsFilters = ref({});
     const shoppingCardsViewMode = ref('grid');
     const shoppingCardsCurrentPage = ref(1);
+const shoppingCardsTotalPages = ref(1);
 
     const getshoppingCards = function () {
       const params = {
-        
+        currentPage: shoppingCardsCurrentPage.value,
+ itemsPerPage: 20,
         orderType: shoppingCardsOrdering.value,
         searchValue: shoppingCardsSearchBar.value,
         ...shoppingCardsFilters.value,
@@ -95,13 +102,27 @@ import $ from "jquery";
         data: JSON.stringify(params),
         success: function(res) {
           console.log(res);
-          shoppingCards.value = res;
+          shoppingCards.value = res.data;
+          shoppingCardsTotalPages.value = res.totalPages;
         },
         error: function(err) {
           console.log(err);
         }
       })
     };
+
+    function nextPage() {
+      if (shoppingCardsCurrentPage.value < shoppingCardsTotalPages.value) {
+        shoppingCardsCurrentPage.value++;
+        getshoppingCards();
+      }
+    }
+    function prevPage() {
+      if (shoppingCardsCurrentPage.value > 1) {
+        shoppingCardsCurrentPage.value--;
+        getshoppingCards();
+      }
+    }
     
     function shoppingCardsToggleOrderVisibility() { shoppingCardsOrderModalVisibility.value = !shoppingCardsOrderModalVisibility.value };
       watch(shoppingCardsOrdering, () => { getshoppingCards(); });
