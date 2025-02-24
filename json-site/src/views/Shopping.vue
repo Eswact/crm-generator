@@ -16,25 +16,32 @@
         </button>
       </div>
     </div>
-            <div class="w-full flex items-center gap-2 flex-wrap">
+            <div class="w-full flex items-center justify-center gap-2 flex-wrap">
         <div
           v-for="card in shoppingCards"
           :key="card.ID"
-          class="relative w-[calc(20%-0.4rem)] xl:w-[calc(25%-0.4rem)] md:w-[calc(50%-0.4rem)] h-[340px] sm:h-[300px] py-2 px-4 bg-white dark:bg-black text-center flex flex-col items-center justify-around rounded-md shadow-lg"
+          class="relative w-[calc(33%-0.3rem)] md:w-[calc(50%-0.4rem)] h-[300px] p-6 bg-white dark:bg-black text-center flex items-start justify-beetween rounded-md shadow-lg"
           :data-envanter=card.Envanter
           :data-barcode=card.Barkodlar[0].Barkodu
         >
-          <img
-            :src="card.Resimler[0] || '/defaults/images/no-image.png'"
-            class="w-full h-[50%] sm:h-[45%] object-contain object-center rounded-lg overflow-hidden"
-            :alt="card.UrunAdi"
-            onerror="this.src='/defaults/images/no-image.png'"
-          />
-          <div class="h-[3.5rem] flex justify-center items-center">
-            <h2 class="w-full text-xl sm:text-lg font-semibold truncatedText2">{{ card.UrunAdi }}</h2>
+          <div class="w-[40%] h-full flex justify-center items-center">
+            <img
+              :src="card.Resimler[0] || '/defaults/images/no-image.png'"
+              class="w-full max-h-full object-contain object-center rounded-lg overflow-hidden"
+              :alt="card.UrunAdi"
+              onerror="this.src='/defaults/images/no-image.png'"
+            />
           </div>
-          <span class="text-lg sm:text-base font-bold text-fourth">{{ commonFunctions.convert2PriceWithUnit(card.Tutar) }}</span>
-          <button  class="w-full bg-third border-2 border-third text-white p-1 text-lg font-semibold rounded-lg">Add to basket</button>
+          <div class="w-[60%] h-full p-6 pr-0 flex flex-col justify-between items-start gap-4">
+            <div class="w-full h-full flex flex-col justify-start items-start gap-2">
+              <h2 class="text-2xl sm:text-lg text-start font-semibold truncatedText2">{{ card.UrunAdi }}</h2>
+              <span class="text-lg text-third font-semibold">{{card.UreticiFirmaAdi}}</span>
+              <span>{{card.Kategori}}</span>
+              <span>{{card.Barkodlar[0].Barkodu}}</span>
+              <span>{{card.Envanter}}</span>
+            </div>
+            <span class="text-xl sm:text-base font-bold text-fourth">{{ commonFunctions.convert2PriceWithUnit(card.Tutar) }}</span>
+          </div>
         </div>
       </div>
             <div class="flex justify-between items-center">
@@ -80,7 +87,7 @@ import $ from "jquery";
  const shoppingCardsOrderOptions = ref([{"name":"A to Z","id":"aToZ","value":1},{"name":"Lowest price","id":"lowestPrice","value":2},{"name":"Highest price","id":"highestPrice","value":3}]);
  const shoppingCardsOrderModalVisibility = ref(false);
     const shoppingCardsSearchBar = ref('');
-    const shoppingCardsFilters = ref({});
+    const shoppingCardsFilters = ref({category: null,brand: null});
     const shoppingCardsViewMode = ref('grid');
     const shoppingCardsCurrentPage = ref(1);
 const shoppingCardsTotalPages = ref(1);
@@ -88,7 +95,7 @@ const shoppingCardsTotalPages = ref(1);
     const getshoppingCards = function () {
       const params = {
         currentPage: shoppingCardsCurrentPage.value,
- itemsPerPage: 20,
+ itemsPerPage: 12,
         orderType: shoppingCardsOrdering.value,
         searchValue: shoppingCardsSearchBar.value,
         ...shoppingCardsFilters.value,
@@ -127,6 +134,7 @@ const shoppingCardsTotalPages = ref(1);
     function shoppingCardsToggleOrderVisibility() { shoppingCardsOrderModalVisibility.value = !shoppingCardsOrderModalVisibility.value };
       watch(shoppingCardsOrdering, () => { getshoppingCards(); });
     watch(shoppingCardsSearchBar, commonFunctions.debounce((value) => { shoppingCardsSearchBar.value = value; getshoppingCards(); }, 300));
+    
     
       onMounted(() => {
         

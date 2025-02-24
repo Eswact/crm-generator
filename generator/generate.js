@@ -273,6 +273,7 @@ function generateCardsDom(item) {
   let topBar = '';
   let modals = '';
   let cardData = item.cardLayout.card;
+  console.log(item.cardLayout.type);
   switch (item.cardLayout.type) {
     case 1:
       cardsDom = `<div class="w-full flex items-center gap-2 flex-wrap">
@@ -294,7 +295,7 @@ function generateCardsDom(item) {
         </div>
       </div>`
       break;
-      case 2:
+    case 2:
       cardsDom = `<div class="w-full flex items-center gap-2 flex-wrap">
         <div
           v-for="card in ${item.name}"
@@ -314,6 +315,36 @@ function generateCardsDom(item) {
           </div>
           <span class="text-lg sm:text-base font-bold text-fourth">{{ commonFunctions.convert2PriceWithUnit(card.${cardData.price}) }}</span>
           <button  class="w-full bg-third border-2 border-third text-white p-1 text-lg font-semibold rounded-lg">Add to basket</button>
+        </div>
+      </div>`
+      break;
+    case 3:
+      cardsDom = `<div class="w-full flex items-center justify-center gap-2 flex-wrap">
+        <div
+          v-for="card in ${item.name}"
+          :key="card.${cardData.id}"
+          class="relative w-[calc(33%-0.3rem)] md:w-[calc(50%-0.4rem)] h-[300px] p-6 bg-white dark:bg-black text-center flex items-start justify-beetween rounded-md shadow-lg"
+          :data-envanter=card.${cardData.envanter}
+          :data-barcode=card.${cardData.barcode}
+        >
+          <div class="w-[40%] h-full flex justify-center items-center">
+            <img
+              :src="card.${cardData.img} || '/defaults/images/no-image.png'"
+              class="w-full max-h-full object-contain object-center rounded-lg overflow-hidden"
+              :alt="card.${cardData.title}"
+              onerror="this.src='/defaults/images/no-image.png'"
+            />
+          </div>
+          <div class="w-[60%] h-full p-6 pr-0 flex flex-col justify-between items-start gap-4">
+            <div class="w-full h-full flex flex-col justify-start items-start gap-2">
+              <h2 class="text-2xl sm:text-lg text-start font-semibold truncatedText2">{{ card.${cardData.title} }}</h2>
+              <span class="text-lg text-third font-semibold">{{card.${cardData.brand}}}</span>
+              <span>{{card.${cardData.category}}}</span>
+              <span>{{card.${cardData.barcode}}}</span>
+              <span>{{card.${cardData.envanter}}}</span>
+            </div>
+            <span class="text-xl sm:text-base font-bold text-fourth">{{ commonFunctions.convert2PriceWithUnit(card.${cardData.price}) }}</span>
+          </div>
         </div>
       </div>`
       break;
@@ -379,7 +410,7 @@ function generateCardsScript(item) {
     const ${item.name} = ref([]);
     ${item.ordering ? `const ${item.name}Ordering = ref(${item.ordering.options[0].value});\n const ${item.name}OrderOptions = ref(${JSON.stringify(item.ordering.options)});\n const ${item.name}OrderModalVisibility = ref(false);` : ''}
     ${item.searchBar ? `const ${item.name}SearchBar = ref('');` : ''}
-    ${item.filters ? `const ${item.name}Filters = ref({});` : ''}
+    ${item.filters ? `const ${item.name}Filters = ref({${item.filters.map((e) => `${e.name}: ${e.value}`).join(',')}});` : ''}
     const ${item.name}ViewMode = ref('${item.cardLayout.viewMode?.defaultView || "grid"}');
     ${item.paging ? `const ${item.name}CurrentPage = ref(1);\nconst ${item.name}TotalPages = ref(1);` : ''}
 
@@ -428,6 +459,10 @@ function generateCardsScript(item) {
     }
     ${item.searchBar 
       ? `watch(${item.name}SearchBar, commonFunctions.debounce((value) => { ${item.name}SearchBar.value = value; get${item.name}(); }, ${item.searchBar.delay}));`
+      : ''
+    }
+    ${item.filters
+      ? ``
       : ''
     }`
   }

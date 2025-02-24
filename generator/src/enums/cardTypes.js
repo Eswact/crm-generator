@@ -20,4 +20,17 @@ const cardTypes = [
             "price": Number,
         } 
     },
+    {
+        "id": 3,
+        "card": {
+            "id": String,
+            "title": String,
+            "img": String,
+            "envanter": Number,
+            "barcode": String,
+            "price": Number,
+            "brand": String,
+            "category": String,
+        } 
+    },
 ]

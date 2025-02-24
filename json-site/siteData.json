@@ -1575,7 +1575,7 @@
           },
           "paging": {
             "type": 0,
-            "size": 20
+            "size": 12
           },
           "ordering": {
             "name": "orderType",
@@ -1602,16 +1602,53 @@
             "placeholder": "Search Products...",
             "delay": 300
           },
-          "filters": [],
+          "filters": [
+            {
+              "name": "category",
+              "title": "Category",
+              "type": "select2",
+              "options": {
+                "width": "100%",
+                "minimumInputLength": -1,
+                "placeholder": "Model Selection",
+                "allowClear": true,
+                "language": {
+                  "noResults": "Eşleşen bir Kategori bulunamadı.",
+                  "inputTooShort": "En az 1 Karakter giriniz.",
+                  "searching": "Aranıyor..."
+                },
+                "ajax": {
+                  "url": "http://localhost:44350/production/get-models",
+                  "delay": 250,
+                  "type": "POST",
+                  "dataType": "json",
+                  "contentType": "application/json; charset=utf-8"
+                }
+              },
+              "value": null,
+              "default": null,
+              "visible": true
+            },
+            {
+              "name": "brand",
+              "title": "Brand",
+              "type": "text",
+              "value": null,
+              "default": null,
+              "visible": true
+            }
+          ],
           "cardLayout": {
-            "type": 2,
+            "type": 3,
             "card": {
               "id": "ID",
               "title": "UrunAdi",
               "img": "Resimler[0]",
               "envanter": "Envanter",
               "barcode": "Barkodlar[0].Barkodu",
-              "price": "Tutar"
+              "price": "Tutar",
+              "brand": "UreticiFirmaAdi",
+              "category": "Kategori"
             },
             "viewMode": {
               "changeable": true,
