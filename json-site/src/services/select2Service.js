@@ -44,7 +44,7 @@ const select2Service = {
         };
         options.ajax.processResults = function (data, params) {
             return {
-                results: $.map(data.data, function (item) {
+                results: $.map(data.data || data, function (item) {
                     return {
                         id: item.id,
                         text: item.name

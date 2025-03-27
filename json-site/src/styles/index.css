@@ -108,4 +108,7 @@ html.dark table.dataTable.row-border > tbody > tr.selected + tr.selected > td, h
 .dark body .select2-search__field {
   @apply text-black;
 }
+.select2-results__option select2-results__option--selectable, .dark .select2-results__option--selectable {
+  @apply text-darkBg;
+}
 /* select2 end */

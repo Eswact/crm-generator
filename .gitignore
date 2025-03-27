@@ -22,3 +22,5 @@ json-site/*.ntvs*
 json-site/*.njsproj
 json-site/*.sln
 json-site/*.sw?
+
+test-backend/node_modules

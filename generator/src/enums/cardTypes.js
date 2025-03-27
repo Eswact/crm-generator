@@ -18,6 +18,7 @@ const cardTypes = [
             "envanter": Number,
             "barcode": String,
             "price": Number,
+            
         } 
     },
     {

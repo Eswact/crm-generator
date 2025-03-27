@@ -108,6 +108,8 @@ function createViews() {
     }).join('\n');
     scriptsImports += '\nimport $ from "jquery";';
     (!page.doms.every(x => x.type != 'datatable')) ? scriptsImports += '\nimport datatableService from "../services/datatableService";' : '';
+    (!page.doms.every(x => x.type != 'cards')) ? scriptsImports += '\nimport cardService from "../services/cardService";' : '';
+
 
     //Datatable scripts
     const datatableScripts = page.doms.filter(x => x.type === 'datatable').map(item => generateDatatableScript(item)).join('\n');
@@ -139,6 +141,10 @@ function createViews() {
           return `get${item.name}();
           ${item. ordering 
             ? `$('#${item.name}OrderModalButton').off('click').on('click', ${item.name}ToggleOrderVisibility)`
+            : ''
+          }
+          ${item.filters
+            ? `$('#${item.name}FiltersButton').off('click').on('click', ${item.name}OpenCardFilters);`
             : ''
           }`;
         }).join('\n')}
@@ -356,7 +362,7 @@ function generateCardsDom(item) {
         ${item.searchBar ? `<div class="w-[300px] md:w-full relative max-w-full flex items-center justify-end"> <input v-model="${item.name}SearchBar" type="text" placeholder="${item.searchBar.placeholder || 'Search...'}" class="peer w-full pl-4 pr-8 py-2 bg-white dark:bg-opacity-10 border-2 border-second dark:border-white rounded-xl placeholder:text-second dark:placeholder:text-white font-bold md:font-semibold text-lg focus:placeholder:text-fourth focus:border-fourth dark:focus:placeholder:text-fourth dark:focus:border-fourth focus:outline-none"/><i class="fa-solid fa-magnifying-glass absolute right-4 text-lg text-second dark:text-white peer-focus:text-fourth"></i></div>` : ''}
       </div>
       <div class="w-[400px] max-w-full md:w-full flex items-center justify-end gap-4">
-        ${item.filters ? `<button class="w-[calc(50%-0.5rem)] bg-white dark:bg-opacity-10 border-2 border-second text-second dark:border-white dark:text-white hover:border-fourth hover:text-fourth dark:hover:border-fourth dark:hover:text-fourth text-lg py-2 px-4 rounded-xl flex items-center justify-between duration-200">
+        ${item.filters ? `<button id="${item.name}FiltersButton" class="w-[calc(50%-0.5rem)] bg-white dark:bg-opacity-10 border-2 border-second text-second dark:border-white dark:text-white hover:border-fourth hover:text-fourth dark:hover:border-fourth dark:hover:text-fourth text-lg py-2 px-4 rounded-xl flex items-center justify-between duration-200">
           <span class="font-bold md:font-semibold">Filters</span>
           <i class="fa-solid fa-filter"></i>
         </button>` : ''}
@@ -365,7 +371,7 @@ function generateCardsDom(item) {
           <i class="fa-solid fa-sort"></i>
         </button>` : ''}
       </div>
-    </div>`
+    </div>`;
   }
 
   if (item.ordering) {
@@ -392,12 +398,12 @@ function generateCardsDom(item) {
   if (item.paging) {
     pagingDom = `<div class="flex justify-between items-center">
                 <button @click="prevPage" :disabled="shoppingCardsCurrentPage === 1" class="bg-second text-white hover:bg-main duration-200 py-2 w-28 rounded-lg disabled:bg-second/50 dark:disabled:bg-second/20">Previous</button>
-                <span>Sayfa {{ shoppingCardsCurrentPage }} / {{ shoppingCardsTotalPages }}</span>
+                <span>Page {{ shoppingCardsCurrentPage }} / {{ shoppingCardsTotalPages }}</span>
                 <button @click="nextPage" :disabled="shoppingCardsCurrentPage === shoppingCardsTotalPages" class="bg-second text-white hover:bg-main duration-200 py-2 w-28 rounded-lg disabled:bg-second/50 dark:disabled:bg-second/20">Next</button>
-              </div>`
+              </div>`;
   }
 
-  return `<div class="w disabled:bg-second/50-full flex flex-col gap-4">
+  return `<div class="w-full flex flex-col gap-4">
             ${topBar}
             ${cardsDom}
             ${pagingDom}
@@ -410,7 +416,8 @@ function generateCardsScript(item) {
     const ${item.name} = ref([]);
     ${item.ordering ? `const ${item.name}Ordering = ref(${item.ordering.options[0].value});\n const ${item.name}OrderOptions = ref(${JSON.stringify(item.ordering.options)});\n const ${item.name}OrderModalVisibility = ref(false);` : ''}
     ${item.searchBar ? `const ${item.name}SearchBar = ref('');` : ''}
-    ${item.filters ? `const ${item.name}Filters = ref({${item.filters.map((e) => `${e.name}: ${e.value}`).join(',')}});` : ''}
+    ${item.filters ? `const ${item.name}Filters = [${item.filters.map(filter => JSON.stringify(filter)).join(',')}];
+    const ${item.name}FiltersData = ref({${item.filters.map(filter => `${filter.data}: ${filter.value}`).join(',')}}) ` : ''}
     const ${item.name}ViewMode = ref('${item.cardLayout.viewMode?.defaultView || "grid"}');
     ${item.paging ? `const ${item.name}CurrentPage = ref(1);\nconst ${item.name}TotalPages = ref(1);` : ''}
 
@@ -419,7 +426,7 @@ function generateCardsScript(item) {
         ${item.paging ? `currentPage: ${item.name}CurrentPage.value,\n itemsPerPage: ${item.paging.size},` : ''}
         ${item.ordering ? `${item.ordering.name}: ${item.name}Ordering.value,` : ''}
         ${item.searchBar ? `${item.searchBar.name}: ${item.name}SearchBar.value,` : ''}
-        ${item.filters ? `...${item.name}Filters.value,` : ''}
+        ${item.filters ? `filters: {...${item.name}FiltersData.value},` : ''}
       };
 
       $.ajax({
@@ -462,7 +469,8 @@ function generateCardsScript(item) {
       : ''
     }
     ${item.filters
-      ? ``
+      ? `function ${item.name}OpenCardFilters() { cardService.openFiltersModal(${item.name}, ${item.name}Filters, ${item.name}FiltersData) };
+      watch(${item.name}FiltersData, () => { get${item.name}(); }, { deep: true });`
       : ''
     }`
   }

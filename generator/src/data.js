@@ -2043,7 +2043,7 @@ module.exports = {
           },
           "paging": {
             "type": 0, //number buttons / scroll ??
-            "size": 12,
+            "size": 10,
           },
           "ordering": {
             "name": "orderType",
@@ -2072,13 +2072,13 @@ module.exports = {
           },
           "filters": [
             {
-              "name": "category",
-              "title": "Category",
+              "data": "category",
+              "name": "Category",
               "type": "select2",
               "options": {
                 "width": '100%',
                 "minimumInputLength": -1,
-                "placeholder": "Model Selection",
+                "placeholder": "Category Selection",
                 "allowClear": true,
                 "language": {
                   "noResults": "Eşleşen bir Kategori bulunamadı.",
@@ -2086,9 +2086,9 @@ module.exports = {
                   "searching": "Aranıyor..."
                 },
                 "ajax": {
-                  "url": `http://localhost:44350/production/get-models`,
+                  "url": `http://localhost:3000/categories`,
                   "delay": 250,
-                  "type": 'POST',
+                  "type": 'GET',
                   "dataType": 'json',
                   "contentType": "application/json; charset=utf-8",
                 }
@@ -2098,8 +2098,8 @@ module.exports = {
               "visible": true
             },
             {
-              "name": "brand",
-              "title": "Brand",
+              "data": "brand",
+              "name": "Brand",
               "type": "text",
               "value": null,
               "default": null,
@@ -2107,7 +2107,7 @@ module.exports = {
             }
           ],
           "cardLayout": {
-            "type": 3,
+            "type": 2,
             "card": {
               "id": "ID",
               "title": "UrunAdi",
