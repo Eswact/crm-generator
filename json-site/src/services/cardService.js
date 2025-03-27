@@ -91,8 +91,9 @@ const cardService = {
         // if (cardFilters.beforeReset) {
         //     cardFilters.beforeReset();
         // }
-        cardFilters.map(function(filter, index){
+        cardFilters.forEach((filter) => {
             filter.value = filter.default;
+            filtersData.value[filter.data] = filter.default;
         });
         // this.reloadCards(card);
         commonFunctions.closeFilter();
