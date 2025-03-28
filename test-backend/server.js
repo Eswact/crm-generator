@@ -17,7 +17,7 @@ app.use(cors());
 app.use(express.json());
 
 app.post("/products", (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   let { searchValue, orderType, filters = {}, currentPage = 1, itemsPerPage = 10 } = req.body;
 
   let filteredProducts = [...products];

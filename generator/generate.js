@@ -279,10 +279,9 @@ function generateCardsDom(item) {
   let topBar = '';
   let modals = '';
   let cardData = item.cardLayout.card;
-  console.log(item.cardLayout.type);
   switch (item.cardLayout.type) {
     case 1:
-      cardsDom = `<div class="w-full flex items-center gap-2 flex-wrap">
+      cardsDom = `<div class="cardList w-full flex items-center gap-2 flex-wrap">
         <div
           v-for="card in ${item.name}"
           :key="card.${cardData.id}"
@@ -302,7 +301,7 @@ function generateCardsDom(item) {
       </div>`
       break;
     case 2:
-      cardsDom = `<div class="w-full flex items-center gap-2 flex-wrap">
+      cardsDom = `<div class="cardList w-full flex items-center gap-2 flex-wrap">
         <div
           v-for="card in ${item.name}"
           :key="card.${cardData.id}"
@@ -325,7 +324,7 @@ function generateCardsDom(item) {
       </div>`
       break;
     case 3:
-      cardsDom = `<div class="w-full flex items-center justify-center gap-2 flex-wrap">
+      cardsDom = `<div class="cardList w-full flex items-center justify-center gap-2 flex-wrap">
         <div
           v-for="card in ${item.name}"
           :key="card.${cardData.id}"
@@ -397,13 +396,13 @@ function generateCardsDom(item) {
 
   if (item.paging) {
     pagingDom = `<div class="flex justify-between items-center">
-                <button @click="prevPage" :disabled="shoppingCardsCurrentPage === 1" class="bg-second text-white hover:bg-main duration-200 py-2 w-28 rounded-lg disabled:bg-second/50 dark:disabled:bg-second/20">Previous</button>
-                <span>Page {{ shoppingCardsCurrentPage }} / {{ shoppingCardsTotalPages }}</span>
-                <button @click="nextPage" :disabled="shoppingCardsCurrentPage === shoppingCardsTotalPages" class="bg-second text-white hover:bg-main duration-200 py-2 w-28 rounded-lg disabled:bg-second/50 dark:disabled:bg-second/20">Next</button>
+                <button @click="${item.name}CurrentPage--" :disabled="${item.name}CurrentPage <= 1" class="bg-second text-white hover:bg-main duration-200 py-2 w-28 rounded-lg disabled:bg-second/50 dark:disabled:bg-second/20">Previous</button>
+                <div class="flex items-center gap-4 px-3 py-1 rounded-lg text-second dark:text-white font-semibold"><span>Page</span><span>{{ ${item.name}CurrentPage }} / {{ ${item.name}TotalPages }}</span></div>
+                <button @click="${item.name}CurrentPage++" :disabled="${item.name}CurrentPage >= ${item.name}TotalPages" class="bg-second text-white hover:bg-main duration-200 py-2 w-28 rounded-lg disabled:bg-second/50 dark:disabled:bg-second/20">Next</button>
               </div>`;
   }
 
-  return `<div class="w-full flex flex-col gap-4">
+  return `<div id="${item.id}" name="${item.name}" class="w-full flex flex-col gap-4">
             ${topBar}
             ${cardsDom}
             ${pagingDom}
@@ -445,32 +444,27 @@ function generateCardsScript(item) {
         }
       })
     };
-
-    function nextPage() {
-      if (${item.name}CurrentPage.value < ${item.name}TotalPages.value) {
-        ${item.name}CurrentPage.value++;
-        get${item.name}();
-      }
-    }
-    function prevPage() {
-      if (${item.name}CurrentPage.value > 1) {
-        ${item.name}CurrentPage.value--;
-        get${item.name}();
-      }
-    }
     
+    watch(${item.name}CurrentPage, () => { get${item.name}(); }, { deep: true });
     ${item.ordering 
       ? `function ${item.name}ToggleOrderVisibility() { ${item.name}OrderModalVisibility.value = !${item.name}OrderModalVisibility.value };
-      watch(${item.name}Ordering, () => { get${item.name}(); });`
+      watch(${item.name}Ordering, () => { get${item.name}(); }, { deep: true });`
       : ''
     }
     ${item.searchBar 
-      ? `watch(${item.name}SearchBar, commonFunctions.debounce((value) => { ${item.name}SearchBar.value = value; get${item.name}(); }, ${item.searchBar.delay}));`
+      ? `watch(${item.name}SearchBar, commonFunctions.debounce((value) => { 
+        ${item.name}SearchBar.value = value; 
+        if (${item.name}CurrentPage.value > 1) { ${item.name}CurrentPage.value = 1; }
+        else { get${item.name}(); } 
+        }, ${item.searchBar.delay}), { deep: true });`
       : ''
     }
     ${item.filters
-      ? `function ${item.name}OpenCardFilters() { cardService.openFiltersModal(${item.name}, ${item.name}Filters, ${item.name}FiltersData) };
-      watch(${item.name}FiltersData, () => { get${item.name}(); }, { deep: true });`
+      ? `function ${item.name}OpenCardFilters() { cardService.openFiltersModal(${JSON.stringify(item.name)}, ${item.name}Filters, ${item.name}FiltersData.value) };
+      watch(${item.name}FiltersData, () => { 
+        if (${item.name}CurrentPage.value > 1) { ${item.name}CurrentPage.value = 1; }
+        else { get${item.name}(); }
+      }, { deep: true });`
       : ''
     }`
   }

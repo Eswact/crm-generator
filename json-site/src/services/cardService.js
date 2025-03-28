@@ -5,11 +5,13 @@ import select2Service from './select2Service';
 
 
 const cardService = {
+    
     openFiltersModal: function(card, cardFilters, filtersData) {
-        this.fillFiltersModal(card, cardFilters, filtersData);
+        console.log(card);
+        this.fillFiltersModal(cardFilters, filtersData);
         commonFunctions.openFilter();
     },
-    fillFiltersModal: function(card, cardFilters, filtersData) {
+    fillFiltersModal: function(cardFilters, filtersData) {
         let filterHtml = '';
         cardFilters.map(function(filter, index){
             if(filter.visible) {
@@ -54,11 +56,11 @@ const cardService = {
                 : select2Service.createSelect2(`.filterInput[data-filter="${f.data}"]`, f.options);
         });
 
-        $('#filterModalApply').off('click').on('click', () => this.applyFilters(card, cardFilters, filtersData));
-        $('#filterModalReset').off('click').on('click', () => this.resetFilters(card, cardFilters, filtersData));
+        $('#filterModalApply').off('click').on('click', () => this.applyFilters(cardFilters, filtersData));
+        $('#filterModalReset').off('click').on('click', () => this.resetFilters(cardFilters, filtersData));
     },
     
-    applyFilters: function(card, cardFilters, filtersData) {
+    applyFilters: function(cardFilters, filtersData) {
         // if (cardFilters.beforeApply) {
         //     cardFilters.beforeApply();
         // }
@@ -82,20 +84,18 @@ const cardService = {
             }
         });
         cardFilters.forEach((filter) => {
-            filtersData.value[filter.data] = filter.value;
+            filtersData[filter.data] = filter.value;
         });
-        // this.reloadCards(card);
         commonFunctions.closeFilter();
     },
-    resetFilters: function(card, cardFilters, filtersData) {
+    resetFilters: function(cardFilters, filtersData) {
         // if (cardFilters.beforeReset) {
         //     cardFilters.beforeReset();
         // }
         cardFilters.forEach((filter) => {
             filter.value = filter.default;
-            filtersData.value[filter.data] = filter.default;
+            filtersData[filter.data] = filter.default;
         });
-        // this.reloadCards(card);
         commonFunctions.closeFilter();
     },
 };
