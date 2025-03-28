@@ -16,7 +16,7 @@
         </button>
       </div>
     </div>
-            <div class="cardList w-full flex items-center gap-2 flex-wrap">
+            <div v-if="shoppingCards.length > 0" class="cardList w-full flex items-center gap-2 flex-wrap">
         <div
           v-for="card in shoppingCards"
           :key="card.ID"
@@ -36,6 +36,10 @@
           <span class="text-lg sm:text-base font-bold text-fourth">{{ commonFunctions.convert2PriceWithUnit(card.Tutar) }}</span>
           <button  class="w-full bg-third border-2 border-third text-white p-1 text-lg font-semibold rounded-lg">Add to basket</button>
         </div>
+      </div>
+      <div v-else class="w-full flex flex-col justify-center items-center gap-2">
+        <img src="/defaults/images/not-found.gif" alt="No data found" />
+        <h2 class="text-3xl font-bold text-second">No data found</h2>
       </div>
             <div class="flex justify-between items-center">
                 <button @click="shoppingCardsCurrentPage--" :disabled="shoppingCardsCurrentPage <= 1" class="bg-second text-white hover:bg-main duration-200 py-2 w-28 rounded-lg disabled:bg-second/50 dark:disabled:bg-second/20">Previous</button>

@@ -281,7 +281,7 @@ function generateCardsDom(item) {
   let cardData = item.cardLayout.card;
   switch (item.cardLayout.type) {
     case 1:
-      cardsDom = `<div class="cardList w-full flex items-center gap-2 flex-wrap">
+      cardsDom = `<div v-if="${item.name}.value.length > 0" class="cardList w-full flex items-center gap-2 flex-wrap">
         <div
           v-for="card in ${item.name}"
           :key="card.${cardData.id}"
@@ -298,10 +298,14 @@ function generateCardsDom(item) {
           </div>
           <span class="text-lg sm:text-base font-bold text-fourth">{{ commonFunctions.convert2PriceWithUnit(card.${cardData.price}) }}</span>
         </div>
-      </div>`
+      </div>
+      <div v-else class="w-full flex flex-col justify-center items-center gap-2">
+        <img src="/defaults/images/not-found.png" alt="No data found" />
+        <h2 class="text-3xl font-bold text-second">No data found</h2>
+      </div>`;
       break;
     case 2:
-      cardsDom = `<div class="cardList w-full flex items-center gap-2 flex-wrap">
+      cardsDom = `<div v-if="${item.name}.length > 0" class="cardList w-full flex items-center gap-2 flex-wrap">
         <div
           v-for="card in ${item.name}"
           :key="card.${cardData.id}"
@@ -321,10 +325,14 @@ function generateCardsDom(item) {
           <span class="text-lg sm:text-base font-bold text-fourth">{{ commonFunctions.convert2PriceWithUnit(card.${cardData.price}) }}</span>
           <button  class="w-full bg-third border-2 border-third text-white p-1 text-lg font-semibold rounded-lg">Add to basket</button>
         </div>
-      </div>`
+      </div>
+      <div v-else class="w-full flex flex-col justify-center items-center gap-2">
+        <img src="/defaults/images/not-found.png" alt="No data found" />
+        <h2 class="text-3xl font-bold text-second">No data found</h2>
+      </div>`;
       break;
     case 3:
-      cardsDom = `<div class="cardList w-full flex items-center justify-center gap-2 flex-wrap">
+      cardsDom = `<div v-if="${item.name}.length > 0" class="cardList w-full flex items-center justify-center gap-2 flex-wrap">
         <div
           v-for="card in ${item.name}"
           :key="card.${cardData.id}"
@@ -351,7 +359,11 @@ function generateCardsDom(item) {
             <span class="text-xl sm:text-base font-bold text-fourth">{{ commonFunctions.convert2PriceWithUnit(card.${cardData.price}) }}</span>
           </div>
         </div>
-      </div>`
+      </div>
+      <div v-else class="w-full flex flex-col justify-center items-center gap-2">
+        <img src="/defaults/images/not-found.png" alt="No data found" />
+        <h2 class="text-3xl font-bold text-second">No data found</h2>
+      </div>`;
       break;
   }
 

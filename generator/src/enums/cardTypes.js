@@ -18,7 +18,7 @@ const cardTypes = [
             "envanter": Number,
             "barcode": String,
             "price": Number,
-            
+            // "action": Function, // add to basket??
         } 
     },
     {
