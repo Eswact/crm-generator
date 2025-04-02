@@ -2,6 +2,7 @@
 const fs = require('fs');
 const path = require('path');
 const siteData = require('./src/data.js');
+const { json } = require('stream/consumers');
 
 // Paths
 const paths = {
@@ -108,7 +109,7 @@ function createViews() {
     }).join('\n');
     scriptsImports += '\nimport $ from "jquery";';
     (!page.doms.every(x => x.type != 'datatable')) ? scriptsImports += '\nimport datatableService from "../services/datatableService";' : '';
-    (!page.doms.every(x => x.type != 'cards')) ? scriptsImports += '\nimport cardService from "../services/cardService";' : '';
+    (!page.doms.every(x => x.type != 'cards')) ? scriptsImports += '\nimport cardService from "../services/cardService";\nimport { useBasketStore } from "../store/basketStore";\nconst basketStore = useBasketStore();' : '';
 
 
     //Datatable scripts
@@ -300,7 +301,7 @@ function generateCardsDom(item) {
         </div>
       </div>
       <div v-else class="w-full flex flex-col justify-center items-center gap-2">
-        <img src="/defaults/images/not-found.png" alt="No data found" />
+        <img src="/defaults/images/not-found.gif" alt="No data found" />
         <h2 class="text-3xl font-bold text-second">No data found</h2>
       </div>`;
       break;
@@ -323,11 +324,16 @@ function generateCardsDom(item) {
             <h2 class="w-full text-xl sm:text-lg font-semibold truncatedText2">{{ card.${cardData.title} }}</h2>
           </div>
           <span class="text-lg sm:text-base font-bold text-fourth">{{ commonFunctions.convert2PriceWithUnit(card.${cardData.price}) }}</span>
-          <button  class="w-full bg-third border-2 border-third text-white p-1 text-lg font-semibold rounded-lg">Add to basket</button>
+          <button v-if="basketStore.getBasket('${item.name}').every(c => c.ID !== card.ID)" @click="basketStore.addItem('${item.name}', card)" class="w-full bg-third border-2 border-third text-white p-1 text-lg font-semibold rounded-lg">Add to basket</button>
+          <div v-else class="w-full flex items-center justify-between gap-4 md:gap-2">
+            <button @click="basketStore.decreaseQuantity('${item.name}', card.ID)" class="w-full bg-second text-white p-1 text-lg font-semibold rounded-lg"><i class="fa-solid fa-minus"></i></button>
+            <span class="text-lg font-bold text-third px-2">{{ basketStore.getBasket('${item.name}').find(c => c.ID === card.ID).quantity }}</span>
+            <button @click="basketStore.increaseQuantity('${item.name}', card.ID)" class="w-full bg-second text-white p-1 text-lg font-semibold rounded-lg"><i class="fa-solid fa-plus"></i></button>
+          </div>
         </div>
       </div>
       <div v-else class="w-full flex flex-col justify-center items-center gap-2">
-        <img src="/defaults/images/not-found.png" alt="No data found" />
+        <img src="/defaults/images/not-found.gif" alt="No data found" />
         <h2 class="text-3xl font-bold text-second">No data found</h2>
       </div>`;
       break;
@@ -361,13 +367,13 @@ function generateCardsDom(item) {
         </div>
       </div>
       <div v-else class="w-full flex flex-col justify-center items-center gap-2">
-        <img src="/defaults/images/not-found.png" alt="No data found" />
+        <img src="/defaults/images/not-found.gif" alt="No data found" />
         <h2 class="text-3xl font-bold text-second">No data found</h2>
       </div>`;
       break;
   }
 
-  if (item.searchBar || item.ordering || item.filters) {
+  if (item.searchBar || item.ordering || item.filters || item.cardLayout.type === 2) {
     topBar = `<div class="w-full flex justify-between items-center gap-4 md:flex-col md:justify-center">
       <div class="flex items-center">
         ${item.searchBar ? `<div class="w-[300px] md:w-full relative max-w-full flex items-center justify-end"> <input v-model="${item.name}SearchBar" type="text" placeholder="${item.searchBar.placeholder || 'Search...'}" class="peer w-full pl-4 pr-8 py-2 bg-white dark:bg-opacity-10 border-2 border-second dark:border-white rounded-xl placeholder:text-second dark:placeholder:text-white font-bold md:font-semibold text-lg focus:placeholder:text-fourth focus:border-fourth dark:focus:placeholder:text-fourth dark:focus:border-fourth focus:outline-none"/><i class="fa-solid fa-magnifying-glass absolute right-4 text-lg text-second dark:text-white peer-focus:text-fourth"></i></div>` : ''}
@@ -380,6 +386,10 @@ function generateCardsDom(item) {
         ${item.ordering ? `<button id="${item.name}OrderModalButton" class="w-[calc(50%-0.5rem)] bg-white dark:bg-opacity-10 border-2 border-second text-second dark:border-white dark:text-white hover:border-fourth hover:text-fourth dark:hover:border-fourth dark:hover:text-fourth text-lg py-2 px-4 rounded-xl flex items-center justify-between duration-200">
           <span class="font-bold md:font-semibold">Sort</span>
           <i class="fa-solid fa-sort"></i>
+        </button>` : ''}
+        ${item.cardLayout.type === 2 ? `<button v-show="basketStore.getBasket('${item.name}').length > 0" @click="getBasketList('${item.name}')" id="${item.name}BasketButton" class="flex items-center gap-2 text-white bg-third text-lg font-semibold p-2 rounded-lg" >
+          <i class="fa-solid fa-basket-shopping text-xl"></i>
+          <span>({{ basketStore.getBasket('${item.name}').length }})</span>
         </button>` : ''}
       </div>
     </div>`;
@@ -478,7 +488,13 @@ function generateCardsScript(item) {
         else { get${item.name}(); }
       }, { deep: true });`
       : ''
-    }`
+    }
+    ${item.cardLayout.type === 2
+      ? `function getBasketList(name) {
+        console.log(basketStore.getBasket(name));
+      };`
+      : ''
+    }`;
   }
 }
 

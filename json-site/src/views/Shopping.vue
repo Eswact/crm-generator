@@ -14,6 +14,10 @@
           <span class="font-bold md:font-semibold">Sort</span>
           <i class="fa-solid fa-sort"></i>
         </button>
+        <button v-show="basketStore.getBasket('shoppingCards').length > 0" @click="getBasketList('shoppingCards')" id="shoppingCardsBasketButton" class="flex items-center gap-2 text-white bg-third text-lg font-semibold p-2 rounded-lg" >
+          <i class="fa-solid fa-basket-shopping text-xl"></i>
+          <span>({{ basketStore.getBasket('shoppingCards').length }})</span>
+        </button>
       </div>
     </div>
             <div v-if="shoppingCards.length > 0" class="cardList w-full flex items-center gap-2 flex-wrap">
@@ -34,7 +38,12 @@
             <h2 class="w-full text-xl sm:text-lg font-semibold truncatedText2">{{ card.UrunAdi }}</h2>
           </div>
           <span class="text-lg sm:text-base font-bold text-fourth">{{ commonFunctions.convert2PriceWithUnit(card.Tutar) }}</span>
-          <button  class="w-full bg-third border-2 border-third text-white p-1 text-lg font-semibold rounded-lg">Add to basket</button>
+          <button v-if="basketStore.getBasket('shoppingCards').every(c => c.ID !== card.ID)" @click="basketStore.addItem('shoppingCards', card)" class="w-full bg-third border-2 border-third text-white p-1 text-lg font-semibold rounded-lg">Add to basket</button>
+          <div v-else class="w-full flex items-center justify-between gap-4 md:gap-2">
+            <button @click="basketStore.decreaseQuantity('shoppingCards', card.ID)" class="w-full bg-second text-white p-1 text-lg font-semibold rounded-lg"><i class="fa-solid fa-minus"></i></button>
+            <span class="text-lg font-bold text-third px-2">{{ basketStore.getBasket('shoppingCards').find(c => c.ID === card.ID).quantity }}</span>
+            <button @click="basketStore.increaseQuantity('shoppingCards', card.ID)" class="w-full bg-second text-white p-1 text-lg font-semibold rounded-lg"><i class="fa-solid fa-plus"></i></button>
+          </div>
         </div>
       </div>
       <div v-else class="w-full flex flex-col justify-center items-center gap-2">
@@ -77,6 +86,8 @@
       
 import $ from "jquery";
 import cardService from "../services/cardService";
+import { useBasketStore } from "../store/basketStore";
+const basketStore = useBasketStore();
     
       
       
@@ -130,6 +141,9 @@ const shoppingCardsTotalPages = ref(1);
         if (shoppingCardsCurrentPage.value > 1) { shoppingCardsCurrentPage.value = 1; }
         else { getshoppingCards(); }
       }, { deep: true });
+    function getBasketList(name) {
+        console.log(basketStore.getBasket(name));
+      };
     
       onMounted(() => {
         
