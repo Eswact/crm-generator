@@ -15,7 +15,7 @@ export const useBasketStore = defineStore('basket', () => {
                 existingItem.quantity += 1;
             }
         } else {
-            baskets.value[cardGroupName].push({ ID: item.ID, quantity: 1, limit: item.Envanter, item: item });
+            baskets.value[cardGroupName].push({ ID: item.ID, quantity: 1, limit: item.Envanter, unitPrice: item.Tutar, item: item });
         }
     }
 
@@ -64,6 +64,16 @@ export const useBasketStore = defineStore('basket', () => {
         }
     }
 
+    function getTotalPrice(cardGroupName) {
+        let total = 0;
+        if (baskets.value[cardGroupName]) {
+            baskets.value[cardGroupName].forEach(item => {
+                total += item.unitPrice * item.quantity;
+            });
+        }
+        return total;
+    }
+
     return {
         baskets,
         addItem,
@@ -72,6 +82,7 @@ export const useBasketStore = defineStore('basket', () => {
         getBasket,
         increaseQuantity,
         decreaseQuantity,
-        setQuantity
+        setQuantity,
+        getTotalPrice,
     };
 });

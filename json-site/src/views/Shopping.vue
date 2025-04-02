@@ -2,7 +2,7 @@
       <div class="w-full flex flex-col justify-center items-center gap-8">
         <div id="shoppingCards" name="shoppingCards" class="w-full flex flex-col gap-4">
             <div class="w-full flex justify-between items-center gap-4 md:flex-col md:justify-center">
-      <div class="flex items-center">
+      <div class="flex items-center md:w-full">
         <div class="w-[300px] md:w-full relative max-w-full flex items-center justify-end"> <input v-model="shoppingCardsSearchBar" type="text" placeholder="Search Products..." class="peer w-full pl-4 pr-8 py-2 bg-white dark:bg-opacity-10 border-2 border-second dark:border-white rounded-xl placeholder:text-second dark:placeholder:text-white font-bold md:font-semibold text-lg focus:placeholder:text-fourth focus:border-fourth dark:focus:placeholder:text-fourth dark:focus:border-fourth focus:outline-none"/><i class="fa-solid fa-magnifying-glass absolute right-4 text-lg text-second dark:text-white peer-focus:text-fourth"></i></div>
       </div>
       <div class="w-[400px] max-w-full md:w-full flex items-center justify-end gap-4">
@@ -14,7 +14,7 @@
           <span class="font-bold md:font-semibold">Sort</span>
           <i class="fa-solid fa-sort"></i>
         </button>
-        <button v-show="basketStore.getBasket('shoppingCards').length > 0" @click="getBasketList('shoppingCards')" id="shoppingCardsBasketButton" class="flex items-center gap-2 text-white bg-third text-lg font-semibold p-2 rounded-lg" >
+        <button v-show="basketStore.getBasket('shoppingCards').length > 0" @click="shoppingCardsToggleBasketVisibility()" id="shoppingCardsBasketButton" class="flex items-center gap-2 text-white bg-third text-lg font-semibold p-2 rounded-lg" >
           <i class="fa-solid fa-basket-shopping text-xl"></i>
           <span>({{ basketStore.getBasket('shoppingCards').length }})</span>
         </button>
@@ -37,11 +37,11 @@
           <div class="h-[3.5rem] flex justify-center items-center">
             <h2 class="w-full text-xl sm:text-lg font-semibold truncatedText2">{{ card.UrunAdi }}</h2>
           </div>
-          <span class="text-lg sm:text-base font-bold text-fourth">{{ commonFunctions.convert2PriceWithUnit(card.Tutar) }}</span>
+          <span class="text-lg sm:text-base font-bold text-main dark:text-fourth">{{ commonFunctions.convert2PriceWithUnit(card.Tutar) }}</span>
           <button v-if="basketStore.getBasket('shoppingCards').every(c => c.ID !== card.ID)" @click="basketStore.addItem('shoppingCards', card)" class="w-full bg-third border-2 border-third text-white p-1 text-lg font-semibold rounded-lg">Add to basket</button>
           <div v-else class="w-full flex items-center justify-between gap-4 md:gap-2">
             <button @click="basketStore.decreaseQuantity('shoppingCards', card.ID)" class="w-full bg-second text-white p-1 text-lg font-semibold rounded-lg"><i class="fa-solid fa-minus"></i></button>
-            <span class="text-lg font-bold text-third px-2">{{ basketStore.getBasket('shoppingCards').find(c => c.ID === card.ID).quantity }}</span>
+            <span class="text-lg font-bold text-fourth dark:text-third px-2">{{ basketStore.getBasket('shoppingCards').find(c => c.ID === card.ID).quantity }}</span>
             <button @click="basketStore.increaseQuantity('shoppingCards', card.ID)" class="w-full bg-second text-white p-1 text-lg font-semibold rounded-lg"><i class="fa-solid fa-plus"></i></button>
           </div>
         </div>
@@ -72,6 +72,37 @@
           <span class="dark:text-darkBg">{{ option.name }}</span>
         </label>
       </div>
+    </div><div v-show="basketStore.getBasket('shoppingCards').length > 0 && shoppingCardsBasketModalVisibility" id="shoppingCardsBasketModal" @click.self="shoppingCardsToggleBasketVisibility()" class="z-30 fixed w-full h-full top-0 left-0 bg-black bg-opacity-65 flex justify-center items-center md:items-end">
+      <div class="bg-bg text-dark px-6 py-4 max-h-full max-w-full w-[800px] overflow-y-auto md:w-full md:h-full md:justify-between md:pb-8 rounded-lg md:rounded-none flex flex-col gap-4">
+        <div class="w-full flex items-center justify-between pb-2 border-b border-second">
+          <h2 class="text-2xl font-bold dark:text-darkBg">Basket</h2>
+          <button @click="shoppingCardsToggleBasketVisibility()" class="px-2 text-3xl text-red-600"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="w-full max-h-[500px] overflow-y-auto md:max-h-full md:h-full flex flex-col gap-2">
+          <div v-for="card in basketStore.getBasket('shoppingCards')" :key="card.ID" class="w-full flex items-center justify-between p-1 gap-4 border-b last:border-b-0 border-second/40 dark:border-second/80">
+            <div class="w-full flex items-center justify-between gap-4">
+               <div class="w-full max-w-[64%] flex items-center gap-4">
+                  <img :src="card.item.Resimler[0] || '/defaults/images/no-image.png'" class="w-[64px] h-[64px] object-contain object-center rounded-lg overflow-hidden" :alt="card.UrunAdi" onerror="this.src='/defaults/images/no-image.png'"/>
+                  <div class="w-full flex flex-col justify-between items-start gap-2">
+                    <h2 class="text-lg font-bold dark:text-darkBg">{{ card.item.UrunAdi }}</h2>
+                    <span class="font-semibold text-second">{{ card.quantity }} x {{ commonFunctions.convert2PriceWithUnit(card.item.Tutar) }}</span>
+                  </div>
+                </div>
+                <span class="text-lg font-bold text-fourth">{{ commonFunctions.convert2PriceWithUnit(card.item.Tutar * card.quantity) }}</span>
+            </div>
+            <button @click="shoppingCardsremoveFromCart('shoppingCards', card.ID)" class="px-2 text-2xl text-red-600"><i class="fa-solid fa-trash-can"></i></button>
+          </div>
+        </div>
+        <div class="w-full flex items-center justify-between pt-2 border-t border-second">
+          <div class="flex items-center gap-4">
+            <button @click="shoppingCardsclearBasket('shoppingCards')" class="px-4 py-2 bg-second text-white hover:bg-main duration-200 text-xl font-bold rounded-lg">Clear</button>
+          </div>
+          <div class="flex items-center gap-4">
+            <span class="text-lg font-bold text-second dark:text-darkBg">Total:</span>
+            <span class="text-2xl font-bold text-main">{{ commonFunctions.convert2PriceWithUnit(basketStore.getTotalPrice('shoppingCards')) }}</span>
+          </div>
+        </div>
+      </div>
     </div>
           </div>
       </div>
@@ -101,6 +132,8 @@ const basketStore = useBasketStore();
     const shoppingCardsViewMode = ref('grid');
     const shoppingCardsCurrentPage = ref(1);
 const shoppingCardsTotalPages = ref(1);
+    const shoppingCardsBasketModalVisibility = ref(false);
+
 
     const getshoppingCards = function () {
       const params = {
@@ -141,9 +174,20 @@ const shoppingCardsTotalPages = ref(1);
         if (shoppingCardsCurrentPage.value > 1) { shoppingCardsCurrentPage.value = 1; }
         else { getshoppingCards(); }
       }, { deep: true });
-    function getBasketList(name) {
-        console.log(basketStore.getBasket(name));
-      };
+    function shoppingCardsToggleBasketVisibility() {
+          shoppingCardsBasketModalVisibility.value = !shoppingCardsBasketModalVisibility.value;
+          console.log(basketStore.getBasket('shoppingCards'));
+        };
+        function shoppingCardsremoveFromCart(name, id) {
+          basketStore.removeItem(name, id);
+          if (basketStore.getBasket(name).length === 0) {
+            shoppingCardsBasketModalVisibility.value = false;
+          }
+        };
+        function shoppingCardsclearBasket(name) {
+          basketStore.clearBasket(name);
+          shoppingCardsBasketModalVisibility.value = false;
+        };
     
       onMounted(() => {
         
