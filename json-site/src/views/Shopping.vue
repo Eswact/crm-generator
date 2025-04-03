@@ -141,6 +141,112 @@
         </div>
       </div>
     </div>
+          </div><hr class="my-4 w-full border-second border dark:border-bg"/><div id="shoppingCards2" name="shoppingCards2" class="w-full flex flex-col gap-4">
+            <div class="w-full flex justify-between items-center gap-4 md:flex-col md:justify-center">
+      <div class="flex items-center md:w-full">
+        <div class="w-[300px] md:w-full relative max-w-full flex items-center justify-end"> <input v-model="shoppingCards2SearchBar" type="text" placeholder="Search Products..." class="peer w-full pl-4 pr-8 py-2 bg-white dark:bg-opacity-10 border-2 border-second dark:border-white rounded-xl placeholder:text-second dark:placeholder:text-white font-bold md:font-semibold text-lg focus:placeholder:text-fourth focus:border-fourth dark:focus:placeholder:text-fourth dark:focus:border-fourth focus:outline-none"/><i class="fa-solid fa-magnifying-glass absolute right-4 text-lg text-second dark:text-white peer-focus:text-fourth"></i></div>
+      </div>
+      <div class="w-[400px] max-w-full md:w-full flex items-center justify-end gap-4">
+        <button id="shoppingCards2FiltersButton" class="w-[calc(50%-0.5rem)] bg-white dark:bg-opacity-10 border-2 border-second text-second dark:border-white dark:text-white hover:border-fourth hover:text-fourth dark:hover:border-fourth dark:hover:text-fourth text-lg py-2 px-4 rounded-xl flex items-center justify-between duration-200">
+          <span class="font-bold md:font-semibold">Filters</span>
+          <i class="fa-solid fa-filter"></i>
+        </button>
+        <button id="shoppingCards2OrderModalButton" class="w-[calc(50%-0.5rem)] bg-white dark:bg-opacity-10 border-2 border-second text-second dark:border-white dark:text-white hover:border-fourth hover:text-fourth dark:hover:border-fourth dark:hover:text-fourth text-lg py-2 px-4 rounded-xl flex items-center justify-between duration-200">
+          <span class="font-bold md:font-semibold">Sort</span>
+          <i class="fa-solid fa-sort"></i>
+        </button>
+        <button @click="shoppingCards2ChangeViewMode()" class="bg-white dark:bg-opacity-10 border-2 border-second text-second dark:border-white dark:text-white hover:border-fourth hover:text-fourth dark:hover:border-fourth dark:hover:text-fourth text-lg py-2 px-4 rounded-xl flex items-center justify-between duration-200">
+          <i v-if="shoppingCards2ViewMode === 'grid'" class="fa-solid fa-list-ul text-xl"></i>
+          <i v-else class="fa-solid fa-table-cells text-xl"></i>  
+        </button>
+        
+      </div>
+    </div>
+            <div v-if="shoppingCards2.length > 0" class="cardList w-full flex items-center justify-center gap-2 flex-wrap">
+        <div v-if="shoppingCards2ViewMode === 'grid'" class="w-full flex items-center justify-center gap-2 flex-wrap">
+          <div
+            v-for="card in shoppingCards2"
+            :key="card.ID"
+            class="relative w-[calc(33%-0.3rem)] md:w-[calc(50%-0.4rem)] h-[300px] p-6 bg-white dark:bg-black text-center flex items-start justify-beetween rounded-md shadow-lg"
+            :data-envanter=card.Envanter
+            :data-barcode=card.Barkodlar[0].Barkodu
+          >
+            <div class="w-[40%] h-full flex justify-center items-center">
+              <img
+                :src="card.Resimler[0] || '/defaults/images/no-image.png'"
+                class="w-full max-h-full object-contain object-center rounded-lg overflow-hidden"
+                :alt="card.UrunAdi"
+                onerror="this.src='/defaults/images/no-image.png'"
+              />
+            </div>
+            <div class="w-[60%] h-full p-6 pr-0 flex flex-col justify-between items-start gap-4">
+              <div class="w-full h-full flex flex-col justify-start items-start gap-2">
+                <h2 class="text-2xl sm:text-lg text-start font-semibold truncatedText2">{{ card.UrunAdi }}</h2>
+                <span class="text-lg text-third font-semibold">{{card.UreticiFirmaAdi}}</span>
+                <span>{{card.Kategori}}</span>
+                <span>{{card.Barkodlar[0].Barkodu}}</span>
+                <span>{{card.Envanter}}</span>
+              </div>
+              <span class="text-xl sm:text-base font-bold text-fourth">{{ commonFunctions.convert2PriceWithUnit(card.Tutar) }}</span>
+            </div>
+          </div>
+        </div>
+        <div v-else class="w-full flex flex-col items-center gap-2 flex-wrap">
+          <div
+            v-for="card in shoppingCards2"
+            :key="card.ID"
+            class="relative w-full h-[160px] p-4 bg-white dark:bg-black text-center flex items-center justify-beetween rounded-md shadow-lg"
+            :data-envanter=card.Envanter
+            :data-barcode=card.Barkodlar[0].Barkodu
+          >
+            <div class="w-full h-full flex justify-start items-center gap-6">
+              <img
+                :src="card.Resimler[0] || '/defaults/images/no-image.png'"
+                class="h-[80%] aspect-square object-contain object-center rounded-lg overflow-hidden"
+                :alt="card.UrunAdi"
+                onerror="this.src='/defaults/images/no-image.png'"
+              />
+              <div class="w-full h-full flex flex-col justify-start items-start gap-2">
+                <h2 class="text-2xl sm:text-lg text-start font-semibold truncatedText2">{{ card.UrunAdi }}</h2>
+                <span class="text-sm font-bold">{{card.Barkodlar[0].Barkodu}}</span>
+                <span class="text-third font-semibold">{{card.UreticiFirmaAdi}}</span>
+                <span>{{card.Kategori}}</span>
+              </div>
+            </div>
+            <div class="w-full h-full p-6 pr-0 flex flex-col justify-center items-end gap-4">
+              <span class="text-lg font-semibold">envanter: {{card.Envanter}}</span>
+              <span class="text-2xl sm:text-base font-bold text-fourth">{{ commonFunctions.convert2PriceWithUnit(card.Tutar) }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div v-else class="w-full flex flex-col justify-center items-center gap-2">
+        <img src="/defaults/images/not-found.gif" alt="No data found" />
+        <h2 class="text-3xl font-bold text-second">No data found</h2>
+      </div>
+            <div class="flex justify-between items-center">
+                <button @click="shoppingCards2CurrentPage--" :disabled="shoppingCards2CurrentPage <= 1" class="bg-second text-white hover:bg-main duration-200 py-2 w-28 rounded-lg disabled:bg-second/50 dark:disabled:bg-second/20">Previous</button>
+                <div class="flex items-center gap-4 px-3 py-1 rounded-lg text-second dark:text-white font-semibold"><span>Page</span><span>{{ shoppingCards2CurrentPage }} / {{ shoppingCards2TotalPages }}</span></div>
+                <button @click="shoppingCards2CurrentPage++" :disabled="shoppingCards2CurrentPage >= shoppingCards2TotalPages" class="bg-second text-white hover:bg-main duration-200 py-2 w-28 rounded-lg disabled:bg-second/50 dark:disabled:bg-second/20">Next</button>
+              </div>
+            <div v-show="shoppingCards2OrderModalVisibility" id="shoppingCards2OrderModal" @click.self="shoppingCards2ToggleOrderVisibility()" class="z-30 fixed w-full h-full top-0 left-0 bg-black bg-opacity-65 flex justify-center items-center md:items-end">
+      <div class="bg-bg text-dark p-4 max-h-full max-w-full min-w-[400px] overflow-y-auto md:w-full md:min-w-[unset] md:pb-8 rounded-lg md:rounded-b-none md:rounded-t-2xl flex flex-col gap-4">
+        <div class="w-full flex items-center justify-between mb-1">
+          <h2 class="text-2xl font-bold dark:text-darkBg">Sorting</h2>
+          <button @click="shoppingCards2ToggleOrderVisibility()" class="px-2 text-3xl text-red-600"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <label v-for="option in shoppingCards2OrderOptions" :key="option.id" :for="option.id" class="w-full px-6 py-3 border border-gray-400 flex items-center gap-4 text-lg font-semibold rounded-md">
+          <input
+            type="radio"
+            :id="option.id"
+            name="ordering"
+            :checked="shoppingCards2Ordering === option.value"
+            @change="shoppingCards2Ordering = option.value"
+          />
+          <span class="dark:text-darkBg">{{ option.name }}</span>
+        </label>
+      </div>
+    </div>
           </div>
       </div>
     </template>
@@ -235,12 +341,77 @@ const shoppingCardsTotalPages = ref(1);
               shoppingCardsViewMode.value = 'grid';
             }
           };
+
+    const shoppingCards2 = ref([]);
+    const shoppingCards2Ordering = ref(1);
+ const shoppingCards2OrderOptions = ref([{"name":"A to Z","id":"aToZ","value":1},{"name":"Lowest price","id":"lowestPrice","value":2},{"name":"Highest price","id":"highestPrice","value":3}]);
+ const shoppingCards2OrderModalVisibility = ref(false);
+    const shoppingCards2SearchBar = ref('');
+    const shoppingCards2Filters = [{"data":"category","name":"Category","type":"select2","options":{"width":"100%","minimumInputLength":-1,"placeholder":"Category Selection","allowClear":true,"language":{"noResults":"Eşleşen bir Kategori bulunamadı.","inputTooShort":"En az 1 Karakter giriniz.","searching":"Aranıyor..."},"ajax":{"url":"http://localhost:3000/categories","delay":250,"type":"GET","dataType":"json","contentType":"application/json; charset=utf-8"}},"value":null,"default":null,"visible":true},{"data":"brand","name":"Brand","type":"text","value":null,"default":null,"visible":true}];
+    const shoppingCards2FiltersData = ref({category: null,brand: null}) 
+    const shoppingCards2CurrentPage = ref(1);
+const shoppingCards2TotalPages = ref(1);
+    const shoppingCards2ViewMode = ref('list');
+    
+
+
+    const getshoppingCards2 = function () {
+      const params = {
+        currentPage: shoppingCards2CurrentPage.value,
+ itemsPerPage: 12,
+        orderType: shoppingCards2Ordering.value,
+        searchValue: shoppingCards2SearchBar.value,
+        filters: {...shoppingCards2FiltersData.value},
+      };
+
+      $.ajax({
+        url: "http://localhost:3000/products",
+        type: "POST",
+        dataType: "json",
+        contentType: "application/json",
+        data: JSON.stringify(params),
+        success: function(res) {
+          console.log(res);
+          shoppingCards2.value = res.data;
+          shoppingCards2TotalPages.value = res.totalPages;
+        },
+        error: function(err) {
+          console.log(err);
+        }
+      })
+    };
+    
+    watch(shoppingCards2CurrentPage, () => { getshoppingCards2(); }, { deep: true });
+    function shoppingCards2ToggleOrderVisibility() { shoppingCards2OrderModalVisibility.value = !shoppingCards2OrderModalVisibility.value };
+      watch(shoppingCards2Ordering, () => { getshoppingCards2(); }, { deep: true });
+    watch(shoppingCards2SearchBar, commonFunctions.debounce((value) => { 
+        shoppingCards2SearchBar.value = value; 
+        if (shoppingCards2CurrentPage.value > 1) { shoppingCards2CurrentPage.value = 1; }
+        else { getshoppingCards2(); } 
+        }, 300), { deep: true });
+    function shoppingCards2OpenCardFilters() { cardService.openFiltersModal("shoppingCards2", shoppingCards2Filters, shoppingCards2FiltersData.value) };
+      watch(shoppingCards2FiltersData, () => { 
+        if (shoppingCards2CurrentPage.value > 1) { shoppingCards2CurrentPage.value = 1; }
+        else { getshoppingCards2(); }
+      }, { deep: true });
+    
+    function shoppingCards2ChangeViewMode() {
+            if (shoppingCards2ViewMode.value === 'grid') {
+              shoppingCards2ViewMode.value = 'list';
+            }
+            else {
+              shoppingCards2ViewMode.value = 'grid';
+            }
+          };
     
       onMounted(() => {
         
         getshoppingCards();
           $('#shoppingCardsOrderModalButton').off('click').on('click', shoppingCardsToggleOrderVisibility)
           $('#shoppingCardsFiltersButton').off('click').on('click', shoppingCardsOpenCardFilters);
+getshoppingCards2();
+          $('#shoppingCards2OrderModalButton').off('click').on('click', shoppingCards2ToggleOrderVisibility)
+          $('#shoppingCards2FiltersButton').off('click').on('click', shoppingCards2OpenCardFilters);
     
         
       });

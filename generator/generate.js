@@ -2,7 +2,6 @@
 const fs = require('fs');
 const path = require('path');
 const siteData = require('./src/data.js');
-const { json } = require('stream/consumers');
 
 // Paths
 const paths = {
