@@ -282,22 +282,46 @@ function generateCardsDom(item) {
   let cardData = item.cardLayout.card;
   switch (item.cardLayout.type) {
     case 1:
-      cardsDom = `<div v-if="${item.name}.value.length > 0" class="cardList w-full flex items-center gap-2 flex-wrap">
-        <div
-          v-for="card in ${item.name}"
-          :key="card.${cardData.id}"
-          class="relative w-[calc(20%-0.4rem)] xl:w-[calc(25%-0.4rem)] md:w-[calc(50%-0.4rem)] h-[340px] sm:h-[300px] py-2 px-4 bg-white dark:bg-black text-center flex flex-col items-center justify-around rounded-md shadow-lg"
-        >
-          <img
-            :src="card.${cardData.img} || '/defaults/images/no-image.png'"
-            class="w-full h-[50%] sm:h-[45%] object-contain object-center rounded-lg overflow-hidden"
-            :alt="card.${cardData.title}"
-            onerror="this.src='/defaults/images/no-image.png'"
-          />
-          <div class="h-[3.5rem] flex justify-center items-center">
-            <h2 class="w-full text-xl sm:text-lg font-semibold truncatedText2">{{ card.${cardData.title} }}</h2>
+      cardsDom = `<div v-if="${item.name}.length > 0" class="cardList w-full flex items-center gap-2 flex-wrap">
+        <div v-if="${item.name}ViewMode === 'grid'" class="w-full flex items-center gap-2 flex-wrap">
+          <div
+            v-for="card in ${item.name}"
+            :key="card.${cardData.id}"
+            class="relative w-[calc(20%-0.4rem)] xl:w-[calc(25%-0.4rem)] md:w-[calc(50%-0.4rem)] h-[340px] sm:h-[300px] py-2 px-4 bg-white dark:bg-black text-center flex flex-col items-center justify-around rounded-md shadow-lg"
+          >
+            <img
+              :src="card.${cardData.img} || '/defaults/images/no-image.png'"
+              class="w-full h-[50%] sm:h-[45%] object-contain object-center rounded-lg overflow-hidden"
+              :alt="card.${cardData.title}"
+              onerror="this.src='/defaults/images/no-image.png'"
+            />
+            <div class="h-[3.5rem] flex justify-center items-center">
+              <h2 class="w-full text-xl sm:text-lg font-semibold truncatedText2">{{ card.${cardData.title} }}</h2>
+            </div>
+            <span class="text-lg sm:text-base font-bold text-fourth">{{ commonFunctions.convert2PriceWithUnit(card.${cardData.price}) }}</span>
           </div>
-          <span class="text-lg sm:text-base font-bold text-fourth">{{ commonFunctions.convert2PriceWithUnit(card.${cardData.price}) }}</span>
+        </div>
+        <div v-else class="w-full flex flex-col items-center gap-2 flex-wrap">
+          <div
+            v-for="card in ${item.name}"
+            :key="card.${cardData.id}"
+            class="relative w-full h-[120px] py-2 px-4 bg-white dark:bg-black text-center flex items-center justify-between rounded-md shadow-lg"
+          >
+            <div class="h-full w-full flex items-center gap-4">
+              <img
+                :src="card.${cardData.img} || '/defaults/images/no-image.png'"
+                class="h-[80%] aspect-square object-contain object-center rounded-lg overflow-hidden"
+                :alt="card.${cardData.title}"
+                onerror="this.src='/defaults/images/no-image.png'"
+              />
+              <div class="h-full flex flex-col justify-center items-start gap-2">
+                <h2 class="w-full text-xl sm:text-lg font-semibold truncatedText2">{{ card.${cardData.title} }}</h2>
+              </div>
+            </div>
+            <div class="w-full h-full p-6 pr-0 flex flex-col justify-center items-end gap-4">
+              <span class="text-xl sm:text-base font-bold text-fourth">{{ commonFunctions.convert2PriceWithUnit(card.${cardData.price}) }}</span>
+            </div>
+          </div>
         </div>
       </div>
       <div v-else class="w-full flex flex-col justify-center items-center gap-2">
@@ -307,28 +331,61 @@ function generateCardsDom(item) {
       break;
     case 2:
       cardsDom = `<div v-if="${item.name}.length > 0" class="cardList w-full flex items-center gap-2 flex-wrap">
-        <div
-          v-for="card in ${item.name}"
-          :key="card.${cardData.id}"
-          class="relative w-[calc(20%-0.4rem)] xl:w-[calc(25%-0.4rem)] md:w-[calc(50%-0.4rem)] h-[340px] sm:h-[300px] py-2 px-4 bg-white dark:bg-black text-center flex flex-col items-center justify-around rounded-md shadow-lg"
-          :data-envanter=card.${cardData.envanter}
-          :data-barcode=card.${cardData.barcode}
-        >
-          <img
-            :src="card.${cardData.img} || '/defaults/images/no-image.png'"
-            class="w-full h-[50%] sm:h-[45%] object-contain object-center rounded-lg overflow-hidden"
-            :alt="card.${cardData.title}"
-            onerror="this.src='/defaults/images/no-image.png'"
-          />
-          <div class="h-[3.5rem] flex justify-center items-center">
-            <h2 class="w-full text-xl sm:text-lg font-semibold truncatedText2">{{ card.${cardData.title} }}</h2>
+        <div v-if="${item.name}ViewMode === 'grid'" class="w-full flex items-center gap-2 flex-wrap">
+          <div
+            v-for="card in ${item.name}"
+            :key="card.${cardData.id}"
+            class="relative w-[calc(20%-0.4rem)] xl:w-[calc(25%-0.4rem)] md:w-[calc(50%-0.4rem)] h-[340px] sm:h-[300px] py-2 px-4 bg-white dark:bg-black text-center flex flex-col items-center justify-around rounded-md shadow-lg"
+            :data-envanter=card.${cardData.envanter}
+            :data-barcode=card.${cardData.barcode}
+          >
+            <img
+              :src="card.${cardData.img} || '/defaults/images/no-image.png'"
+              class="w-full h-[50%] sm:h-[45%] object-contain object-center rounded-lg overflow-hidden"
+              :alt="card.${cardData.title}"
+              onerror="this.src='/defaults/images/no-image.png'"
+            />
+            <div class="h-[3.5rem] flex justify-center items-center">
+              <h2 class="w-full text-xl sm:text-lg font-semibold truncatedText2">{{ card.${cardData.title} }}</h2>
+            </div>
+            <span class="text-lg sm:text-base font-bold text-main dark:text-fourth">{{ commonFunctions.convert2PriceWithUnit(card.${cardData.price}) }}</span>
+            <button v-if="basketStore.getBasket('${item.name}').every(c => c.id !== card.${cardData.id})" @click="basketStore.addItem('${item.name}', card, {id:'${cardData.id}',envanter:'${cardData.envanter}',price:'${cardData.price}'})" class="w-full bg-third border-2 border-third text-white p-1 text-lg font-semibold rounded-lg">Add to basket</button>
+            <div v-else class="w-full flex items-center justify-between gap-4 md:gap-2">
+              <button @click="basketStore.decreaseQuantity('${item.name}', card.${cardData.id})" class="w-full bg-second text-white p-1 max-w-[100px] text-lg font-semibold rounded-lg border-2 border-second dark:border-white"><i class="fa-solid fa-minus"></i></button>
+              <span class="text-lg font-bold text-fourth dark:text-third px-2">{{ basketStore.getBasket('${item.name}').find(c => c.id === card.${cardData.id}).quantity }}</span>
+              <button @click="basketStore.increaseQuantity('${item.name}', card.${cardData.id})" class="w-full bg-second text-white p-1 max-w-[100px] text-lg font-semibold rounded-lg border-2 border-second dark:border-white"><i class="fa-solid fa-plus"></i></button>
+            </div>
           </div>
-          <span class="text-lg sm:text-base font-bold text-main dark:text-fourth">{{ commonFunctions.convert2PriceWithUnit(card.${cardData.price}) }}</span>
-          <button v-if="basketStore.getBasket('${item.name}').every(c => c.id !== card.${cardData.id})" @click="basketStore.addItem('${item.name}', card, {id:'${cardData.id}',envanter:'${cardData.envanter}',price:'${cardData.price}'})" class="w-full bg-third border-2 border-third text-white p-1 text-lg font-semibold rounded-lg">Add to basket</button>
-          <div v-else class="w-full flex items-center justify-between gap-4 md:gap-2">
-            <button @click="basketStore.decreaseQuantity('${item.name}', card.${cardData.id})" class="w-full bg-second text-white p-1 max-w-[100px] text-lg font-semibold rounded-lg border-2 border-second dark:border-white"><i class="fa-solid fa-minus"></i></button>
-            <span class="text-lg font-bold text-fourth dark:text-third px-2">{{ basketStore.getBasket('${item.name}').find(c => c.id === card.${cardData.id}).quantity }}</span>
-            <button @click="basketStore.increaseQuantity('${item.name}', card.${cardData.id})" class="w-full bg-second text-white p-1 max-w-[100px] text-lg font-semibold rounded-lg border-2 border-second dark:border-white"><i class="fa-solid fa-plus"></i></button>
+        </div>
+        <div v-else class="w-full flex flex-col items-center gap-2 flex-wrap">
+          <div
+            v-for="card in ${item.name}"
+            :key="card.${cardData.id}"
+            class="relative w-full h-[120px] py-2 px-4 bg-white dark:bg-black text-center flex items-center justify-between rounded-md shadow-lg"
+            :data-envanter=card.${cardData.envanter}
+            :data-barcode=card.${cardData.barcode}
+          >
+            <div class="h-full w-full flex items-center gap-4">
+              <img
+                :src="card.${cardData.img} || '/defaults/images/no-image.png'"
+                class="h-[80%] aspect-square object-contain object-center rounded-lg overflow-hidden"
+                :alt="card.${cardData.title}"
+                onerror="this.src='/defaults/images/no-image.png'"
+              />
+              <div class="h-full flex flex-col justify-center items-start gap-2">
+                <h2 class="w-full text-xl sm:text-lg font-semibold truncatedText2">{{ card.${cardData.title} }}</h2>
+                <span class="text-lg sm:text-base">{{ card.${cardData.barcode} }}</span>
+              </div>
+            </div>
+            <div class="w-[240px] h-full md:w-[25%] flex flex-col gap-4 justify-center items-center">
+              <span class="text-lg sm:text-base font-bold text-main dark:text-fourth">{{ commonFunctions.convert2PriceWithUnit(card.${cardData.price}) }}</span>
+              <button v-if="basketStore.getBasket('${item.name}').every(c => c.id !== card.${cardData.id})" @click="basketStore.addItem('${item.name}', card, {id:'${cardData.id}',envanter:'${cardData.envanter}',price:'${cardData.price}'})" class="w-full bg-third border-2 border-third text-white p-1 text-lg font-semibold rounded-lg">Add to basket</button>
+              <div v-else class="w-full flex items-center justify-between gap-4 md:gap-2">
+                <button @click="basketStore.decreaseQuantity('${item.name}', card.${cardData.id})" class="w-full bg-second text-white p-1 max-w-[100px] text-lg font-semibold rounded-lg border-2 border-second dark:border-white"><i class="fa-solid fa-minus"></i></button>
+                <span class="text-lg font-bold text-fourth dark:text-third px-2">{{ basketStore.getBasket('${item.name}').find(c => c.id === card.${cardData.id}).quantity }}</span>
+                <button @click="basketStore.increaseQuantity('${item.name}', card.${cardData.id})" class="w-full bg-second text-white p-1 max-w-[100px] text-lg font-semibold rounded-lg border-2 border-second dark:border-white"><i class="fa-solid fa-plus"></i></button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -339,30 +396,60 @@ function generateCardsDom(item) {
       break;
     case 3:
       cardsDom = `<div v-if="${item.name}.length > 0" class="cardList w-full flex items-center justify-center gap-2 flex-wrap">
-        <div
-          v-for="card in ${item.name}"
-          :key="card.${cardData.id}"
-          class="relative w-[calc(33%-0.3rem)] md:w-[calc(50%-0.4rem)] h-[300px] p-6 bg-white dark:bg-black text-center flex items-start justify-beetween rounded-md shadow-lg"
-          :data-envanter=card.${cardData.envanter}
-          :data-barcode=card.${cardData.barcode}
-        >
-          <div class="w-[40%] h-full flex justify-center items-center">
-            <img
-              :src="card.${cardData.img} || '/defaults/images/no-image.png'"
-              class="w-full max-h-full object-contain object-center rounded-lg overflow-hidden"
-              :alt="card.${cardData.title}"
-              onerror="this.src='/defaults/images/no-image.png'"
-            />
-          </div>
-          <div class="w-[60%] h-full p-6 pr-0 flex flex-col justify-between items-start gap-4">
-            <div class="w-full h-full flex flex-col justify-start items-start gap-2">
-              <h2 class="text-2xl sm:text-lg text-start font-semibold truncatedText2">{{ card.${cardData.title} }}</h2>
-              <span class="text-lg text-third font-semibold">{{card.${cardData.brand}}}</span>
-              <span>{{card.${cardData.category}}}</span>
-              <span>{{card.${cardData.barcode}}}</span>
-              <span>{{card.${cardData.envanter}}}</span>
+        <div v-if="${item.name}ViewMode === 'grid'" class="w-full flex items-center justify-center gap-2 flex-wrap">
+          <div
+            v-for="card in ${item.name}"
+            :key="card.${cardData.id}"
+            class="relative w-[calc(33%-0.3rem)] md:w-[calc(50%-0.4rem)] h-[300px] p-6 bg-white dark:bg-black text-center flex items-start justify-beetween rounded-md shadow-lg"
+            :data-envanter=card.${cardData.envanter}
+            :data-barcode=card.${cardData.barcode}
+          >
+            <div class="w-[40%] h-full flex justify-center items-center">
+              <img
+                :src="card.${cardData.img} || '/defaults/images/no-image.png'"
+                class="w-full max-h-full object-contain object-center rounded-lg overflow-hidden"
+                :alt="card.${cardData.title}"
+                onerror="this.src='/defaults/images/no-image.png'"
+              />
             </div>
-            <span class="text-xl sm:text-base font-bold text-fourth">{{ commonFunctions.convert2PriceWithUnit(card.${cardData.price}) }}</span>
+            <div class="w-[60%] h-full p-6 pr-0 flex flex-col justify-between items-start gap-4">
+              <div class="w-full h-full flex flex-col justify-start items-start gap-2">
+                <h2 class="text-2xl sm:text-lg text-start font-semibold truncatedText2">{{ card.${cardData.title} }}</h2>
+                <span class="text-lg text-third font-semibold">{{card.${cardData.brand}}}</span>
+                <span>{{card.${cardData.category}}}</span>
+                <span>{{card.${cardData.barcode}}}</span>
+                <span>{{card.${cardData.envanter}}}</span>
+              </div>
+              <span class="text-xl sm:text-base font-bold text-fourth">{{ commonFunctions.convert2PriceWithUnit(card.${cardData.price}) }}</span>
+            </div>
+          </div>
+        </div>
+        <div v-else class="w-full flex flex-col items-center gap-2 flex-wrap">
+          <div
+            v-for="card in ${item.name}"
+            :key="card.${cardData.id}"
+            class="relative w-full h-[160px] p-4 bg-white dark:bg-black text-center flex items-center justify-beetween rounded-md shadow-lg"
+            :data-envanter=card.${cardData.envanter}
+            :data-barcode=card.${cardData.barcode}
+          >
+            <div class="w-full h-full flex justify-start items-center gap-6">
+              <img
+                :src="card.${cardData.img} || '/defaults/images/no-image.png'"
+                class="h-[80%] aspect-square object-contain object-center rounded-lg overflow-hidden"
+                :alt="card.${cardData.title}"
+                onerror="this.src='/defaults/images/no-image.png'"
+              />
+              <div class="w-full h-full flex flex-col justify-start items-start gap-2">
+                <h2 class="text-2xl sm:text-lg text-start font-semibold truncatedText2">{{ card.${cardData.title} }}</h2>
+                <span class="text-sm font-bold">{{card.${cardData.barcode}}}</span>
+                <span class="text-third font-semibold">{{card.${cardData.brand}}}</span>
+                <span>{{card.${cardData.category}}}</span>
+              </div>
+            </div>
+            <div class="w-full h-full p-6 pr-0 flex flex-col justify-center items-end gap-4">
+              <span class="text-lg font-semibold">envanter: {{card.${cardData.envanter}}}</span>
+              <span class="text-2xl sm:text-base font-bold text-fourth">{{ commonFunctions.convert2PriceWithUnit(card.${cardData.price}) }}</span>
+            </div>
           </div>
         </div>
       </div>
@@ -373,7 +460,7 @@ function generateCardsDom(item) {
       break;
   }
 
-  if (item.searchBar || item.ordering || item.filters || item.cardLayout.type === 2) {
+  if (item.searchBar || item.ordering || item.filters || item.cardLayout.type === 2 || item.cardLayout.viewMode?.changeable) {
     topBar = `<div class="w-full flex justify-between items-center gap-4 md:flex-col md:justify-center">
       <div class="flex items-center md:w-full">
         ${item.searchBar ? `<div class="w-[300px] md:w-full relative max-w-full flex items-center justify-end"> <input v-model="${item.name}SearchBar" type="text" placeholder="${item.searchBar.placeholder || 'Search...'}" class="peer w-full pl-4 pr-8 py-2 bg-white dark:bg-opacity-10 border-2 border-second dark:border-white rounded-xl placeholder:text-second dark:placeholder:text-white font-bold md:font-semibold text-lg focus:placeholder:text-fourth focus:border-fourth dark:focus:placeholder:text-fourth dark:focus:border-fourth focus:outline-none"/><i class="fa-solid fa-magnifying-glass absolute right-4 text-lg text-second dark:text-white peer-focus:text-fourth"></i></div>` : ''}
@@ -387,6 +474,10 @@ function generateCardsDom(item) {
           <span class="font-bold md:font-semibold">Sort</span>
           <i class="fa-solid fa-sort"></i>
         </button>` : ''}
+        ${item.cardLayout.viewMode?.changeable ? `<button @click="${item.name}ChangeViewMode()" class="bg-white dark:bg-opacity-10 border-2 border-second text-second dark:border-white dark:text-white hover:border-fourth hover:text-fourth dark:hover:border-fourth dark:hover:text-fourth text-lg py-2 px-4 rounded-xl flex items-center justify-between duration-200">
+          <i v-if="${item.name}ViewMode === 'grid'" class="fa-solid fa-list-ul text-xl"></i>
+          <i v-else class="fa-solid fa-table-cells text-xl"></i>  
+        </button>`: ''}
         ${item.cardLayout.type === 2 ? `<button v-show="basketStore.getBasket('${item.name}').length > 0" @click="${item.name}ToggleBasketVisibility()" id="${item.name}BasketButton" class="flex items-center gap-2 text-white bg-third text-lg font-semibold p-2 rounded-lg" >
           <i class="fa-solid fa-basket-shopping text-xl"></i>
           <span>({{ basketStore.getBasket('${item.name}').length }})</span>
@@ -418,24 +509,24 @@ function generateCardsDom(item) {
 
   if (item.cardLayout.type === 2) {
     modals += `<div v-show="basketStore.getBasket('${item.name}').length > 0 && ${item.name}BasketModalVisibility" id="${item.name}BasketModal" @click.self="${item.name}ToggleBasketVisibility()" class="z-30 fixed w-full h-full top-0 left-0 bg-black bg-opacity-65 flex justify-center items-center md:items-end">
-      <div class="bg-bg text-dark px-6 py-4 max-h-full max-w-full w-[800px] overflow-y-auto md:w-full md:h-full md:justify-between md:pb-8 rounded-lg md:rounded-none flex flex-col gap-4">
+      <div class="bg-bg text-dark px-6 py-4 max-h-full max-w-full w-[800px] overflow-y-auto md:w-full md:h-full md:justify-between md:pb-8 md:px-2 rounded-lg md:rounded-none flex flex-col gap-4">
         <div class="w-full flex items-center justify-between pb-2 border-b border-second">
           <h2 class="text-2xl font-bold dark:text-darkBg">Basket</h2>
           <button @click="${item.name}ToggleBasketVisibility()" class="px-2 text-3xl text-red-600"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div class="w-full max-h-[500px] overflow-y-auto md:max-h-full md:h-full flex flex-col gap-2">
           <div v-for="card in basketStore.getBasket('${item.name}')" :key="card.id" class="w-full flex items-center justify-between p-1 gap-4 border-b last:border-b-0 border-second/40 dark:border-second/80">
-            <div class="w-full flex items-center justify-between gap-4">
-               <div class="w-full max-w-[64%] flex items-center gap-4">
-                  <img :src="card.item.${cardData.img} || '/defaults/images/no-image.png'" class="w-[64px] h-[64px] object-contain object-center rounded-lg overflow-hidden" :alt="card.${cardData.title}" onerror="this.src='/defaults/images/no-image.png'"/>
+            <div class="w-[calc(100%-32px)] flex items-center justify-between gap-4">
+               <div class="w-full max-w-[68%] md:max-w-[60%] sm:max-w-[150px] flex items-center gap-4">
+                  <img :src="card.item.${cardData.img} || '/defaults/images/no-image.png'" class="w-[64px] h-[64px] sm:hidden object-contain object-center rounded-lg overflow-hidden" :alt="card.${cardData.title}" onerror="this.src='/defaults/images/no-image.png'"/>
                   <div class="w-full flex flex-col justify-between items-start gap-2">
-                    <h2 class="text-lg font-bold dark:text-darkBg">{{ card.item.${cardData.title} }}</h2>
+                    <h2 class="threeDots max-w-[calc(100%-64px)] sm:max-w-full text-lg font-bold dark:text-darkBg">{{ card.item.${cardData.title} }}</h2>
                     <span class="font-semibold text-second">{{ card.quantity }} x {{ commonFunctions.convert2PriceWithUnit(card.item.${cardData.price}) }}</span>
                   </div>
                 </div>
                 <span class="text-lg font-bold text-fourth">{{ commonFunctions.convert2PriceWithUnit(card.item.${cardData.price} * card.quantity) }}</span>
             </div>
-            <button @click="${item.name}removeFromCart('${item.name}', card.id)" class="px-2 text-2xl text-red-600"><i class="fa-solid fa-trash-can"></i></button>
+            <button @click="${item.name}removeFromCart('${item.name}', card.id)" class="px-2 text-2xl w-[32px] h-[32px] text-red-600"><i class="fa-solid fa-trash-can"></i></button>
           </div>
         </div>
         <div class="w-full flex items-center justify-between pt-2 border-t border-second">
@@ -474,8 +565,8 @@ function generateCardsScript(item) {
     ${item.searchBar ? `const ${item.name}SearchBar = ref('');` : ''}
     ${item.filters ? `const ${item.name}Filters = [${item.filters.map(filter => JSON.stringify(filter)).join(',')}];
     const ${item.name}FiltersData = ref({${item.filters.map(filter => `${filter.data}: ${filter.value}`).join(',')}}) ` : ''}
-    const ${item.name}ViewMode = ref('${item.cardLayout.viewMode?.defaultView || "grid"}');
     ${item.paging ? `const ${item.name}CurrentPage = ref(1);\nconst ${item.name}TotalPages = ref(1);` : ''}
+    const ${item.name}ViewMode = ref('${item.cardLayout.viewMode?.default || "grid"}');
     ${item.cardLayout.type === 2 ? `const ${item.name}BasketModalVisibility = ref(false);` : ''}
 
 
@@ -538,9 +629,22 @@ function generateCardsScript(item) {
           }
         };
         function ${item.name}clearBasket(name) {
-          basketStore.clearBasket(name);
-          ${item.name}BasketModalVisibility.value = false;
+          commonFunctions.showConfirmationMessage('Are you sure you want to clear the basket?', () => {
+            basketStore.clearBasket(name);
+            ${item.name}BasketModalVisibility.value = false;
+          });
         };`
+      : ''
+    }
+    ${item.cardLayout.viewMode?.changeable
+      ? `function ${item.name}ChangeViewMode() {
+            if (${item.name}ViewMode.value === 'grid') {
+              ${item.name}ViewMode.value = 'list';
+            }
+            else {
+              ${item.name}ViewMode.value = 'grid';
+            }
+          };` 
       : ''
     }`;
   }

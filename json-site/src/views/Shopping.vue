@@ -14,6 +14,10 @@
           <span class="font-bold md:font-semibold">Sort</span>
           <i class="fa-solid fa-sort"></i>
         </button>
+        <button @click="shoppingCardsChangeViewMode()" class="bg-white dark:bg-opacity-10 border-2 border-second text-second dark:border-white dark:text-white hover:border-fourth hover:text-fourth dark:hover:border-fourth dark:hover:text-fourth text-lg py-2 px-4 rounded-xl flex items-center justify-between duration-200">
+          <i v-if="shoppingCardsViewMode === 'grid'" class="fa-solid fa-list-ul text-xl"></i>
+          <i v-else class="fa-solid fa-table-cells text-xl"></i>  
+        </button>
         <button v-show="basketStore.getBasket('shoppingCards').length > 0" @click="shoppingCardsToggleBasketVisibility()" id="shoppingCardsBasketButton" class="flex items-center gap-2 text-white bg-third text-lg font-semibold p-2 rounded-lg" >
           <i class="fa-solid fa-basket-shopping text-xl"></i>
           <span>({{ basketStore.getBasket('shoppingCards').length }})</span>
@@ -21,28 +25,61 @@
       </div>
     </div>
             <div v-if="shoppingCards.length > 0" class="cardList w-full flex items-center gap-2 flex-wrap">
-        <div
-          v-for="card in shoppingCards"
-          :key="card.ID"
-          class="relative w-[calc(20%-0.4rem)] xl:w-[calc(25%-0.4rem)] md:w-[calc(50%-0.4rem)] h-[340px] sm:h-[300px] py-2 px-4 bg-white dark:bg-black text-center flex flex-col items-center justify-around rounded-md shadow-lg"
-          :data-envanter=card.Envanter
-          :data-barcode=card.Barkodlar[0].Barkodu
-        >
-          <img
-            :src="card.Resimler[0] || '/defaults/images/no-image.png'"
-            class="w-full h-[50%] sm:h-[45%] object-contain object-center rounded-lg overflow-hidden"
-            :alt="card.UrunAdi"
-            onerror="this.src='/defaults/images/no-image.png'"
-          />
-          <div class="h-[3.5rem] flex justify-center items-center">
-            <h2 class="w-full text-xl sm:text-lg font-semibold truncatedText2">{{ card.UrunAdi }}</h2>
+        <div v-if="shoppingCardsViewMode === 'grid'" class="w-full flex items-center gap-2 flex-wrap">
+          <div
+            v-for="card in shoppingCards"
+            :key="card.ID"
+            class="relative w-[calc(20%-0.4rem)] xl:w-[calc(25%-0.4rem)] md:w-[calc(50%-0.4rem)] h-[340px] sm:h-[300px] py-2 px-4 bg-white dark:bg-black text-center flex flex-col items-center justify-around rounded-md shadow-lg"
+            :data-envanter=card.Envanter
+            :data-barcode=card.Barkodlar[0].Barkodu
+          >
+            <img
+              :src="card.Resimler[0] || '/defaults/images/no-image.png'"
+              class="w-full h-[50%] sm:h-[45%] object-contain object-center rounded-lg overflow-hidden"
+              :alt="card.UrunAdi"
+              onerror="this.src='/defaults/images/no-image.png'"
+            />
+            <div class="h-[3.5rem] flex justify-center items-center">
+              <h2 class="w-full text-xl sm:text-lg font-semibold truncatedText2">{{ card.UrunAdi }}</h2>
+            </div>
+            <span class="text-lg sm:text-base font-bold text-main dark:text-fourth">{{ commonFunctions.convert2PriceWithUnit(card.Tutar) }}</span>
+            <button v-if="basketStore.getBasket('shoppingCards').every(c => c.id !== card.ID)" @click="basketStore.addItem('shoppingCards', card, {id:'ID',envanter:'Envanter',price:'Tutar'})" class="w-full bg-third border-2 border-third text-white p-1 text-lg font-semibold rounded-lg">Add to basket</button>
+            <div v-else class="w-full flex items-center justify-between gap-4 md:gap-2">
+              <button @click="basketStore.decreaseQuantity('shoppingCards', card.ID)" class="w-full bg-second text-white p-1 max-w-[100px] text-lg font-semibold rounded-lg border-2 border-second dark:border-white"><i class="fa-solid fa-minus"></i></button>
+              <span class="text-lg font-bold text-fourth dark:text-third px-2">{{ basketStore.getBasket('shoppingCards').find(c => c.id === card.ID).quantity }}</span>
+              <button @click="basketStore.increaseQuantity('shoppingCards', card.ID)" class="w-full bg-second text-white p-1 max-w-[100px] text-lg font-semibold rounded-lg border-2 border-second dark:border-white"><i class="fa-solid fa-plus"></i></button>
+            </div>
           </div>
-          <span class="text-lg sm:text-base font-bold text-main dark:text-fourth">{{ commonFunctions.convert2PriceWithUnit(card.Tutar) }}</span>
-          <button v-if="basketStore.getBasket('shoppingCards').every(c => c.id !== card.ID)" @click="basketStore.addItem('shoppingCards', card, {id:'ID',envanter:'Envanter',price:'Tutar'})" class="w-full bg-third border-2 border-third text-white p-1 text-lg font-semibold rounded-lg">Add to basket</button>
-          <div v-else class="w-full flex items-center justify-between gap-4 md:gap-2">
-            <button @click="basketStore.decreaseQuantity('shoppingCards', card.ID)" class="w-full bg-second text-white p-1 max-w-[100px] text-lg font-semibold rounded-lg border-2 border-second dark:border-white"><i class="fa-solid fa-minus"></i></button>
-            <span class="text-lg font-bold text-fourth dark:text-third px-2">{{ basketStore.getBasket('shoppingCards').find(c => c.id === card.ID).quantity }}</span>
-            <button @click="basketStore.increaseQuantity('shoppingCards', card.ID)" class="w-full bg-second text-white p-1 max-w-[100px] text-lg font-semibold rounded-lg border-2 border-second dark:border-white"><i class="fa-solid fa-plus"></i></button>
+        </div>
+        <div v-else class="w-full flex flex-col items-center gap-2 flex-wrap">
+          <div
+            v-for="card in shoppingCards"
+            :key="card.ID"
+            class="relative w-full h-[120px] py-2 px-4 bg-white dark:bg-black text-center flex items-center justify-between rounded-md shadow-lg"
+            :data-envanter=card.Envanter
+            :data-barcode=card.Barkodlar[0].Barkodu
+          >
+            <div class="h-full w-full flex items-center gap-4">
+              <img
+                :src="card.Resimler[0] || '/defaults/images/no-image.png'"
+                class="h-[80%] aspect-square object-contain object-center rounded-lg overflow-hidden"
+                :alt="card.UrunAdi"
+                onerror="this.src='/defaults/images/no-image.png'"
+              />
+              <div class="h-full flex flex-col justify-center items-start gap-2">
+                <h2 class="w-full text-xl sm:text-lg font-semibold truncatedText2">{{ card.UrunAdi }}</h2>
+                <span class="text-lg sm:text-base">{{ card.Barkodlar[0].Barkodu }}</span>
+              </div>
+            </div>
+            <div class="w-[240px] h-full md:w-[25%] flex flex-col gap-4 justify-center items-center">
+              <span class="text-lg sm:text-base font-bold text-main dark:text-fourth">{{ commonFunctions.convert2PriceWithUnit(card.Tutar) }}</span>
+              <button v-if="basketStore.getBasket('shoppingCards').every(c => c.id !== card.ID)" @click="basketStore.addItem('shoppingCards', card, {id:'ID',envanter:'Envanter',price:'Tutar'})" class="w-full bg-third border-2 border-third text-white p-1 text-lg font-semibold rounded-lg">Add to basket</button>
+              <div v-else class="w-full flex items-center justify-between gap-4 md:gap-2">
+                <button @click="basketStore.decreaseQuantity('shoppingCards', card.ID)" class="w-full bg-second text-white p-1 max-w-[100px] text-lg font-semibold rounded-lg border-2 border-second dark:border-white"><i class="fa-solid fa-minus"></i></button>
+                <span class="text-lg font-bold text-fourth dark:text-third px-2">{{ basketStore.getBasket('shoppingCards').find(c => c.id === card.ID).quantity }}</span>
+                <button @click="basketStore.increaseQuantity('shoppingCards', card.ID)" class="w-full bg-second text-white p-1 max-w-[100px] text-lg font-semibold rounded-lg border-2 border-second dark:border-white"><i class="fa-solid fa-plus"></i></button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -73,24 +110,24 @@
         </label>
       </div>
     </div><div v-show="basketStore.getBasket('shoppingCards').length > 0 && shoppingCardsBasketModalVisibility" id="shoppingCardsBasketModal" @click.self="shoppingCardsToggleBasketVisibility()" class="z-30 fixed w-full h-full top-0 left-0 bg-black bg-opacity-65 flex justify-center items-center md:items-end">
-      <div class="bg-bg text-dark px-6 py-4 max-h-full max-w-full w-[800px] overflow-y-auto md:w-full md:h-full md:justify-between md:pb-8 rounded-lg md:rounded-none flex flex-col gap-4">
+      <div class="bg-bg text-dark px-6 py-4 max-h-full max-w-full w-[800px] overflow-y-auto md:w-full md:h-full md:justify-between md:pb-8 md:px-2 rounded-lg md:rounded-none flex flex-col gap-4">
         <div class="w-full flex items-center justify-between pb-2 border-b border-second">
           <h2 class="text-2xl font-bold dark:text-darkBg">Basket</h2>
           <button @click="shoppingCardsToggleBasketVisibility()" class="px-2 text-3xl text-red-600"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div class="w-full max-h-[500px] overflow-y-auto md:max-h-full md:h-full flex flex-col gap-2">
           <div v-for="card in basketStore.getBasket('shoppingCards')" :key="card.id" class="w-full flex items-center justify-between p-1 gap-4 border-b last:border-b-0 border-second/40 dark:border-second/80">
-            <div class="w-full flex items-center justify-between gap-4">
-               <div class="w-full max-w-[64%] flex items-center gap-4">
-                  <img :src="card.item.Resimler[0] || '/defaults/images/no-image.png'" class="w-[64px] h-[64px] object-contain object-center rounded-lg overflow-hidden" :alt="card.UrunAdi" onerror="this.src='/defaults/images/no-image.png'"/>
+            <div class="w-[calc(100%-32px)] flex items-center justify-between gap-4">
+               <div class="w-full max-w-[68%] md:max-w-[60%] sm:max-w-[150px] flex items-center gap-4">
+                  <img :src="card.item.Resimler[0] || '/defaults/images/no-image.png'" class="w-[64px] h-[64px] sm:hidden object-contain object-center rounded-lg overflow-hidden" :alt="card.UrunAdi" onerror="this.src='/defaults/images/no-image.png'"/>
                   <div class="w-full flex flex-col justify-between items-start gap-2">
-                    <h2 class="text-lg font-bold dark:text-darkBg">{{ card.item.UrunAdi }}</h2>
+                    <h2 class="threeDots max-w-[calc(100%-64px)] sm:max-w-full text-lg font-bold dark:text-darkBg">{{ card.item.UrunAdi }}</h2>
                     <span class="font-semibold text-second">{{ card.quantity }} x {{ commonFunctions.convert2PriceWithUnit(card.item.Tutar) }}</span>
                   </div>
                 </div>
                 <span class="text-lg font-bold text-fourth">{{ commonFunctions.convert2PriceWithUnit(card.item.Tutar * card.quantity) }}</span>
             </div>
-            <button @click="shoppingCardsremoveFromCart('shoppingCards', card.id)" class="px-2 text-2xl text-red-600"><i class="fa-solid fa-trash-can"></i></button>
+            <button @click="shoppingCardsremoveFromCart('shoppingCards', card.id)" class="px-2 text-2xl w-[32px] h-[32px] text-red-600"><i class="fa-solid fa-trash-can"></i></button>
           </div>
         </div>
         <div class="w-full flex items-center justify-between pt-2 border-t border-second">
@@ -129,9 +166,9 @@ const basketStore = useBasketStore();
     const shoppingCardsSearchBar = ref('');
     const shoppingCardsFilters = [{"data":"category","name":"Category","type":"select2","options":{"width":"100%","minimumInputLength":-1,"placeholder":"Category Selection","allowClear":true,"language":{"noResults":"Eşleşen bir Kategori bulunamadı.","inputTooShort":"En az 1 Karakter giriniz.","searching":"Aranıyor..."},"ajax":{"url":"http://localhost:3000/categories","delay":250,"type":"GET","dataType":"json","contentType":"application/json; charset=utf-8"}},"value":null,"default":null,"visible":true},{"data":"brand","name":"Brand","type":"text","value":null,"default":null,"visible":true}];
     const shoppingCardsFiltersData = ref({category: null,brand: null}) 
-    const shoppingCardsViewMode = ref('grid');
     const shoppingCardsCurrentPage = ref(1);
 const shoppingCardsTotalPages = ref(1);
+    const shoppingCardsViewMode = ref('grid');
     const shoppingCardsBasketModalVisibility = ref(false);
 
 
@@ -185,9 +222,19 @@ const shoppingCardsTotalPages = ref(1);
           }
         };
         function shoppingCardsclearBasket(name) {
-          basketStore.clearBasket(name);
-          shoppingCardsBasketModalVisibility.value = false;
+          commonFunctions.showConfirmationMessage('Are you sure you want to clear the basket?', () => {
+            basketStore.clearBasket(name);
+            shoppingCardsBasketModalVisibility.value = false;
+          });
         };
+    function shoppingCardsChangeViewMode() {
+            if (shoppingCardsViewMode.value === 'grid') {
+              shoppingCardsViewMode.value = 'list';
+            }
+            else {
+              shoppingCardsViewMode.value = 'grid';
+            }
+          };
     
       onMounted(() => {
         
