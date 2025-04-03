@@ -4,24 +4,24 @@ import { ref } from 'vue';
 export const useBasketStore = defineStore('basket', () => {
     const baskets = ref({});
 
-    function addItem(cardGroupName, item) {
+    function addItem(cardGroupName, item, ObjNames) {
         if (!baskets.value[cardGroupName]) {
             baskets.value[cardGroupName] = [];
         }
 
-        let existingItem = baskets.value[cardGroupName].find(i => i.ID === item.ID);
+        let existingItem = baskets.value[cardGroupName].find(i => i.id === item[ObjNames.id]);
         if (existingItem) {
             if (existingItem.quantity < existingItem.limit) {
                 existingItem.quantity += 1;
             }
         } else {
-            baskets.value[cardGroupName].push({ ID: item.ID, quantity: 1, limit: item.Envanter, unitPrice: item.Tutar, item: item });
+            baskets.value[cardGroupName].push({ id: item[ObjNames.id], quantity: 1, limit: item[ObjNames.envanter], unitPrice: item[ObjNames.price], item: item });
         }
     }
 
     function removeItem(cardGroupName, itemId) {
         if (baskets.value[cardGroupName]) {
-            baskets.value[cardGroupName] = baskets.value[cardGroupName].filter(i => i.ID !== itemId);
+            baskets.value[cardGroupName] = baskets.value[cardGroupName].filter(i => i.id !== itemId);
         }
     }
 
@@ -36,14 +36,14 @@ export const useBasketStore = defineStore('basket', () => {
     }
 
     function increaseQuantity(cardGroupName, itemId) {
-        let item = baskets.value[cardGroupName]?.find(i => i.ID === itemId);
+        let item = baskets.value[cardGroupName]?.find(i => i.id === itemId);
         if (item && item.quantity < item.limit) {
             item.quantity += 1;
         }
     }
 
     function decreaseQuantity(cardGroupName, itemId) {
-        let item = baskets.value[cardGroupName]?.find(i => i.ID === itemId);
+        let item = baskets.value[cardGroupName]?.find(i => i.id === itemId);
         if (item) {
             if (item.quantity > 1) {
                 item.quantity -= 1;
@@ -54,7 +54,7 @@ export const useBasketStore = defineStore('basket', () => {
     }
 
     function setQuantity(cardGroupName, itemId, newQuantity) {
-        let item = baskets.value[cardGroupName]?.find(i => i.ID === itemId);
+        let item = baskets.value[cardGroupName]?.find(i => i.id === itemId);
         if (item) {
             if (newQuantity >= 1 && newQuantity <= item.limit) {
                 item.quantity = newQuantity;

@@ -324,11 +324,11 @@ function generateCardsDom(item) {
             <h2 class="w-full text-xl sm:text-lg font-semibold truncatedText2">{{ card.${cardData.title} }}</h2>
           </div>
           <span class="text-lg sm:text-base font-bold text-main dark:text-fourth">{{ commonFunctions.convert2PriceWithUnit(card.${cardData.price}) }}</span>
-          <button v-if="basketStore.getBasket('${item.name}').every(c => c.ID !== card.ID)" @click="basketStore.addItem('${item.name}', card)" class="w-full bg-third border-2 border-third text-white p-1 text-lg font-semibold rounded-lg">Add to basket</button>
+          <button v-if="basketStore.getBasket('${item.name}').every(c => c.id !== card.${cardData.id})" @click="basketStore.addItem('${item.name}', card, {id:'${cardData.id}',envanter:'${cardData.envanter}',price:'${cardData.price}'})" class="w-full bg-third border-2 border-third text-white p-1 text-lg font-semibold rounded-lg">Add to basket</button>
           <div v-else class="w-full flex items-center justify-between gap-4 md:gap-2">
-            <button @click="basketStore.decreaseQuantity('${item.name}', card.ID)" class="w-full bg-second text-white p-1 text-lg font-semibold rounded-lg"><i class="fa-solid fa-minus"></i></button>
-            <span class="text-lg font-bold text-fourth dark:text-third px-2">{{ basketStore.getBasket('${item.name}').find(c => c.ID === card.ID).quantity }}</span>
-            <button @click="basketStore.increaseQuantity('${item.name}', card.ID)" class="w-full bg-second text-white p-1 text-lg font-semibold rounded-lg"><i class="fa-solid fa-plus"></i></button>
+            <button @click="basketStore.decreaseQuantity('${item.name}', card.${cardData.id})" class="w-full bg-second text-white p-1 max-w-[100px] text-lg font-semibold rounded-lg border-2 border-second dark:border-white"><i class="fa-solid fa-minus"></i></button>
+            <span class="text-lg font-bold text-fourth dark:text-third px-2">{{ basketStore.getBasket('${item.name}').find(c => c.id === card.${cardData.id}).quantity }}</span>
+            <button @click="basketStore.increaseQuantity('${item.name}', card.${cardData.id})" class="w-full bg-second text-white p-1 max-w-[100px] text-lg font-semibold rounded-lg border-2 border-second dark:border-white"><i class="fa-solid fa-plus"></i></button>
           </div>
         </div>
       </div>
@@ -424,7 +424,7 @@ function generateCardsDom(item) {
           <button @click="${item.name}ToggleBasketVisibility()" class="px-2 text-3xl text-red-600"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div class="w-full max-h-[500px] overflow-y-auto md:max-h-full md:h-full flex flex-col gap-2">
-          <div v-for="card in basketStore.getBasket('${item.name}')" :key="card.ID" class="w-full flex items-center justify-between p-1 gap-4 border-b last:border-b-0 border-second/40 dark:border-second/80">
+          <div v-for="card in basketStore.getBasket('${item.name}')" :key="card.id" class="w-full flex items-center justify-between p-1 gap-4 border-b last:border-b-0 border-second/40 dark:border-second/80">
             <div class="w-full flex items-center justify-between gap-4">
                <div class="w-full max-w-[64%] flex items-center gap-4">
                   <img :src="card.item.${cardData.img} || '/defaults/images/no-image.png'" class="w-[64px] h-[64px] object-contain object-center rounded-lg overflow-hidden" :alt="card.${cardData.title}" onerror="this.src='/defaults/images/no-image.png'"/>
@@ -435,7 +435,7 @@ function generateCardsDom(item) {
                 </div>
                 <span class="text-lg font-bold text-fourth">{{ commonFunctions.convert2PriceWithUnit(card.item.${cardData.price} * card.quantity) }}</span>
             </div>
-            <button @click="${item.name}removeFromCart('${item.name}', card.ID)" class="px-2 text-2xl text-red-600"><i class="fa-solid fa-trash-can"></i></button>
+            <button @click="${item.name}removeFromCart('${item.name}', card.id)" class="px-2 text-2xl text-red-600"><i class="fa-solid fa-trash-can"></i></button>
           </div>
         </div>
         <div class="w-full flex items-center justify-between pt-2 border-t border-second">
