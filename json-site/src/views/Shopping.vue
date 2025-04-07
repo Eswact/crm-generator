@@ -43,7 +43,7 @@
               <h2 class="w-full text-xl sm:text-lg font-semibold truncatedText2">{{ card.UrunAdi }}</h2>
             </div>
             <span class="text-lg sm:text-base font-bold text-main dark:text-fourth">{{ commonFunctions.convert2PriceWithUnit(card.Tutar) }}</span>
-            <button v-if="basketStore.getBasket('shoppingCards').every(c => c.id !== card.ID)" @click="basketStore.addItem('shoppingCards', card, {id:'ID',envanter:'Envanter',price:'Tutar'})" class="w-full bg-third border-2 border-third text-white p-1 text-lg font-semibold rounded-lg">Add to basket</button>
+            <button v-if="basketStore.getBasket('shoppingCards').every(c => c.id !== card.ID)" @click="basketStore.addItem('shoppingCards', card, {id:'ID',envanter:'Envanter',price:'Tutar'})" class="w-full bg-third border-2 border-third text-white p-1 text-lg font-semibold rounded-lg  disabled:opacity-50 disabled:bg-gray-600 disabled:border-gray-800" :disabled="card.Envanter <= 0">{{ card.Envanter <= 0 ? 'Sold out' : 'Add to basket'}}</button>
             <div v-else class="w-full flex items-center justify-between gap-4 md:gap-2">
               <button @click="basketStore.decreaseQuantity('shoppingCards', card.ID)" class="w-full bg-second text-white p-1 max-w-[100px] text-lg font-semibold rounded-lg border-2 border-second dark:border-white"><i class="fa-solid fa-minus"></i></button>
               <span class="text-lg font-bold text-fourth dark:text-third px-2">{{ basketStore.getBasket('shoppingCards').find(c => c.id === card.ID).quantity }}</span>

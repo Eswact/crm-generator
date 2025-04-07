@@ -73,7 +73,7 @@ const commonFunctions = {
 
     Object.assign(splash.value, { ...defaultSplash, ...options, visible: true });
 
-    if (options.timeout) {
+    if (options && options.timeout) {
       splashTimeout = setTimeout(() => {
         splash.value.visible = false;
       }, options.timeout);

@@ -348,7 +348,7 @@ function generateCardsDom(item) {
               <h2 class="w-full text-xl sm:text-lg font-semibold truncatedText2">{{ card.${cardData.title} }}</h2>
             </div>
             <span class="text-lg sm:text-base font-bold text-main dark:text-fourth">{{ commonFunctions.convert2PriceWithUnit(card.${cardData.price}) }}</span>
-            <button v-if="basketStore.getBasket('${item.name}').every(c => c.id !== card.${cardData.id})" @click="basketStore.addItem('${item.name}', card, {id:'${cardData.id}',envanter:'${cardData.envanter}',price:'${cardData.price}'})" class="w-full bg-third border-2 border-third text-white p-1 text-lg font-semibold rounded-lg">Add to basket</button>
+            <button v-if="basketStore.getBasket('${item.name}').every(c => c.id !== card.${cardData.id})" @click="basketStore.addItem('${item.name}', card, {id:'${cardData.id}',envanter:'${cardData.envanter}',price:'${cardData.price}'})" class="w-full bg-third border-2 border-third text-white p-1 text-lg font-semibold rounded-lg  disabled:opacity-50 disabled:bg-gray-600 disabled:border-gray-800" :disabled="card.${cardData.envanter} <= 0">{{ card.${cardData.envanter} <= 0 ? 'Sold out' : 'Add to basket'}}</button>
             <div v-else class="w-full flex items-center justify-between gap-4 md:gap-2">
               <button @click="basketStore.decreaseQuantity('${item.name}', card.${cardData.id})" class="w-full bg-second text-white p-1 max-w-[100px] text-lg font-semibold rounded-lg border-2 border-second dark:border-white"><i class="fa-solid fa-minus"></i></button>
               <span class="text-lg font-bold text-fourth dark:text-third px-2">{{ basketStore.getBasket('${item.name}').find(c => c.id === card.${cardData.id}).quantity }}</span>
