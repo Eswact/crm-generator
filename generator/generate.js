@@ -1,10 +1,13 @@
 // Imports
+const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 const siteData = require('./src/data.js');
 
 // Paths
 const paths = {
+  defaultVuePath: path.resolve(__dirname, './src/defaults/vue'),
+  projectPath: path.resolve(__dirname, '../json-site'),
   jsonFilePath: path.join(__dirname, '../json-site/siteData.json'),
   viewsDir: path.join(__dirname, '../json-site/src/views'),
   scriptsDir: path.join(__dirname, '../json-site/src/scripts/custom'),
@@ -26,6 +29,76 @@ function copyFiles(sourceDir, targetDir) {
   fs.readdirSync(sourceDir).forEach(file => {
     fs.copyFileSync(path.join(sourceDir, file), path.join(targetDir, file));
   });
+}
+function clearDirContent(dirPath) {
+  const files = fs.readdirSync(dirPath);
+  files.forEach(file => {
+    const filePath = path.join(dirPath, file);
+    const stats = fs.statSync(filePath);
+    if (stats.isDirectory()) {
+      clearDirContent(filePath);
+      fs.rmdirSync(filePath);
+    } else {
+      fs.unlinkSync(filePath);
+    }
+  });
+}
+function advancedCopyFiles(sourceDir, targetDir) {
+  if (!fs.existsSync(sourceDir)) {
+    console.error(`Kaynak dizin mevcut değil: ${sourceDir}`);
+    return;
+  }
+
+  if (!fs.existsSync(targetDir)) {
+    fs.mkdirSync(targetDir, { recursive: true });
+  }
+
+  if (targetDir.includes('src')) {
+    clearDirContent(targetDir); 
+  }
+
+  const files = fs.readdirSync(sourceDir);
+  files.forEach(file => {
+    const sourceFilePath = path.join(sourceDir, file);
+    const targetFilePath = path.join(targetDir, file);
+
+    const stats = fs.statSync(sourceFilePath);
+    if (stats.isDirectory()) {
+      advancedCopyFiles(sourceFilePath, targetFilePath);
+    } else {
+      try {
+        fs.copyFileSync(sourceFilePath, targetFilePath);
+      } catch (err) {
+        console.error(`Dosya kopyalanamadı: ${sourceFilePath} -> ${targetFilePath}`, err);
+      }
+    }
+  });
+}
+
+// Vue Project
+function createVueProject() {
+  const targetDir = paths.projectPath;
+
+  console.log('Proje dizini temizleniyor ve yeniden oluşturuluyor...');
+  clearAndCreateDir(targetDir);
+
+  console.log('Yeni Vue (Vite) projesi oluşturuluyor...');
+  execSync(`npm create vite@latest . -- --template vue`, {
+    cwd: targetDir,
+    stdio: 'inherit',
+    shell: true
+  });
+
+  console.log('Varsayılan dosyalar kopyalanıyor...');
+  advancedCopyFiles(paths.defaultVuePath, targetDir);
+
+  console.log('npm install çalıştırılıyor...');
+  execSync(`cd ${targetDir} && npm install`, { stdio: 'inherit' });
+
+  let readmePath = path.join(targetDir, 'README.md');
+  if (fs.existsSync(readmePath)) { fs.unlinkSync(readmePath); }
+
+  console.log('Vue projesi başarıyla oluşturuldu, özel dosyalar kopyalandı ve bağımlılıklar yüklendi!');
 }
 
 //Images
@@ -649,13 +722,19 @@ function generateCardsScript(item) {
   }
 }
 
+function runProject() {
+  execSync(`cd ${paths.projectPath} && npm run dev`, { stdio: 'inherit' });
+}
+
 //Generate
 function generateSite() {
+  createVueProject();
   copyImages();
   setFonts();
   createJsonFile();
   createCustomScripts();
   createViews();
+  runProject();
 }
 
 
