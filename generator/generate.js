@@ -53,6 +53,7 @@ function advancedCopyFiles(sourceDir, targetDir) {
     fs.mkdirSync(targetDir, { recursive: true });
   }
 
+  // Clean inside src folder
   if (targetDir.includes('src')) {
     clearDirContent(targetDir); 
   }

@@ -78,7 +78,7 @@
       "doms": [
         {
           "type": "custom",
-          "content": "<div class=\"w-full py-0  md:px-0 mt-2 flex justify-center items-center\"><div class=\"p-6 w-full max-w-[1000px]\"><h1 class=\"text-3xl font-bold text-center mb-6\">Getting Started</h1><ol class=\"list-decimal list-inside space-y-4\"><li><strong>Install Dependencies</strong><p>Open your terminal and run the following command in both the <code>generator</code> and <code>json-site</code> folders:</p><pre class=\"bg-darkBg text-bg dark:bg-black p-4 mt-2 rounded-md overflow-hidden\"><code>npm install</code></pre></li><li><strong>Edit <code>data.js</code> in the <code>generator</code> Folder</strong><p>Navigate to the <code>generator</code> folder, open <code>data.js</code>, and make the necessary adjustments to the data.</p></li><li><strong>Generate JSON Files</strong><p>Run the following command in the <code>json-site</code> folder:</p><pre class=\"bg-darkBg text-bg dark:bg-black p-4 mt-2 rounded-md overflow-hidden\"><code>npm run generate</code></pre></li></ol></div></div>"
+          "content": "<div class=\"w-full py-0  md:px-0 mt-2 flex justify-center items-center\"><div class=\"p-6 w-full max-w-[1000px]\"><h1 class=\"text-3xl font-bold text-center mb-6\">Getting Started</h1><ol class=\"list-decimal list-inside space-y-4\"><li><strong>Install Dependencies</strong><p>Open your terminal and run the following command in the <code>generator</code> folder:</p><pre class=\"bg-darkBg text-bg dark:bg-black p-4 mt-2 rounded-md overflow-hidden\"><code>npm install</code></pre></li><li><strong>Edit <code>data.js</code> in the <code>generator</code> Folder</strong><p>Navigate to the <code>generator</code> folder, open <code>data.js</code>, and make the necessary adjustments to the data.</p></li><li><strong>Generate JSON Files</strong><p>Run the following command in the <code>generator</code> folder:</p><pre class=\"bg-darkBg text-bg dark:bg-black p-4 mt-2 rounded-md overflow-hidden\"><code>npm run generate</code></pre></li></ol></div></div>"
         },
         {
           "type": "custom",
@@ -868,65 +868,6 @@
           }
         },
         {
-          "type": "custom",
-          "content": "\n            <div id=\"changesModal\" class=\"fixed bottom-0 flex-col justify-center items-center gap-2 w-[400px] px-8 py-4 max-w-full bg-bg text-darkBg rounded-t-lg\">\n                <div class=\"w-full flex justify-center items-center gap-4 text-sm\"><input id=\"showChangedCells\" type=\"checkbox\" /><span>Show changed cells</span></div>\n                <div class=\"flex flex-col justify-center items-center gap-8\">\n                  <h1 class=\"text-2xl font-bold\">Some changes were noticed</h1>\n                  <div class=\"flex gap-4 w-full\">\n                      <button @click=\"saveCellChanges\" class=\"w-1/2 px-4 py-2 bg-green-600 text-white shadow-md text-xl font-bold rounded-lg\">Save</button>\n                      <button @click=\"cancelCellChanges\" class=\"w-1/2 px-4 py-2 bg-red-600 text-white shadow-md text-xl font-bold rounded-lg\">Cancel</button>\n                  </div>\n                </div>\n            </div>\n          "
-        }
-      ],
-      "scopedCss": "\n        #changesModal { \n          display:none;     \n        }\n        #changesModal.show { \n          display:flex;     \n        }\n      ",
-      "customScripts": " import { toast } from \"vue3-toastify\";\n      var createdAutomatTableCellUpdates = [];\n      function add2UpdatedCells(name, id, value, rowData) { \n          document.getElementById('changesModal').classList.add('show');\n          $('#showChangedCells').attr('checked', false);\n          let index = createdAutomatTableCellUpdates.findIndex(x => x.name == name && x.id == id);\n          if (index == -1) {\n              createdAutomatTableCellUpdates.push({ name: name, id: id, value: value, rowData: rowData });\n          }\n          else {\n              createdAutomatTableCellUpdates[index].value = value;\n          }\n      }\n      function remove2UpdatedCells(name, id) { \n          let index = createdAutomatTableCellUpdates.findIndex(x => x.name == name && x.id == id);\n          if (index != -1) {\n              createdAutomatTableCellUpdates.splice(index, 1);\n          }\n\n          if (createdAutomatTableCellUpdates.length == 0) {\n              document.getElementById('changesModal').classList.remove('show');\n          }\n      }\n      function saveCellChanges() { \n        console.log(createdAutomatTableCellUpdates[0].rowData);\n        let data = {\n          manufactId: createdAutomatTableCellUpdates[0].id,\n          plaka: createdAutomatTableCellUpdates[0].rowData.plate,\n          model: createdAutomatTableCellUpdates[0].rowData.model,\n          androidMac: createdAutomatTableCellUpdates[0].rowData.macAndroid,\n          androidImei: createdAutomatTableCellUpdates[0].rowData.imeiAndroid,\n          modemImei: createdAutomatTableCellUpdates[0].rowData.imeimodem,\n          modemMac: createdAutomatTableCellUpdates[0].rowData.macmodem,\n          plcImei: createdAutomatTableCellUpdates[0].rowData.imeiplc,\n          plcMac: createdAutomatTableCellUpdates[0].rowData.macplc,\n          serialNumber: createdAutomatTableCellUpdates[0].rowData.snAndroid\n        };\n        data[createdAutomatTableCellUpdates[0].name] = createdAutomatTableCellUpdates[0].value;\n        $.ajax({\n          url: \"http://localhost:44350/production/update-automat\",\n          method: \"POST\",\n          data: data,\n          success: function (response) {\n            toast.success(response.description || \"İşlem başarılı\");\n            createdAutomatTableCellUpdates = [];\n            createdAutomatTable.ajax.reload(null, false);\n            document.getElementById('changesModal').classList.remove('show');\n          },\n          error: function (xhr, status, error) {\n            console.log(error);\n          }\n        });\n      }\n      function cancelCellChanges() {\n        createdAutomatTableCellUpdates = [];\n        document.getElementById('changesModal').classList.remove('show');\n        createdAutomatTable.ajax.reload(null, false);\n      }\n      function dateTrFormat(data) {\n          let options = { timeZone: 'Europe/Istanbul', year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: false };\n          let formattedDate = new Date(data).toLocaleString('tr-TR', options);\n          return formattedDate;\n      }",
-      "customReadyScripts": "\n        $('#showChangedCells').on('change', function () {\n            createdAutomatTable.ajax.reload();\n        });\n      ",
-      "help": {
-        "page": "Datatables Page",
-        "info": "In this page, you can see example datatables. There are two datatables in this page and both have filtering. Second datatable has operations (add, edit, delete) and right-click context menu. If you want delete or edit a row, first you click on the row to select it, then click on the edit or delete button above the datatable",
-        "shortcuts": [
-          {
-            "shortcut": [
-              {
-                "key": "/images/ctrl_key.png"
-              },
-              {
-                "key": "/images/letter_k.png"
-              }
-            ],
-            "shortcutDescription": "Example shortcut description."
-          },
-          {
-            "shortcut": [
-              {
-                "key": "/images/esc_key.png"
-              }
-            ],
-            "shortcutDescription": "For the cancel."
-          },
-          {
-            "shortcut": [
-              {
-                "key": "/images/right-click.png"
-              }
-            ],
-            "shortcutDescription": "In the second datatable, right click on the row to see the context menu."
-          }
-        ],
-        "link": null
-      }
-    },
-    {
-      "file": "Datatables2.vue",
-      "name": "Datatables 2",
-      "path": "/datatables2",
-      "icon": "fa-solid fa-table",
-      "seo": {
-        "title": "Datatables 2 - My CRM",
-        "description": "In this page you can see datatable examples.",
-        "keywords": [
-          "datatable",
-          "example",
-          "table"
-        ]
-      },
-      "pageCss": "w-full flex flex-col justify-center items-center gap-8",
-      "doms": [
-        {
           "type": "datatable",
           "containerClass": "w-full",
           "id": "createdAutomatTable2",
@@ -1504,11 +1445,15 @@
               }
             }
           }
+        },
+        {
+          "type": "custom",
+          "content": "\n            <div id=\"changesModal\" class=\"fixed bottom-0 flex-col justify-center items-center gap-2 w-[400px] px-8 py-4 max-w-full bg-bg text-darkBg rounded-t-lg\">\n                <div class=\"w-full flex justify-center items-center gap-4 text-sm\"><input id=\"showChangedCells\" type=\"checkbox\" /><span>Show changed cells</span></div>\n                <div class=\"flex flex-col justify-center items-center gap-8\">\n                  <h1 class=\"text-2xl font-bold\">Some changes were noticed</h1>\n                  <div class=\"flex gap-4 w-full\">\n                      <button @click=\"saveCellChanges\" class=\"w-1/2 px-4 py-2 bg-green-600 text-white shadow-md text-xl font-bold rounded-lg\">Save</button>\n                      <button @click=\"cancelCellChanges\" class=\"w-1/2 px-4 py-2 bg-red-600 text-white shadow-md text-xl font-bold rounded-lg\">Cancel</button>\n                  </div>\n                </div>\n            </div>\n          "
         }
       ],
-      "scopedCss": "",
-      "customScripts": "",
-      "customReadyScripts": "",
+      "scopedCss": "\n        #changesModal { \n          display:none;     \n        }\n        #changesModal.show { \n          display:flex;     \n        }\n      ",
+      "customScripts": " import { toast } from \"vue3-toastify\";\n      var createdAutomatTableCellUpdates = [];\n      function add2UpdatedCells(name, id, value, rowData) { \n          document.getElementById('changesModal').classList.add('show');\n          $('#showChangedCells').attr('checked', false);\n          let index = createdAutomatTableCellUpdates.findIndex(x => x.name == name && x.id == id);\n          if (index == -1) {\n              createdAutomatTableCellUpdates.push({ name: name, id: id, value: value, rowData: rowData });\n          }\n          else {\n              createdAutomatTableCellUpdates[index].value = value;\n          }\n      }\n      function remove2UpdatedCells(name, id) { \n          let index = createdAutomatTableCellUpdates.findIndex(x => x.name == name && x.id == id);\n          if (index != -1) {\n              createdAutomatTableCellUpdates.splice(index, 1);\n          }\n\n          if (createdAutomatTableCellUpdates.length == 0) {\n              document.getElementById('changesModal').classList.remove('show');\n          }\n      }\n      function saveCellChanges() { \n        console.log(createdAutomatTableCellUpdates[0].rowData);\n        let data = {\n          manufactId: createdAutomatTableCellUpdates[0].id,\n          plaka: createdAutomatTableCellUpdates[0].rowData.plate,\n          model: createdAutomatTableCellUpdates[0].rowData.model,\n          androidMac: createdAutomatTableCellUpdates[0].rowData.macAndroid,\n          androidImei: createdAutomatTableCellUpdates[0].rowData.imeiAndroid,\n          modemImei: createdAutomatTableCellUpdates[0].rowData.imeimodem,\n          modemMac: createdAutomatTableCellUpdates[0].rowData.macmodem,\n          plcImei: createdAutomatTableCellUpdates[0].rowData.imeiplc,\n          plcMac: createdAutomatTableCellUpdates[0].rowData.macplc,\n          serialNumber: createdAutomatTableCellUpdates[0].rowData.snAndroid\n        };\n        data[createdAutomatTableCellUpdates[0].name] = createdAutomatTableCellUpdates[0].value;\n        $.ajax({\n          url: \"http://localhost:44350/production/update-automat\",\n          method: \"POST\",\n          data: data,\n          success: function (response) {\n            toast.success(response.description || \"İşlem başarılı\");\n            createdAutomatTableCellUpdates = [];\n            createdAutomatTable.ajax.reload(null, false);\n            document.getElementById('changesModal').classList.remove('show');\n          },\n          error: function (xhr, status, error) {\n            console.log(error);\n          }\n        });\n      }\n      function cancelCellChanges() {\n        createdAutomatTableCellUpdates = [];\n        document.getElementById('changesModal').classList.remove('show');\n        createdAutomatTable.ajax.reload(null, false);\n      }\n      function dateTrFormat(data) {\n          let options = { timeZone: 'Europe/Istanbul', year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: false };\n          let formattedDate = new Date(data).toLocaleString('tr-TR', options);\n          return formattedDate;\n      }",
+      "customReadyScripts": "\n        $('#showChangedCells').on('change', function () {\n            createdAutomatTable.ajax.reload();\n        });\n      ",
       "help": {
         "page": "Datatables Page",
         "info": "In this page, you can see example datatables. There are two datatables in this page and both have filtering. Second datatable has operations (add, edit, delete) and right-click context menu. If you want delete or edit a row, first you click on the row to select it, then click on the edit or delete button above the datatable",
@@ -1545,17 +1490,17 @@
       }
     },
     {
-      "file": "Shopping.vue",
-      "name": "Shopping",
-      "path": "/shopping",
+      "file": "Cards.vue",
+      "name": "Cards",
+      "path": "/cards",
       "icon": "fa-solid fa-cart-shopping",
       "seo": {
-        "title": "Shopping - My CRM",
+        "title": "Cards - My CRM",
         "description": "In this page you can see shopping card examples.",
         "keywords": [
-          "shopping",
-          "shopping",
+          "cards",
           "card",
+          "shopping",
           "basket"
         ]
       },

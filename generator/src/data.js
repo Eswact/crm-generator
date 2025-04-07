@@ -74,7 +74,7 @@ module.exports = {
       "doms": [
         {
           "type": "custom",
-          "content": `<div class="w-full py-0  md:px-0 mt-2 flex justify-center items-center"><div class="p-6 w-full max-w-[1000px]"><h1 class="text-3xl font-bold text-center mb-6">Getting Started</h1><ol class="list-decimal list-inside space-y-4"><li><strong>Install Dependencies</strong><p>Open your terminal and run the following command in both the <code>generator</code> and <code>json-site</code> folders:</p><pre class="bg-darkBg text-bg dark:bg-black p-4 mt-2 rounded-md overflow-hidden"><code>npm install</code></pre></li><li><strong>Edit <code>data.js</code> in the <code>generator</code> Folder</strong><p>Navigate to the <code>generator</code> folder, open <code>data.js</code>, and make the necessary adjustments to the data.</p></li><li><strong>Generate JSON Files</strong><p>Run the following command in the <code>json-site</code> folder:</p><pre class="bg-darkBg text-bg dark:bg-black p-4 mt-2 rounded-md overflow-hidden"><code>npm run generate</code></pre></li></ol></div></div>`
+          "content": `<div class="w-full py-0  md:px-0 mt-2 flex justify-center items-center"><div class="p-6 w-full max-w-[1000px]"><h1 class="text-3xl font-bold text-center mb-6">Getting Started</h1><ol class="list-decimal list-inside space-y-4"><li><strong>Install Dependencies</strong><p>Open your terminal and run the following command in the <code>generator</code> folder:</p><pre class="bg-darkBg text-bg dark:bg-black p-4 mt-2 rounded-md overflow-hidden"><code>npm install</code></pre></li><li><strong>Edit <code>data.js</code> in the <code>generator</code> Folder</strong><p>Navigate to the <code>generator</code> folder, open <code>data.js</code>, and make the necessary adjustments to the data.</p></li><li><strong>Generate JSON Files</strong><p>Run the following command in the <code>generator</code> folder:</p><pre class="bg-darkBg text-bg dark:bg-black p-4 mt-2 rounded-md overflow-hidden"><code>npm run generate</code></pre></li></ol></div></div>`
         },
         {
           "type": "custom",
@@ -1205,145 +1205,6 @@ module.exports = {
           }
         },
         {
-          "type": "custom",
-          "content": `
-            <div id="changesModal" class="fixed bottom-0 flex-col justify-center items-center gap-2 w-[400px] px-8 py-4 max-w-full bg-bg text-darkBg rounded-t-lg">
-                <div class="w-full flex justify-center items-center gap-4 text-sm"><input id="showChangedCells" type="checkbox" /><span>Show changed cells</span></div>
-                <div class="flex flex-col justify-center items-center gap-8">
-                  <h1 class="text-2xl font-bold">Some changes were noticed</h1>
-                  <div class="flex gap-4 w-full">
-                      <button @click="saveCellChanges" class="w-1/2 px-4 py-2 bg-green-600 text-white shadow-md text-xl font-bold rounded-lg">Save</button>
-                      <button @click="cancelCellChanges" class="w-1/2 px-4 py-2 bg-red-600 text-white shadow-md text-xl font-bold rounded-lg">Cancel</button>
-                  </div>
-                </div>
-            </div>
-          `
-        }
-      ],
-      "scopedCss": `
-        #changesModal { 
-          display:none;     
-        }
-        #changesModal.show { 
-          display:flex;     
-        }
-      `,
-      "customScripts": ` import { toast } from "vue3-toastify";
-      var createdAutomatTableCellUpdates = [];
-      function add2UpdatedCells(name, id, value, rowData) { 
-          document.getElementById('changesModal').classList.add('show');
-          $('#showChangedCells').attr('checked', false);
-          let index = createdAutomatTableCellUpdates.findIndex(x => x.name == name && x.id == id);
-          if (index == -1) {
-              createdAutomatTableCellUpdates.push({ name: name, id: id, value: value, rowData: rowData });
-          }
-          else {
-              createdAutomatTableCellUpdates[index].value = value;
-          }
-      }
-      function remove2UpdatedCells(name, id) { 
-          let index = createdAutomatTableCellUpdates.findIndex(x => x.name == name && x.id == id);
-          if (index != -1) {
-              createdAutomatTableCellUpdates.splice(index, 1);
-          }
-
-          if (createdAutomatTableCellUpdates.length == 0) {
-              document.getElementById('changesModal').classList.remove('show');
-          }
-      }
-      function saveCellChanges() { 
-        console.log(createdAutomatTableCellUpdates[0].rowData);
-        let data = {
-          manufactId: createdAutomatTableCellUpdates[0].id,
-          plaka: createdAutomatTableCellUpdates[0].rowData.plate,
-          model: createdAutomatTableCellUpdates[0].rowData.model,
-          androidMac: createdAutomatTableCellUpdates[0].rowData.macAndroid,
-          androidImei: createdAutomatTableCellUpdates[0].rowData.imeiAndroid,
-          modemImei: createdAutomatTableCellUpdates[0].rowData.imeimodem,
-          modemMac: createdAutomatTableCellUpdates[0].rowData.macmodem,
-          plcImei: createdAutomatTableCellUpdates[0].rowData.imeiplc,
-          plcMac: createdAutomatTableCellUpdates[0].rowData.macplc,
-          serialNumber: createdAutomatTableCellUpdates[0].rowData.snAndroid
-        };
-        data[createdAutomatTableCellUpdates[0].name] = createdAutomatTableCellUpdates[0].value;
-        $.ajax({
-          url: "http://localhost:44350/production/update-automat",
-          method: "POST",
-          data: data,
-          success: function (response) {
-            toast.success(response.description || "İşlem başarılı");
-            createdAutomatTableCellUpdates = [];
-            createdAutomatTable.ajax.reload(null, false);
-            document.getElementById('changesModal').classList.remove('show');
-          },
-          error: function (xhr, status, error) {
-            console.log(error);
-          }
-        });
-      }
-      function cancelCellChanges() {
-        createdAutomatTableCellUpdates = [];
-        document.getElementById('changesModal').classList.remove('show');
-        createdAutomatTable.ajax.reload(null, false);
-      }
-      function dateTrFormat(data) {
-          let options = { timeZone: 'Europe/Istanbul', year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: false };
-          let formattedDate = new Date(data).toLocaleString('tr-TR', options);
-          return formattedDate;
-      }`,
-      "customReadyScripts": `
-        $('#showChangedCells').on('change', function () {
-            createdAutomatTable.ajax.reload();
-        });
-      `,
-      "help": {
-        "page": "Datatables Page",
-        "info": "In this page, you can see example datatables. There are two datatables in this page and both have filtering. Second datatable has operations (add, edit, delete) and right-click context menu. If you want delete or edit a row, first you click on the row to select it, then click on the edit or delete button above the datatable",
-        "shortcuts": [
-          {
-            "shortcut": [
-              {
-                "key": "/images/ctrl_key.png"
-              },
-              {
-                "key": "/images/letter_k.png"
-              }
-            ],
-            "shortcutDescription": "Example shortcut description."
-          },
-          {
-            "shortcut": [
-              {
-                "key": "/images/esc_key.png"
-              }
-            ],
-            "shortcutDescription": "For the cancel."
-          },
-          {
-            "shortcut": [
-              {
-                "key": "/images/right-click.png"
-              }
-            ],
-            "shortcutDescription": "In the second datatable, right click on the row to see the context menu."
-          }
-        ],
-        "link": null
-      }
-    },
-    {
-      "file": "Datatables2.vue",
-      "name": "Datatables 2",
-      "path": "/datatables2",
-      "icon": 'fa-solid fa-table',
-      "seo": {
-        "title": "Datatables 2 - My CRM",
-        "description": "In this page you can see datatable examples.",
-        "keywords": ["datatable", "example", "table"]
-      },
-      "pageCss": "w-full flex flex-col justify-center items-center gap-8",
-      "doms": [
-        {
           "type": "datatable",
           "containerClass": "w-full",
           "id": "createdAutomatTable2",
@@ -1978,10 +1839,98 @@ module.exports = {
             }
           }
         },
+        {
+          "type": "custom",
+          "content": `
+            <div id="changesModal" class="fixed bottom-0 flex-col justify-center items-center gap-2 w-[400px] px-8 py-4 max-w-full bg-bg text-darkBg rounded-t-lg">
+                <div class="w-full flex justify-center items-center gap-4 text-sm"><input id="showChangedCells" type="checkbox" /><span>Show changed cells</span></div>
+                <div class="flex flex-col justify-center items-center gap-8">
+                  <h1 class="text-2xl font-bold">Some changes were noticed</h1>
+                  <div class="flex gap-4 w-full">
+                      <button @click="saveCellChanges" class="w-1/2 px-4 py-2 bg-green-600 text-white shadow-md text-xl font-bold rounded-lg">Save</button>
+                      <button @click="cancelCellChanges" class="w-1/2 px-4 py-2 bg-red-600 text-white shadow-md text-xl font-bold rounded-lg">Cancel</button>
+                  </div>
+                </div>
+            </div>
+          `
+        }
       ],
-      "scopedCss": '',
-      "customScripts": '',
-      "customReadyScripts": '',
+      "scopedCss": `
+        #changesModal { 
+          display:none;     
+        }
+        #changesModal.show { 
+          display:flex;     
+        }
+      `,
+      "customScripts": ` import { toast } from "vue3-toastify";
+      var createdAutomatTableCellUpdates = [];
+      function add2UpdatedCells(name, id, value, rowData) { 
+          document.getElementById('changesModal').classList.add('show');
+          $('#showChangedCells').attr('checked', false);
+          let index = createdAutomatTableCellUpdates.findIndex(x => x.name == name && x.id == id);
+          if (index == -1) {
+              createdAutomatTableCellUpdates.push({ name: name, id: id, value: value, rowData: rowData });
+          }
+          else {
+              createdAutomatTableCellUpdates[index].value = value;
+          }
+      }
+      function remove2UpdatedCells(name, id) { 
+          let index = createdAutomatTableCellUpdates.findIndex(x => x.name == name && x.id == id);
+          if (index != -1) {
+              createdAutomatTableCellUpdates.splice(index, 1);
+          }
+
+          if (createdAutomatTableCellUpdates.length == 0) {
+              document.getElementById('changesModal').classList.remove('show');
+          }
+      }
+      function saveCellChanges() { 
+        console.log(createdAutomatTableCellUpdates[0].rowData);
+        let data = {
+          manufactId: createdAutomatTableCellUpdates[0].id,
+          plaka: createdAutomatTableCellUpdates[0].rowData.plate,
+          model: createdAutomatTableCellUpdates[0].rowData.model,
+          androidMac: createdAutomatTableCellUpdates[0].rowData.macAndroid,
+          androidImei: createdAutomatTableCellUpdates[0].rowData.imeiAndroid,
+          modemImei: createdAutomatTableCellUpdates[0].rowData.imeimodem,
+          modemMac: createdAutomatTableCellUpdates[0].rowData.macmodem,
+          plcImei: createdAutomatTableCellUpdates[0].rowData.imeiplc,
+          plcMac: createdAutomatTableCellUpdates[0].rowData.macplc,
+          serialNumber: createdAutomatTableCellUpdates[0].rowData.snAndroid
+        };
+        data[createdAutomatTableCellUpdates[0].name] = createdAutomatTableCellUpdates[0].value;
+        $.ajax({
+          url: "http://localhost:44350/production/update-automat",
+          method: "POST",
+          data: data,
+          success: function (response) {
+            toast.success(response.description || "İşlem başarılı");
+            createdAutomatTableCellUpdates = [];
+            createdAutomatTable.ajax.reload(null, false);
+            document.getElementById('changesModal').classList.remove('show');
+          },
+          error: function (xhr, status, error) {
+            console.log(error);
+          }
+        });
+      }
+      function cancelCellChanges() {
+        createdAutomatTableCellUpdates = [];
+        document.getElementById('changesModal').classList.remove('show');
+        createdAutomatTable.ajax.reload(null, false);
+      }
+      function dateTrFormat(data) {
+          let options = { timeZone: 'Europe/Istanbul', year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: false };
+          let formattedDate = new Date(data).toLocaleString('tr-TR', options);
+          return formattedDate;
+      }`,
+      "customReadyScripts": `
+        $('#showChangedCells').on('change', function () {
+            createdAutomatTable.ajax.reload();
+        });
+      `,
       "help": {
         "page": "Datatables Page",
         "info": "In this page, you can see example datatables. There are two datatables in this page and both have filtering. Second datatable has operations (add, edit, delete) and right-click context menu. If you want delete or edit a row, first you click on the row to select it, then click on the edit or delete button above the datatable",
@@ -2018,14 +1967,14 @@ module.exports = {
       }
     },
     {
-      "file": "Shopping.vue",
-      "name": "Shopping",
-      "path": "/shopping",
+      "file": "Cards.vue",
+      "name": "Cards",
+      "path": "/cards",
       "icon": 'fa-solid fa-cart-shopping',
       "seo": {
-        "title": "Shopping - My CRM",
+        "title": "Cards - My CRM",
         "description": "In this page you can see shopping card examples.",
-        "keywords": ["shopping", "shopping", "card", "basket"]
+        "keywords": ["cards", "card", "shopping", "basket"]
       },
       "pageCss": "w-full flex flex-col justify-center items-center gap-8",
       "doms": [
