@@ -106,8 +106,12 @@
           "try"
         ]
       },
-      "pageCss": "w-full flex flex-col gap-8",
+      "pageCss": "w-full flex flex-col gap-4",
       "doms": [
+        {
+          "type": "custom",
+          "content": "<div class=\"w-full flex justify-beetween items-center\">\n            <div class=\"w-full flex items-center gap-8\">\n              <h1 class=\"text-2xl font-bold text-second dark:text-white\">Datatable Example</h1>\n            </div>\n          </div>"
+        },
         {
           "type": "datatable",
           "containerClass": "w-full",
@@ -149,7 +153,70 @@
         },
         {
           "type": "custom",
-          "content": "<div class=\"w-full flex justify-center items-center\">\n            <div class=\"w-full py-0 gap-8 flex justify-between items-center\">\n              <div></div>\n              <button @click=\"sharedFunctions.getPageByPath(route.path)\" class=\"px-4 py-2 bg-main text-white shadow-md text-xl font-bold rounded-lg\">This Page</button>\n            </div>\n          </div>"
+          "content": "<div class=\"w-full flex justify-beetween items-center mt-4\">\n            <div class=\"w-full flex items-center gap-8\">\n              <h1 class=\"text-2xl font-bold text-second dark:text-white\">Card Example</h1>\n            </div>\n          </div>"
+        },
+        {
+          "type": "cards",
+          "containerClass": "w-full",
+          "id": "shoppingCards",
+          "name": "shoppingCards",
+          "ajax": {
+            "url": "http://localhost:3000/products",
+            "method": "POST",
+            "dataType": "json",
+            "contentType": "application/json",
+            "stringifyData": true
+          },
+          "paging": {
+            "type": 0,
+            "size": 10
+          },
+          "ordering": {
+            "name": "orderType",
+            "options": [
+              {
+                "name": "A to Z",
+                "id": "aToZ",
+                "value": 1
+              },
+              {
+                "name": "Lowest price",
+                "id": "lowestPrice",
+                "value": 2
+              },
+              {
+                "name": "Highest price",
+                "id": "highestPrice",
+                "value": 3
+              }
+            ]
+          },
+          "searchBar": {
+            "name": "searchValue",
+            "placeholder": "Search Products...",
+            "delay": 300
+          },
+          "cardLayout": {
+            "type": 1,
+            "card": {
+              "id": "ID",
+              "title": "UrunAdi",
+              "img": "Resimler[0]",
+              "envanter": "Envanter",
+              "barcode": "Barkodlar[0].Barkodu",
+              "price": "Tutar",
+              "brand": "UreticiFirmaAdi",
+              "category": "Kategori"
+            },
+            "viewMode": {
+              "changeable": true,
+              "default": "grid"
+            }
+          }
+        },
+        {
+          "type": "custom",
+          "content": "<div class=\"w-full flex justify-center items-center mt-4\">\n            <div class=\"w-full py-0 gap-8 flex justify-between items-center\">\n              <div></div>\n              <button @click=\"sharedFunctions.getPageByPath(route.path)\" class=\"px-4 py-2 bg-main text-white shadow-md text-xl font-bold rounded-lg\">This Page</button>\n            </div>\n          </div>"
         }
       ],
       "customScripts": "\n        import { toast } from \"vue3-toastify\";\n        function gettingStarted() {\n          router.push({ path: '/configuration' });\n        }\n      ",
@@ -203,8 +270,12 @@
           "table"
         ]
       },
-      "pageCss": "w-full flex flex-col justify-center items-center gap-8",
+      "pageCss": "w-full flex flex-col justify-center items-center gap-4",
       "doms": [
+        {
+          "type": "custom",
+          "content": "<div class=\"w-full flex justify-beetween items-center mt-4\">\n            <div class=\"w-full flex items-center gap-8\">\n              <h1 class=\"text-2xl font-bold text-second dark:text-white\">Datatable with filters</h1>\n            </div>\n          </div>"
+        },
         {
           "type": "datatable",
           "containerClass": "w-full",
@@ -316,6 +387,10 @@
             "keys": true
           },
           "options": {}
+        },
+        {
+          "type": "custom",
+          "content": "<div class=\"w-full flex justify-beetween items-center mt-4\">\n            <div class=\"w-full flex items-center gap-8\">\n              <h1 class=\"text-2xl font-bold text-second dark:text-white\">Editable datatable</h1>\n            </div>\n          </div>"
         },
         {
           "type": "datatable",
@@ -866,6 +941,10 @@
               }
             }
           }
+        },
+        {
+          "type": "custom",
+          "content": "<div class=\"w-full flex justify-beetween items-center mt-4\">\n            <div class=\"w-full flex items-center gap-8\">\n              <h1 class=\"text-2xl font-bold text-second dark:text-white\">Multiselect datatable</h1>\n            </div>\n          </div>"
         },
         {
           "type": "datatable",

@@ -222,8 +222,16 @@ module.exports = {
         "description": "Overview of Examples",
         "keywords": ["example", "demo", "try"]
       },
-      "pageCss": "w-full flex flex-col gap-8",
+      "pageCss": "w-full flex flex-col gap-4",
       "doms": [
+        {
+          "type": "custom",
+          "content": `<div class="w-full flex justify-beetween items-center">
+            <div class="w-full flex items-center gap-8">
+              <h1 class="text-2xl font-bold text-second dark:text-white">Datatable Example</h1>
+            </div>
+          </div>`
+        },
         {
           "type": "datatable",
           "containerClass": "w-full",
@@ -303,7 +311,74 @@ module.exports = {
         },
         {
           "type": "custom",
-          "content": `<div class="w-full flex justify-center items-center">
+          "content": `<div class="w-full flex justify-beetween items-center mt-4">
+            <div class="w-full flex items-center gap-8">
+              <h1 class="text-2xl font-bold text-second dark:text-white">Card Example</h1>
+            </div>
+          </div>`
+        },
+        {
+          "type": "cards",
+          "containerClass": "w-full",
+          "id": "shoppingCards",
+          "name": "shoppingCards",
+          "ajax": {
+            "url": "http://localhost:3000/products",
+            "method": "POST",
+            "dataType": 'json',
+            "contentType": 'application/json',
+            "stringifyData": true
+          },
+          "paging": {
+            "type": 0, //number buttons / scroll ??
+            "size": 10,
+          },
+          "ordering": {
+            "name": "orderType",
+            "options": [
+              {
+                "name": "A to Z",
+                "id": "aToZ",
+                "value": 1,
+              },
+              {
+                "name": "Lowest price",
+                "id": "lowestPrice",
+                "value": 2,
+              },
+              {
+                "name": "Highest price",
+                "id": "highestPrice",
+                "value": 3,
+              }
+            ]
+          },
+          "searchBar": {
+            "name": "searchValue",
+            "placeholder": "Search Products...",
+            "delay": 300
+          },
+          "cardLayout": {
+            "type": 1,
+            "card": {
+              "id": "ID",
+              "title": "UrunAdi",
+              "img": "Resimler[0]",
+              "envanter": "Envanter",
+              "barcode": "Barkodlar[0].Barkodu",
+              "price": "Tutar",
+              "brand": "UreticiFirmaAdi",
+              "category": "Kategori",
+            },
+            "viewMode": {
+              "changeable": true,
+              "default": "grid",
+            },
+          }
+        },
+        {
+          "type": "custom",
+          "content": `<div class="w-full flex justify-center items-center mt-4">
             <div class="w-full py-0 gap-8 flex justify-between items-center">
               <div></div>
               <button @click="sharedFunctions.getPageByPath(route.path)" class="px-4 py-2 bg-main text-white shadow-md text-xl font-bold rounded-lg">This Page</button>
@@ -366,8 +441,16 @@ module.exports = {
         "description": "In this page you can see datatable examples.",
         "keywords": ["datatable", "example", "table"]
       },
-      "pageCss": "w-full flex flex-col justify-center items-center gap-8",
+      "pageCss": "w-full flex flex-col justify-center items-center gap-4",
       "doms": [
+        {
+          "type": "custom",
+          "content": `<div class="w-full flex justify-beetween items-center mt-4">
+            <div class="w-full flex items-center gap-8">
+              <h1 class="text-2xl font-bold text-second dark:text-white">Datatable with filters</h1>
+            </div>
+          </div>`
+        },
         {
           "type": "datatable",
           "containerClass": "w-full",
@@ -510,6 +593,14 @@ module.exports = {
               }
             },
           }
+        },
+        {
+          "type": "custom",
+          "content": `<div class="w-full flex justify-beetween items-center mt-4">
+            <div class="w-full flex items-center gap-8">
+              <h1 class="text-2xl font-bold text-second dark:text-white">Editable datatable</h1>
+            </div>
+          </div>`
         },
         {
           "type": "datatable",
@@ -1203,6 +1294,14 @@ module.exports = {
               }
             }
           }
+        },
+        {
+          "type": "custom",
+          "content": `<div class="w-full flex justify-beetween items-center mt-4">
+            <div class="w-full flex items-center gap-8">
+              <h1 class="text-2xl font-bold text-second dark:text-white">Multiselect datatable</h1>
+            </div>
+          </div>`
         },
         {
           "type": "datatable",

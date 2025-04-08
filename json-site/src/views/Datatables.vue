@@ -1,12 +1,24 @@
 <template>
-      <div class="w-full flex flex-col justify-center items-center gap-8">
-        
+      <div class="w-full flex flex-col justify-center items-center gap-4">
+        <div class="w-full flex justify-beetween items-center mt-4">
+            <div class="w-full flex items-center gap-8">
+              <h1 class="text-2xl font-bold text-second dark:text-white">Datatable with filters</h1>
+            </div>
+          </div>
     <div class="w-full">
       <table id="transferedAutomatTable" class="display stripe hover" style="width:100%"></table>
-    </div>
+    </div><div class="w-full flex justify-beetween items-center mt-4">
+            <div class="w-full flex items-center gap-8">
+              <h1 class="text-2xl font-bold text-second dark:text-white">Editable datatable</h1>
+            </div>
+          </div>
     <div class="w-full">
       <table id="createdAutomatTable" class="display stripe hover" style="width:100%"></table>
-    </div>
+    </div><div class="w-full flex justify-beetween items-center mt-4">
+            <div class="w-full flex items-center gap-8">
+              <h1 class="text-2xl font-bold text-second dark:text-white">Multiselect datatable</h1>
+            </div>
+          </div>
     <div class="w-full">
       <table id="createdAutomatTable2" class="display stripe hover" style="width:100%"><tfoot><tr><td colspan="2"></td><td></td><td colspan="3"></td><td></td><td></td><td></td></tr></tfoot></table>
     </div>
