@@ -610,6 +610,33 @@ createdAutomatTable2 = datatableService.initializeDataTable('createdAutomatTable
         });
       
       });
+
+      document.addEventListener('keydown', function (e) {
+    const pressedKeys = new Set();
+
+    // Modifier tuşlar
+    if (e.ctrlKey) pressedKeys.add('ctrl');
+    if (e.shiftKey) pressedKeys.add('shift');
+    if (e.altKey) pressedKeys.add('alt');
+    if (e.metaKey) pressedKeys.add('meta');
+
+    // Basılan tuş
+    pressedKeys.add(e.key.toLowerCase());
+
+    // Shortcut 1: [ctrl + k]
+    if (['ctrl', 'k'].every(k => pressedKeys.has(k)) && pressedKeys.size === 2) {
+      e.preventDefault();
+      (function () {
+            alert('Ctrl + K pressed!');
+          })();
+    }// Shortcut 2: [p]
+    if (['p'].every(k => pressedKeys.has(k)) && pressedKeys.size === 1) {
+      e.preventDefault();
+      (function () {
+            console.log('P pressed!');
+          })();
+    }
+  });
     
        import { toast } from "vue3-toastify";
       var createdAutomatTableCellUpdates = [];

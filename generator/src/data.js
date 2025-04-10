@@ -429,7 +429,27 @@ module.exports = {
           }
         ],
         "link": "https://www.youtube.com/embed/pad_iFvqtYw?si=cWmRAfFFvFuJR8Hj"
-      }
+      },
+      "shortcuts": [
+        {
+          keys: ['ctrl', 'k'],
+          action: function () {
+            alert('Ctrl + K pressed!');
+          }
+        },
+        {
+          keys: ['alt', 's'],
+          action: function () {
+            console.log('Alt + S pressed!');
+          }
+        },
+        {
+          keys: ['p'],
+          action: function () {
+            console.log('P pressed!');
+          }
+        }
+      ]
     },
     {
       "file": "Datatables.vue",
@@ -2063,7 +2083,21 @@ module.exports = {
           }
         ],
         "link": null
-      }
+      },
+      "shortcuts": [
+        {
+          keys: ['ctrl', 'k'],
+          action: function () {
+            alert('Ctrl + K pressed!');
+          }
+        },
+        {
+          keys: ['p'],
+          action: function () {
+            console.log('P pressed!');
+          }
+        }
+      ]
     },
     {
       "file": "Cards.vue",
@@ -2271,7 +2305,13 @@ module.exports = {
             },
           }
         }
-      ]
+      ],
+      "help": {
+        "page": "Cards Page",
+        "info": "In this page, you can see example cards. There are two cards in this page and both have filtering & sorting. First card is in grid view and second card is in list view. You can change the view mode by clicking on the button on the top right corner of the card.",
+        "shortcuts": null,
+        "link": null
+      }
     }
   ],
   "scripts": [

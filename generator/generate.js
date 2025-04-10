@@ -225,6 +225,8 @@ function createViews() {
     
         ${page.customReadyScripts || ''}
       });
+
+      ${page.shortcuts ? createShortcutsScript(page.shortcuts) : ''}
     
       ${page.customScripts || ''}
     </script>
@@ -721,6 +723,36 @@ function generateCardsScript(item) {
       : ''
     }`;
   }
+}
+
+//Shortcuts
+function createShortcutsScript(shortcuts) {
+  let shortcutList = '';
+  shortcuts.forEach((shortcut, index) => {
+    const keysArray = shortcut.keys.map(k => `'${k.toLowerCase()}'`).join(', ');
+    shortcutList += `// Shortcut ${index + 1}: [${shortcut.keys.join(' + ')}]
+    if ([${keysArray}].every(k => pressedKeys.has(k)) && pressedKeys.size === ${shortcut.keys.length}) {
+      e.preventDefault();
+      (${shortcut.action.toString()})();
+    }`;
+  });
+
+  let script = `document.addEventListener('keydown', function (e) {
+    const pressedKeys = new Set();
+
+    // Modifier tuşlar
+    if (e.ctrlKey) pressedKeys.add('ctrl');
+    if (e.shiftKey) pressedKeys.add('shift');
+    if (e.altKey) pressedKeys.add('alt');
+    if (e.metaKey) pressedKeys.add('meta');
+
+    // Basılan tuş
+    pressedKeys.add(e.key.toLowerCase());
+
+    ${shortcutList}
+  });`;
+
+  return script;
 }
 
 function runProject() {

@@ -22,6 +22,8 @@ import $ from "jquery";
     
         
       });
+
+      
     
       
         function gettingStarted() {

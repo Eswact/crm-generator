@@ -415,6 +415,8 @@ getshoppingCards2();
     
         
       });
+
+      
     
       
     </script>

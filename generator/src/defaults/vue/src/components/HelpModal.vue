@@ -21,7 +21,7 @@
                         <span class="w-full text-lg">{{ helpStore.$state.helpData.info || "" }}</span>
                     </div>
                 </div>
-                <div v-if="helpStore.$state.helpData.shortcuts.length" class="helpSection sm:hidden w-full h-full max-h-full md:max-h-[33%] overflow-hidden flex flex-col gap-2 items-center border-r-2 md:border-r-0 md:border-b-2 border-main/50 dark:border-third/50 md:pt-4">
+                <div v-if="helpStore.$state.helpData.shortcuts && helpStore.$state.helpData.shortcuts.length" class="helpSection sm:hidden w-full h-full max-h-full md:max-h-[33%] overflow-hidden flex flex-col gap-2 items-center border-r-2 md:border-r-0 md:border-b-2 border-main/50 dark:border-third/50 md:pt-4">
                     <div class="text-main dark:text-third w-full relative flex justify-center gap-4 items-center text-2xl font-semibold">
                         <i class="fa-solid fa-keyboard absolute left-6"></i>
                         <h5>Shortcuts</h5>
