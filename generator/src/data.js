@@ -33,10 +33,37 @@ module.exports = {
     },
   },
   "splashDefaultContext": `<img src="/images/loading.gif" />`,
+  "languages": {
+    "default": "en",
+    "options": [
+      {
+        "code": "en",
+        "label": "English",
+        "data": {
+          "introduction": "Introduction",
+          "configuration": "Configuration",
+          "examples": "Examples",
+          "datatables": "Datatables",
+          "cards": "Cards",
+        }
+      },
+      {
+        "code": "tr",
+        "label": "Türkçe",
+        "data": {
+          "introduction": "Anasayfa",
+          "configuration": "Yapılandırma",
+          "examples": "Örnekler",
+          "datatables": "Tablolar",
+          "cards": "Kartlar",
+        }
+      }
+    ]
+  },
   "pages": [
     {
       "file": "Introduction.vue",
-      "name": "Introduction",
+      "name": "introduction",
       "path": "/",
       "icon": 'fa-solid fa-home',
       "seo": {
@@ -63,7 +90,7 @@ module.exports = {
     },
     {
       "file": "ConfigurationPage.vue",
-      "name": "Configuration",
+      "name": "configuration",
       "path": "/configuration",
       "icon": 'fa-solid fa-hammer',
       "seo": {
@@ -214,7 +241,7 @@ module.exports = {
     },
     {
       "file": "ExamplesPage.vue",
-      "name": "Examples",
+      "name": "examples",
       "path": "/examples",
       "icon": 'fa-solid fa-chart-simple',
       "seo": {
@@ -453,7 +480,7 @@ module.exports = {
     },
     {
       "file": "Datatables.vue",
-      "name": "Datatables",
+      "name": "datatables",
       "path": "/datatables",
       "icon": 'fa-solid fa-table',
       "seo": {
@@ -2101,7 +2128,7 @@ module.exports = {
     },
     {
       "file": "Cards.vue",
-      "name": "Cards",
+      "name": "cards",
       "path": "/cards",
       "icon": 'fa-solid fa-cart-shopping',
       "seo": {

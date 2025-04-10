@@ -9,6 +9,7 @@ const paths = {
   defaultVuePath: path.resolve(__dirname, './src/defaults/vue'),
   projectPath: path.resolve(__dirname, '../json-site'),
   jsonFilePath: path.join(__dirname, '../json-site/siteData.json'),
+  languagesDir: path.join(__dirname, '../json-site/src/locales'),
   viewsDir: path.join(__dirname, '../json-site/src/views'),
   scriptsDir: path.join(__dirname, '../json-site/src/scripts/custom'),
   sourceImagesDir: path.join(__dirname, './src/images'),
@@ -137,6 +138,16 @@ function createFontsCss() {
   }).join('\n');
 
   fs.writeFileSync(paths.fontsCssOutputFile, cssContent);
+}
+
+//Languages
+function createLanguages() {
+  clearAndCreateDir(paths.languagesDir);
+  siteData.languages.options.forEach(lang => {
+    const langFilePath = path.join(paths.languagesDir, `${lang.code}.json`);
+    fs.writeFileSync(langFilePath, JSON.stringify(lang.data, null, 2));
+    console.log(`Language file created: ${langFilePath}`);
+  });
 }
 
 //Json
@@ -764,6 +775,7 @@ function generateSite() {
   createVueProject();
   copyImages();
   setFonts();
+  createLanguages();
   createJsonFile();
   createCustomScripts();
   createViews();

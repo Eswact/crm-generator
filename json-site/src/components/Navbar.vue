@@ -3,7 +3,8 @@ import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import pagesData from '../../siteData.json';
 import { useHelpStore } from '../store/pageHelper';
-import DarkModeToggle from './DarkModeToggle.vue'
+import DarkModeToggle from './DarkModeToggle.vue';
+import LanguageToggle from './LanguageToggle.vue';
 
 const helpStore = useHelpStore();
 
@@ -20,6 +21,7 @@ const closeNavbar = () => {
 };
 
 const darkModeEnabled = (pagesData.theme.darkModeEnabled == true || pagesData.theme.darkModeEnabled == 'true');
+const languagesEnabled = (pagesData.languages.options.length > 1);
 </script>
 
 <template>
@@ -44,7 +46,7 @@ const darkModeEnabled = (pagesData.theme.darkModeEnabled == true || pagesData.th
           class="flex justify-start items-center w-full"
         >
           <router-link
-            :title="page.name"
+            :title="$t(page.name)"
             class="w-full h-full flex items-center gap-[20px] px-[18px] py-[12px] cursor-pointer text-white transition-all hover:bg-main"
             :to="page.path"
             @click="closeNavbar"
@@ -52,7 +54,7 @@ const darkModeEnabled = (pagesData.theme.darkModeEnabled == true || pagesData.th
             <span :class="['p-[8px] w-[44px] border-box flex justify-center items-center', { 'bg-main rounded-lg': isActive(page.path) }]">
               <i :class=page.icon class="min-w-[30px] flex justify-center items-center text-[26px]"></i>
             </span>
-            <span class="text-[1.45rem] font-semibold threeDots">{{ page.name }}</span>
+            <span class="text-[1.45rem] font-semibold threeDots">{{ $t(page.name) }}</span>
           </router-link>
         </li>
       </ul>
@@ -70,6 +72,7 @@ const darkModeEnabled = (pagesData.theme.darkModeEnabled == true || pagesData.th
           <button v-if="helpStore.$state.helpData" @click="helpStore.toggleHelpModal()" class="text-white text-3xl px-[4px]"><i class="fa-solid fa-question"></i></button>
         </div>
         <div class="flex gap-[34px] md:gap-[20px] items-center justify-end">
+          <LanguageToggle v-if="languagesEnabled" />
           <DarkModeToggle v-if="darkModeEnabled" />
           <!-- Settings Button -->
           <!-- Logout Button -->

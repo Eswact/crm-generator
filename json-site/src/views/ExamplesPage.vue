@@ -113,7 +113,7 @@
       const route = useRoute();
       const router = useRouter();
       import commonFunctions from '../scripts/common.js'
-      import { sharedFunctions } from '../scripts/custom/shared.js';
+      
 import $ from "jquery";
 import datatableService from "../services/datatableService";
 import cardService from "../services/cardService";
