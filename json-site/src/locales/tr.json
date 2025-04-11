@@ -1,7 +1,115 @@
 {
+  "defaults": {
+    "visibility": "Görünürlük",
+    "visibilityHeader": "Tabloyu Özelleştir",
+    "visibilityDesc": "Liste içindeki öğeleri yeniden sıralamak için sürükleyip bırakın. Sütun görünürlüğü için onay kutularını kullanın.",
+    "filters": "Filtreler",
+    "sort": "Sırala",
+    "next": "Sonraki",
+    "previous": "Önceki",
+    "page": "Sayfa",
+    "search": "Ara...",
+    "apply": "Uygula",
+    "reset": "Sıfırla"
+  },
   "introduction": "Anasayfa",
   "configuration": "Yapılandırma",
   "examples": "Örnekler",
   "datatables": "Tablolar",
-  "cards": "Kartlar"
+  "cards": "Kartlar",
+  "thisPage": "Bu Sayfa",
+  "introductionPage": {
+    "title1": "JSON Tabanlı Dinamik CRM Üretici",
+    "desc1": "Projenin amacı, bir JSON dosyası ve yerel kaynaklar kullanarak web sitesi geliştirme sürecini basitleştirmektir. Bu, önceden tanımlanmış yapılandırmaları kullanarak Vue 3 ve Tailwind CSS tabanlı bir web sitesinin dinamik olarak oluşturulmasını sağlar ve web sitelerinin oluşturulmasını, özelleştirilmesini ve bakımını kolaylaştırır.",
+    "title2": "JSON Yapılandırması",
+    "desc2": "JSON dosyası, projenin temelini oluşturur ve aşağıdaki ana bileşenleri içerir:",
+    "desc3-1": "Genel Bilgiler:",
+    "desc3-2": "Web sitesinin adı ve logosunun yanı sıra, başlık, açıklama ve simge gibi meta veri ayrıntılarını da içerir.",
+    "desc4-1": "Temalar:",
+    "desc4-2": "Renk şemaları, karanlık mod etkinleştirme ve yazı tipi yapılandırmaları gibi görsel öğelerin ayarlarını belirtir. Bu ayarlar, web sitesinin genel estetiğini tanımlar.",
+    "desc5-1": "Sayfalar:",
+    "desc5-2": "Her sayfa, JSON yapısı içinde tanımlanır ve sayfanın düzenini ve kullanılan bileşenleri detaylandırır. Sayfalar ayrıca DataTable, customType gibi geliştirmeyi kolaylaştırmak için çeşitli içerik türlerini içerir.",
+    "desc6": "İçerik türleri, sayfa tanımlarının içine doğrudan entegre edilmiştir ve projenin gereksinimlerine uygun dinamik DOM yapılarının oluşturulmasını kolaylaştırır. Bu yaklaşım, JSON dosyasının hem genel hem de sayfaya özgü yapılandırmaları verimli bir şekilde ele almasını sağlar.",
+    "button": "Başlarken"
+  },
+  "configurationPage": {
+    "title1": "Başlarken",
+    "subtitle1": "Bağımlılıkları Yükle",
+    "desc1": "Terminalinizi açın ve aşağıdaki komutu generator klasöründe çalıştırın:",
+    "subtitle2": "data.js'yi Düzenle",
+    "desc2": "generator klasörüne gidin, data.js'yi açın ve gerekli ayarlamaları yapın.",
+    "subtitle3": "JSON Dosyalarını Oluştur",
+    "desc3": "generator klasöründe aşağıdaki komutu çalıştırın:",
+    "title2": "Yapılandırma",
+    "subtitle4": "Genel",
+    "desc4": "Bu bölüm, sitenin temel bilgilerini içerir. Logo, site adı, simge, sayfa başlığı ve SEO bilgileri gibi görsel öğeler burada tanımlanır.",
+    "subtitle5": "Tema",
+    "desc5": "Tema ayarları, sitenin tasarımını kontrol eder. Bu, karanlık mod, renkler ve yazı tipleri gibi özellikleri içerir. Ayrıca, özel renkleri ve projenin logosunu ve simgesini belirtmenizi sağlar. Ayrıca, bu bölümde projeye özel yazı tipleri ve resimler ekleyebilirsiniz.",
+    "subtitle6": "Sayfalar",
+    "desc6": "Bu bölümde, sitenin sayfaları tanımlanır. SEO hakkında bilgi, sayfaya özgü içerik ve her sayfada kullanılan bileşenler sağlanır. İki ana sayfa türü vardır:",
+    "desc7-1": "Datatable:",
+    "desc7-2": "AJAX çağrısı aracılığıyla dinamik olarak doldurulabilen bir veri tablosunu içeren bir sayfa. Bu, büyük miktarda veriyi filtreleme, arama ve sayfalama yeteneği ile yapılandırılmış bir formatta görüntülemek için kullanışlıdır.",
+    "desc8-1": "Custom:",
+    "desc8-2": "Daha özelleştirilmiş içeriğe izin veren bir sayfa. İçerik, JSON dosyasında doğrudan belirtilir ve özel HTML veya Vue bileşenlerini içerebilir.",
+    "subtitle7": "Özel Scriptler",
+    "desc9": "Paylaşılabilir işlevler ve scriptler burada bulunur.",
+    "button": "Örnekler"
+  },
+  "examplesPage": {
+    "title1": "Veri Tablosu Örneği",
+    "title2": "Kart Örneği",
+    "exampleTable": {
+      "group": "Grup",
+      "name": "İsim",
+      "mail": "Mail",
+      "message": "Mesaj"
+    },
+    "exampleCard": {
+      "searchPlaceholder": "Ürünleri ara..."
+    }
+  },
+  "datatablesPage": {
+    "title1": "Filtreli Veri Tablosu",
+    "title2": "Düzenlebilir Veri Tablosu",
+    "title3": "Çoklu Seçim Veri Tablosu",
+    "save": "Kaydet",
+    "cancel": "İptal",
+    "table1": {
+      "plate": "Plaka",
+      "model": "Model",
+      "customer": "Müşteri",
+      "location": "Konum",
+      "date": "Tarih"
+    },
+    "table2": {
+      "plate": "Plaka",
+      "model": "Model",
+      "androidImei": "Android Imei",
+      "androidMac": "Andorid Mac",
+      "modemImei": "Modem Imei",
+      "modemMac": "Modem Mac",
+      "plcImei": "PLC Imei",
+      "plcMac": "PLC Mac",
+      "test": "Test"
+    },
+    "table3": {
+      "plate": "Plaka",
+      "model": "Model",
+      "androidImei": "Android Imei",
+      "androidMac": "Andorid Mac",
+      "modemImei": "Modem Imei",
+      "modemMac": "Modem Mac",
+      "plcImei": "PLC Imei",
+      "plcMac": "PLC Mac",
+      "test": "Test"
+    }
+  },
+  "cardsPage": {
+    "card1": {
+      "searchPlaceholder": "Ürünleri ara..."
+    },
+    "card2": {
+      "searchPlaceholder": "Arama yapın..."
+    }
+  }
 }

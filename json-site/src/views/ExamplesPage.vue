@@ -2,24 +2,24 @@
       <div class="w-full flex flex-col gap-4">
         <div class="w-full flex justify-beetween items-center">
             <div class="w-full flex items-center gap-8">
-              <h1 class="text-2xl font-bold text-second dark:text-white">Datatable Example</h1>
+              <h1 class="text-2xl font-bold text-second dark:text-white">{{$t("examplesPage.title1")}}</h1>
             </div>
           </div>
     <div class="w-full">
       <table id="messagesTable" class="display stripe hover" style="width:100%"></table>
     </div><div class="w-full flex justify-beetween items-center mt-4">
             <div class="w-full flex items-center gap-8">
-              <h1 class="text-2xl font-bold text-second dark:text-white">Card Example</h1>
+              <h1 class="text-2xl font-bold text-second dark:text-white">{{$t("examplesPage.title2")}}</h1>
             </div>
           </div><div id="shoppingCards" name="shoppingCards" class="w-full flex flex-col gap-4">
             <div class="w-full flex justify-between items-center gap-4 md:flex-col md:justify-center">
       <div class="flex items-center md:w-full">
-        <div class="w-[300px] md:w-full relative max-w-full flex items-center justify-end"> <input v-model="shoppingCardsSearchBar" type="text" placeholder="Search Products..." class="peer w-full pl-4 pr-8 py-2 bg-white dark:bg-opacity-10 border-2 border-second dark:border-white rounded-xl placeholder:text-second dark:placeholder:text-white font-bold md:font-semibold text-lg focus:placeholder:text-fourth focus:border-fourth dark:focus:placeholder:text-fourth dark:focus:border-fourth focus:outline-none"/><i class="fa-solid fa-magnifying-glass absolute right-4 text-lg text-second dark:text-white peer-focus:text-fourth"></i></div>
+        <div class="w-[300px] md:w-full relative max-w-full flex items-center justify-end"> <input v-model="shoppingCardsSearchBar" type="text" :placeholder='$t("examplesPage.exampleCard.searchPlaceholder")' class="peer w-full pl-4 pr-8 py-2 bg-white dark:bg-opacity-10 border-2 border-second dark:border-white rounded-xl placeholder:text-second dark:placeholder:text-white font-bold md:font-semibold text-lg focus:placeholder:text-fourth focus:border-fourth dark:focus:placeholder:text-fourth dark:focus:border-fourth focus:outline-none"/><i class="fa-solid fa-magnifying-glass absolute right-4 text-lg text-second dark:text-white peer-focus:text-fourth"></i></div>
       </div>
       <div class="w-[400px] max-w-full md:w-full flex items-center justify-end gap-4">
         
         <button id="shoppingCardsOrderModalButton" class="w-[calc(50%-0.5rem)] bg-white dark:bg-opacity-10 border-2 border-second text-second dark:border-white dark:text-white hover:border-fourth hover:text-fourth dark:hover:border-fourth dark:hover:text-fourth text-lg py-2 px-4 rounded-xl flex items-center justify-between duration-200">
-          <span class="font-bold md:font-semibold">Sort</span>
+          <span class="font-bold md:font-semibold">{{$t("defaults.sort")}}</span>
           <i class="fa-solid fa-sort"></i>
         </button>
         <button @click="shoppingCardsChangeViewMode()" class="bg-white dark:bg-opacity-10 border-2 border-second text-second dark:border-white dark:text-white hover:border-fourth hover:text-fourth dark:hover:border-fourth dark:hover:text-fourth text-lg py-2 px-4 rounded-xl flex items-center justify-between duration-200">
@@ -76,21 +76,21 @@
         <h2 class="text-3xl font-bold text-second">No data found</h2>
       </div>
             <div class="flex justify-between items-center">
-                <button @click="shoppingCardsCurrentPage--" :disabled="shoppingCardsCurrentPage <= 1" class="bg-second text-white hover:bg-main duration-200 py-2 w-28 rounded-lg disabled:bg-second/50 dark:disabled:bg-second/20">Previous</button>
-                <div class="flex items-center gap-4 px-3 py-1 rounded-lg text-second dark:text-white font-semibold"><span>Page</span><span>{{ shoppingCardsCurrentPage }} / {{ shoppingCardsTotalPages }}</span></div>
-                <button @click="shoppingCardsCurrentPage++" :disabled="shoppingCardsCurrentPage >= shoppingCardsTotalPages" class="bg-second text-white hover:bg-main duration-200 py-2 w-28 rounded-lg disabled:bg-second/50 dark:disabled:bg-second/20">Next</button>
+                <button @click="shoppingCardsCurrentPage--" :disabled="shoppingCardsCurrentPage <= 1" class="bg-second text-white hover:bg-main duration-200 py-2 w-28 rounded-lg disabled:bg-second/50 dark:disabled:bg-second/20">{{$t("defaults.previous")}}</button>
+                <div class="flex items-center gap-4 px-3 py-1 rounded-lg text-second dark:text-white font-semibold"><span>{{$t("defaults.page")}}</span><span>{{ shoppingCardsCurrentPage }} / {{ shoppingCardsTotalPages }}</span></div>
+                <button @click="shoppingCardsCurrentPage++" :disabled="shoppingCardsCurrentPage >= shoppingCardsTotalPages" class="bg-second text-white hover:bg-main duration-200 py-2 w-28 rounded-lg disabled:bg-second/50 dark:disabled:bg-second/20">{{$t("defaults.next")}}</button>
               </div>
             <div v-show="shoppingCardsOrderModalVisibility" id="shoppingCardsOrderModal" @click.self="shoppingCardsToggleOrderVisibility()" class="z-30 fixed w-full h-full top-0 left-0 bg-black bg-opacity-65 flex justify-center items-center md:items-end">
       <div class="bg-bg text-dark p-4 max-h-full max-w-full min-w-[400px] overflow-y-auto md:w-full md:min-w-[unset] md:pb-8 rounded-lg md:rounded-b-none md:rounded-t-2xl flex flex-col gap-4">
         <div class="w-full flex items-center justify-between mb-1">
-          <h2 class="text-2xl font-bold dark:text-darkBg">Sorting</h2>
+          <h2 class="text-2xl font-bold dark:text-darkBg">{{$t("defaults.sort")}}</h2>
           <button @click="shoppingCardsToggleOrderVisibility()" class="px-2 text-3xl text-red-600"><i class="fa-solid fa-xmark"></i></button>
         </div>
-        <label v-for="option in shoppingCardsOrderOptions" :key="option.id" :for="option.id" class="w-full px-6 py-3 border border-gray-400 flex items-center gap-4 text-lg font-semibold rounded-md">
+        <label v-for="option in shoppingCardsOrderOptions" :key="option.id" :for="'shoppingCards' + option.id" class="w-full px-6 py-3 border border-gray-400 flex items-center gap-4 text-lg font-semibold rounded-md">
           <input
             type="radio"
-            :id="option.id"
-            name="ordering"
+            :id="'shoppingCards' + option.id"
+            name="shoppingCardsOrdering"
             :checked="shoppingCardsOrdering === option.value"
             @change="shoppingCardsOrdering = option.value"
           />
@@ -101,7 +101,7 @@
           </div><div class="w-full flex justify-center items-center mt-4">
             <div class="w-full py-0 gap-8 flex justify-between items-center">
               <div></div>
-              <button @click="sharedFunctions.getPageByPath(route.path)" class="px-4 py-2 bg-main text-white shadow-md text-xl font-bold rounded-lg">This Page</button>
+              <button @click="sharedFunctions.getPageByPath(route.path)" class="px-4 py-2 bg-main text-white shadow-md text-xl font-bold rounded-lg">{{$t("thisPage")}}</button>
             </div>
           </div>
       </div>
@@ -110,8 +110,10 @@
     <script setup>
       import { ref, onMounted, computed, watch } from 'vue';
       import { useRoute, useRouter } from 'vue-router';
+      import { useI18n } from 'vue-i18n';
       const route = useRoute();
       const router = useRouter();
+      const { locale } = useI18n();
       import commonFunctions from '../scripts/common.js'
       
 import $ from "jquery";
@@ -126,7 +128,7 @@ var messagesTable;
 let messagesTableColumns = [
   {
     order: 0,
-    title: "Group",
+    title: "examplesPage.exampleTable.group",
     data: "postId",
     name: "postId",
     checkable: true,
@@ -142,7 +144,7 @@ let messagesTableColumns = [
     className: ""
   },{
     order: 1,
-    title: "Name",
+    title: "examplesPage.exampleTable.name",
     data: "name",
     name: "name",
     checkable: false,
@@ -158,7 +160,7 @@ let messagesTableColumns = [
     className: ""
   },{
     order: 2,
-    title: "Mail",
+    title: "examplesPage.exampleTable.mail",
     data: "email",
     name: "email",
     checkable: true,
@@ -174,7 +176,7 @@ let messagesTableColumns = [
     className: ""
   },{
     order: 3,
-    title: "Message",
+    title: "examplesPage.exampleTable.message",
     data: "body",
     name: "body",
     checkable: false,
@@ -297,6 +299,12 @@ const shoppingCardsTotalPages = ref(1);
         commonFunctions.useSplashScreen({"title": "Example Splash", "description": "This is an example splash screen. This splash close automatically in 3 seconds.", "buttons": [{"text": "Close Now", "action": commonFunctions.hideSplashScreen}], "timeout": 3000});
       
       });
+
+      watch(locale, () => {
+        messagesTable.destroy();
+        messagesTable = null;
+        messagesTable = datatableService.initializeDataTable('messagesTable', '#messagesTable', messagesTableAjax, messagesTableColumns, null, messagesTableTableOptions, messagesTableOperations, messagesTableOptions);
+        });
 
       document.addEventListener('keydown', function (e) {
     const pressedKeys = new Set();

@@ -40,22 +40,238 @@ module.exports = {
         "code": "en",
         "label": "English",
         "data": {
+          "defaults": {
+            "visibility": "Visibility",
+            "visibilityHeader": "Customize Table",
+            "visibilityDesc": "Drag and drop the items in the list to reorder them. Use checkboxes for column visibility.",
+            "filters": "Filters",
+            "sort": "Sort",
+            "next": "Next",
+            "previous": "Previous",
+            "page": "Page",
+            "search": "Search...",
+            "apply": "Apply",
+            "reset": "Reset",
+          },
           "introduction": "Introduction",
           "configuration": "Configuration",
           "examples": "Examples",
           "datatables": "Datatables",
           "cards": "Cards",
+          "thisPage": "This Page",
+          "introductionPage": {
+            "title1": "JSON-Based Dynamic CRM Generator",
+            "desc1": "The project's goal is to simplify the process of website development, particularly for CRM systems, by utilizing a JSON file and local resources. It enables dynamic generation of a Vue 3 and Tailwind CSS-based website using predefined configurations in the JSON file, making it easier to create, customize, and maintain websites.",
+            "title2": "JSON Configuration",
+            "desc2": "The JSON file forms the foundation of the project and includes the following key components:",
+            "desc3-1": "General Information:",
+            "desc3-2": "In addition to the website's name and logo, it also includes metadata details such as the title, description, and icon.",
+            "desc4-1": "Themes:",
+            "desc4-2": "Specifies settings for visual elements such as color schemes, dark mode enablement, and font configurations. These settings define the overall aesthetic of the website.",
+            "desc5-1": "Pages:",
+            "desc5-2": "Each page is defined within the JSON structure, detailing its layout and the components used. Pages also include a variety of content types to streamline development like DataTable, customType",
+            "desc6": "The content types are integrated directly within the page definitions, making it easier to construct dynamic DOM structures that align with the project's requirements. This approach ensures that the JSON file can handle both general and page-specific configurations efficiently.",
+            "button": "Getting Started",
+          },
+          "configurationPage": {
+            "title1": "Getting Started",
+            "subtitle1": "Install Dependencies",
+            "desc1": "Open your terminal and run the following command in the generator folder:",
+            "subtitle2": "Edit data.js in the generator Folder",
+            "desc2": "Navigate to the generator folder, open data.js, and make the necessary adjustments to the data.",
+            "subtitle3": "Generate JSON Files",
+            "desc3": "Run the following command in the generator folder:",
+            "title2": "Configuration",
+            "subtitle4": "General",
+            "desc4": "This section contains basic information about the site. Visual elements such as logo, site name, icon, page title and SEO information are defined here.",
+            "subtitle5": "Theme",
+            "desc5": "Theme settings control the site design. This includes features like dark mode, colors, and fonts. You can also specify custom colors and the project’s logo and icon. Additionally, this section allows you to include fonts and images in the project directory.",
+            "subtitle6": "Pages",
+            "desc6": "In this section, the pages of the site are defined. Information about SEO, page-specific content, and the components used in each page are provided. There are two main types of pages:",
+            "desc7-1": "Datatable:",
+            "desc7-2": "A page that includes a table of data that can be dynamically populated through an AJAX call. This is useful for displaying large amounts of data in a structured format with the ability to filter, search, and paginate.",
+            "desc8-1": "Custom:",
+            "desc8-2": "A page that allows for more customized content. The content is specified directly in the JSON file and can include custom HTML or Vue components.",
+            "subtitle7": "Custom Scripts",
+            "desc9": "Shareable functions and scripts are located here.",
+            "button": "Examples",
+          },
+          "examplesPage": { 
+            "title1": "Datatable Example",
+            "title2": "Card Example",
+            "exampleTable": {
+              "group": "Group",
+              "name": "Name",
+              "mail": "Mail",
+              "message": "Message",
+            },
+            "exampleCard": {
+              "searchPlaceholder": "Search products...",
+            }
+          },
+          "datatablesPage": { 
+            "title1": "Datatable with filters",
+            "title2": "Editable datatable",
+            "title3": "Multiselect datatable",
+            "save": "Save",
+            "cancel": "Cancel",
+            "table1": {
+              "plate": "Plate",
+              "model": "Model",
+              "customer": "Customer",
+              "location": "Location",
+              "date": "Date",
+            },
+            "table2": {
+              "plate": "Plate",
+              "model": "Model",
+              "androidImei": "Android Imei",
+              "androidMac": "Andorid Mac",
+              "modemImei": "Modem Imei",
+              "modemMac": "Modem Mac",
+              "plcImei": "PLC Imei",
+              "plcMac": "PLC Mac",
+              "test": "Test",
+            },
+            "table3": {
+              "plate": "Plate",
+              "model": "Model",
+              "androidImei": "Android Imei",
+              "androidMac": "Andorid Mac",
+              "modemImei": "Modem Imei",
+              "modemMac": "Modem Mac",
+              "plcImei": "PLC Imei",
+              "plcMac": "PLC Mac",
+              "test": "Test",
+            }
+          },
+          "cardsPage": { 
+            "card1": {
+              "searchPlaceholder": "Search products...",
+            },
+            "card2": {
+              "searchPlaceholder": "Search...",
+            }
+          }
         }
       },
       {
         "code": "tr",
         "label": "Türkçe",
         "data": {
+          "defaults": {
+            "visibility": "Görünürlük",
+            "visibilityHeader": "Tabloyu Özelleştir",
+            "visibilityDesc": "Liste içindeki öğeleri yeniden sıralamak için sürükleyip bırakın. Sütun görünürlüğü için onay kutularını kullanın.",
+            "filters": "Filtreler",
+            "sort": "Sırala",
+            "next": "Sonraki",
+            "previous": "Önceki",
+            "page": "Sayfa",
+            "search": "Ara...",
+            "apply": "Uygula",
+            "reset": "Sıfırla",
+          },
           "introduction": "Anasayfa",
           "configuration": "Yapılandırma",
           "examples": "Örnekler",
           "datatables": "Tablolar",
           "cards": "Kartlar",
+          "thisPage": "Bu Sayfa",
+          "introductionPage": {
+            "title1": "JSON Tabanlı Dinamik CRM Üretici",
+            "desc1": "Projenin amacı, bir JSON dosyası ve yerel kaynaklar kullanarak web sitesi geliştirme sürecini basitleştirmektir. Bu, önceden tanımlanmış yapılandırmaları kullanarak Vue 3 ve Tailwind CSS tabanlı bir web sitesinin dinamik olarak oluşturulmasını sağlar ve web sitelerinin oluşturulmasını, özelleştirilmesini ve bakımını kolaylaştırır.",
+            "title2": "JSON Yapılandırması",
+            "desc2": "JSON dosyası, projenin temelini oluşturur ve aşağıdaki ana bileşenleri içerir:",
+            "desc3-1": "Genel Bilgiler:",
+            "desc3-2": "Web sitesinin adı ve logosunun yanı sıra, başlık, açıklama ve simge gibi meta veri ayrıntılarını da içerir.",
+            "desc4-1": "Temalar:",
+            "desc4-2": "Renk şemaları, karanlık mod etkinleştirme ve yazı tipi yapılandırmaları gibi görsel öğelerin ayarlarını belirtir. Bu ayarlar, web sitesinin genel estetiğini tanımlar.",
+            "desc5-1": "Sayfalar:",
+            "desc5-2": "Her sayfa, JSON yapısı içinde tanımlanır ve sayfanın düzenini ve kullanılan bileşenleri detaylandırır. Sayfalar ayrıca DataTable, customType gibi geliştirmeyi kolaylaştırmak için çeşitli içerik türlerini içerir.",
+            "desc6": "İçerik türleri, sayfa tanımlarının içine doğrudan entegre edilmiştir ve projenin gereksinimlerine uygun dinamik DOM yapılarının oluşturulmasını kolaylaştırır. Bu yaklaşım, JSON dosyasının hem genel hem de sayfaya özgü yapılandırmaları verimli bir şekilde ele almasını sağlar.",
+            "button": "Başlarken",
+          },
+          "configurationPage": { 
+            "title1": "Başlarken",
+            "subtitle1": "Bağımlılıkları Yükle",
+            "desc1": "Terminalinizi açın ve aşağıdaki komutu generator klasöründe çalıştırın:",
+            "subtitle2": "data.js'yi Düzenle",
+            "desc2": "generator klasörüne gidin, data.js'yi açın ve gerekli ayarlamaları yapın.",
+            "subtitle3": "JSON Dosyalarını Oluştur",
+            "desc3": "generator klasöründe aşağıdaki komutu çalıştırın:",
+            "title2": "Yapılandırma",
+            "subtitle4": "Genel",
+            "desc4": "Bu bölüm, sitenin temel bilgilerini içerir. Logo, site adı, simge, sayfa başlığı ve SEO bilgileri gibi görsel öğeler burada tanımlanır.",
+            "subtitle5": "Tema",
+            "desc5": "Tema ayarları, sitenin tasarımını kontrol eder. Bu, karanlık mod, renkler ve yazı tipleri gibi özellikleri içerir. Ayrıca, özel renkleri ve projenin logosunu ve simgesini belirtmenizi sağlar. Ayrıca, bu bölümde projeye özel yazı tipleri ve resimler ekleyebilirsiniz.",
+            "subtitle6": "Sayfalar",
+            "desc6": "Bu bölümde, sitenin sayfaları tanımlanır. SEO hakkında bilgi, sayfaya özgü içerik ve her sayfada kullanılan bileşenler sağlanır. İki ana sayfa türü vardır:",
+            "desc7-1": "Datatable:",
+            "desc7-2": "AJAX çağrısı aracılığıyla dinamik olarak doldurulabilen bir veri tablosunu içeren bir sayfa. Bu, büyük miktarda veriyi filtreleme, arama ve sayfalama yeteneği ile yapılandırılmış bir formatta görüntülemek için kullanışlıdır.",
+            "desc8-1": "Custom:",
+            "desc8-2": "Daha özelleştirilmiş içeriğe izin veren bir sayfa. İçerik, JSON dosyasında doğrudan belirtilir ve özel HTML veya Vue bileşenlerini içerebilir.",
+            "subtitle7": "Özel Scriptler",
+            "desc9": "Paylaşılabilir işlevler ve scriptler burada bulunur.",
+            "button": "Örnekler",
+          },
+          "examplesPage": { 
+            "title1": "Veri Tablosu Örneği",
+            "title2": "Kart Örneği",
+            "exampleTable": {
+              "group": "Grup",
+              "name": "İsim",
+              "mail": "Mail",
+              "message": "Mesaj",
+            },
+            "exampleCard": {
+              "searchPlaceholder": "Ürünleri ara...",
+            }
+          },
+          "datatablesPage": { 
+            "title1": "Filtreli Veri Tablosu",
+            "title2": "Düzenlebilir Veri Tablosu",
+            "title3": "Çoklu Seçim Veri Tablosu",
+            "save": "Kaydet",
+            "cancel": "İptal",
+            "table1": {
+              "plate": "Plaka",
+              "model": "Model",
+              "customer": "Müşteri",
+              "location": "Konum",
+              "date": "Tarih",
+            },
+            "table2": {
+              "plate": "Plaka",
+              "model": "Model",
+              "androidImei": "Android Imei",
+              "androidMac": "Andorid Mac",
+              "modemImei": "Modem Imei",
+              "modemMac": "Modem Mac",
+              "plcImei": "PLC Imei",
+              "plcMac": "PLC Mac",
+              "test": "Test",
+            },
+            "table3": {
+              "plate": "Plaka",
+              "model": "Model",
+              "androidImei": "Android Imei",
+              "androidMac": "Andorid Mac",
+              "modemImei": "Modem Imei",
+              "modemMac": "Modem Mac",
+              "plcImei": "PLC Imei",
+              "plcMac": "PLC Mac",
+              "test": "Test",
+            }
+          },
+          "cardsPage": { 
+            "card1": {
+              "searchPlaceholder": "Ürünleri ara...",
+            },
+            "card2": {
+              "searchPlaceholder": "Arama yapın...",
+            }
+          }
         }
       }
     ]
@@ -73,11 +289,28 @@ module.exports = {
       "doms": [
         {
           "type": "custom",
-          "content": `<div class="w-full flex flex-col gap-6 justify-center items-center text-lg"><h1 class="text-main text-center text-[2.25rem] leading-10 font-bold">JSON-Based Dynamic CRM Generator</h1><div class="max-w-[1000px] flex flex-col gap-4 justify-center items-center"><p class="text-center">The project's goal is to simplify the process of website development, particularly for CRM systems, by utilizing a JSON file and local resources. It enables dynamic generation of a Vue 3 and Tailwind CSS-based website using predefined configurations in the JSON file, making it easier to create, customize, and maintain websites.</p><img style="border-width:4px;" class="mb-4 px-4 py-2 border border-dashed border-main dark:border-bg rounded-xl dark:hidden" title="process" src="/images/process.png" /><img style="border-width:4px;" class="mb-4 px-4 py-2 border border-dashed border-main dark:border-bg rounded-xl hidden dark:block" title="process" src="/images/process-dark.png" /></div><div class="max-w-[1000px] flex flex-col gap-4 justify-center items-center"><h2 class="text-main text-center text-[1.75rem] font-semibold">JSON Configuration</h2><p>The JSON file forms the foundation of the project and includes the following key components:</p><img style="border-width:4px;" class="mb-4 px-4 py-2 border border-dashed border-main dark:border-bg rounded-xl dark:hidden" title="json config" src="/images/json-detail.png" /><img style="border-width:4px;" class="mb-4 px-4 py-2 border border-dashed border-main dark:border-bg rounded-xl hidden dark:block" title="json config" src="/images/json-detail-dark.png" /><span><span class="font-semibold">General Information: </span>In addition to the website's name and logo, it also includes metadata details such as the title, description, and icon.</span><span><span class="font-semibold">Themes: </span>Specifies settings for visual elements such as color schemes, dark mode enablement, and font configurations. These settings define the overall aesthetic of the website.</span><span><span class="font-semibold">Pages: </span>Each page is defined within the JSON structure, detailing its layout and the components used. Pages also include a variety of content types to streamline development like DataTable, customType</span><span>The content types are integrated directly within the page definitions, making it easier to construct dynamic DOM structures that align with the project's requirements. This approach ensures that the JSON file can handle both general and page-specific configurations efficiently.</span></div></div>`
+          "content": `<div class="w-full flex flex-col gap-6 justify-center items-center text-lg">
+                        <h1 class="text-main text-center text-[2.25rem] leading-10 font-bold">{{$t("introductionPage.title1")}}</h1>
+                        <div class="max-w-[1000px] flex flex-col gap-4 justify-center items-center">
+                          <p class="text-center">{{$t("introductionPage.desc1")}}</p>
+                          <img style="border-width:4px;" class="mb-4 px-4 py-2 border border-dashed border-main dark:border-bg rounded-xl dark:hidden" title="process" src="/images/process.png" />
+                          <img style="border-width:4px;" class="mb-4 px-4 py-2 border border-dashed border-main dark:border-bg rounded-xl hidden dark:block" title="process" src="/images/process-dark.png" />
+                        </div>
+                        <div class="max-w-[1000px] flex flex-col gap-4 justify-center items-center">
+                          <h2 class="text-main text-center text-[1.75rem] font-semibold">{{$t("introductionPage.title2")}}</h2>
+                          <p>{{$t("introductionPage.desc2")}}</p>
+                          <img style="border-width:4px;" class="mb-4 px-4 py-2 border border-dashed border-main dark:border-bg rounded-xl dark:hidden" title="json config" src="/images/json-detail.png" />
+                          <img style="border-width:4px;" class="mb-4 px-4 py-2 border border-dashed border-main dark:border-bg rounded-xl hidden dark:block" title="json config" src="/images/json-detail-dark.png" />
+                          <span><span class="font-semibold">{{$t("introductionPage.desc3-1")}} </span>{{$t("introductionPage.desc3-2")}}</span>
+                          <span><span class="font-semibold">{{$t("introductionPage.desc4-1")}} </span>{{$t("introductionPage.desc4-2")}}</span>
+                          <span><span class="font-semibold">{{$t("introductionPage.desc5-1")}} </span>{{$t("introductionPage.desc5-2")}}</span>
+                          <span>{{$t("introductionPage.desc6")}}</span>
+                        </div>
+                      </div>`
         },
         {
           "type": "custom",
-          "content": `<div class="w-full py-2 mt-2 flex justify-center items-center"><div class="w-full max-w-[1000px] gap-8 flex justify-between items-center"><button @click=gettingStarted class="px-4 py-2 bg-third text-white shadow-md text-xl font-bold rounded-lg">Getting Started</button><button @click="sharedFunctions.getPageByPath(route.path)" class="px-4 py-2 bg-main text-white shadow-md text-xl font-bold rounded-lg">This Page</button></div></div>`
+          "content": `<div class="w-full py-2 mt-2 flex justify-center items-center"><div class="w-full max-w-[1000px] gap-8 flex justify-between items-center"><button @click=gettingStarted class="px-4 py-2 bg-third text-white shadow-md text-xl font-bold rounded-lg">{{$t("introductionPage.button")}}</button><button @click="sharedFunctions.getPageByPath(route.path)" class="px-4 py-2 bg-main text-white shadow-md text-xl font-bold rounded-lg">{{$t("thisPage")}}</button></div></div>`
         }
       ],
       "scopedCss": ``,
@@ -101,133 +334,153 @@ module.exports = {
       "doms": [
         {
           "type": "custom",
-          "content": `<div class="w-full py-0  md:px-0 mt-2 flex justify-center items-center"><div class="p-6 w-full max-w-[1000px]"><h1 class="text-3xl font-bold text-center mb-6">Getting Started</h1><ol class="list-decimal list-inside space-y-4"><li><strong>Install Dependencies</strong><p>Open your terminal and run the following command in the <code>generator</code> folder:</p><pre class="bg-darkBg text-bg dark:bg-black p-4 mt-2 rounded-md overflow-hidden"><code>npm install</code></pre></li><li><strong>Edit <code>data.js</code> in the <code>generator</code> Folder</strong><p>Navigate to the <code>generator</code> folder, open <code>data.js</code>, and make the necessary adjustments to the data.</p></li><li><strong>Generate JSON Files</strong><p>Run the following command in the <code>generator</code> folder:</p><pre class="bg-darkBg text-bg dark:bg-black p-4 mt-2 rounded-md overflow-hidden"><code>npm run generate</code></pre></li></ol></div></div>`
+          "content": `<div class="w-full py-0  md:px-0 mt-2 flex justify-center items-center">
+  <div class="p-6 w-full max-w-[1000px]">
+    <h1 class="text-3xl font-bold text-center mb-6">{{$t("configurationPage.title1")}}</h1>
+    <ol class="list-decimal list-inside space-y-4">
+      <li>
+        <strong>{{$t("configurationPage.subtitle1")}}</strong>
+        <p>{{$t("configurationPage.desc1")}}</p>
+        <pre class="bg-darkBg text-bg dark:bg-black p-4 mt-2 rounded-md overflow-hidden"><code>npm install</code></pre>
+      </li>
+      <li>
+        <strong>{{$t("configurationPage.subtitle2")}}</strong>
+        <p>{{$t("configurationPage.desc2")}}</p>
+      </li>
+      <li>
+        <strong>{{$t("configurationPage.subtitle3")}}</strong>
+        <p>{{$t("configurationPage.desc3")}}</p>
+        <pre class="bg-darkBg text-bg dark:bg-black p-4 mt-2 rounded-md overflow-hidden"><code>npm run generate</code></pre>
+      </li>
+    </ol>
+  </div>
+</div>`
         },
         {
           "type": "custom",
           "content": `<div class="w-full py-0  md:px-0 mt-2 flex justify-center items-center">
-<div class="p-6 w-full max-w-[1000px]">
-    <h1 class="text-3xl font-bold text-center mb-6">Configuration</h1>
-    <ol class="list-decimal list-inside space-y-4">
-        <li>
-            <strong>General </strong>
-            <p>This section contains basic information about the site. Visual elements such as logo, site name, icon, page title and SEO information are defined here.</p>
-            <pre class="bg-darkBg text-bg dark:bg-black p-4 mt-2 rounded-md overflow-hidden"><code>
-{
-  "logo": "/images/logo.png",   
-  "siteName": "My CRM",         
-  "icon": "/images/icon.png",   
-  "title": "My CRM"      
-}
-            </code></pre>
-        </li>
-        <li>
-            <strong>Theme</strong>
-            <p>Theme settings control the site design. This includes features like dark mode, colors, and fonts. You can also specify custom colors and the project’s logo and icon. Additionally, this section allows you to include fonts and images in the project directory.</p>
-            <pre class="bg-darkBg text-bg dark:bg-black p-4 mt-2 rounded-md overflow-hidden"><code>
-"theme": {
-  "darkModeEnabled": true,
-  "colors": {
-    "bg": "#F7F7F7",
-    "text": "#333",
-    "darkBg": "#091625",
-    "darkText": "#FFF",
-    "accept": "#4CAF50",
-    "cancel": "#DC3545",
-    "main": "#87567A",
-    "second": "#2F323A",
-    "third": "#E3D26F",
-    "fourth": "#347FC4",
-    "customColors": {
-      "test": "00FF00"
-      ...
-    }
-  },
-  "font": {
-    "family": "Montserrat",
-    "size": "14px",
-    "custom": [
-      {
-        "name": "Montserrat",
-        "file": "Montserrat.woff2"
-      }
-      ...
-    ]
-  },
-},
-            </code></pre>
-        </li>
-        <li>
-            <strong>Pages</strong>
-            <p>In this section, the pages of the site are defined. Information about SEO, page-specific content, and the components used in each page are provided. There are two main types of pages:</p>
-            <p class="p-3"><span class="font-semibold">Datatable:</span> A page that includes a table of data that can be dynamically populated through an AJAX call. This is useful for displaying large amounts of data in a structured format with the ability to filter, search, and paginate.</p>
-            <p class="p-3 pt-0"><span class="font-semibold">Custom:</span> A page that allows for more customized content. The content is specified directly in the JSON file and can include custom HTML or Vue components.</p>
-            <pre class="bg-darkBg text-bg dark:bg-black p-4 mt-2 rounded-md overflow-hidden"><code>
-{
-  "file": "Configuration.vue",
-  "name": "Configuration",
-  "path": "/configuration",
-  "icon": 'fa-solid fa-layer-group',
-  "seo": {
-    "title": "Configuration - My CRM",
-    "description": "Configuration",
-    "keywords": ["Configuration", "options", "settings"]
-  },
-  "doms": [
-    {
-      "type": "custom",
-      "content": 'Content here'
-    },
-    {
-      "type": "datatable",
-      "id": "productsTable",
-      "columns": ["title", "url", "albumId", "thumbnailUrl"],
-      "ajax": { "url": "https://jsonplaceholder.typicode.com/photos", "method": "GET", "dataSrc": '' },
-      "filters": [],
-      "toolbar": []
-    },
-    {
-      "type": "custom",
-      "content": 'Content here'
-    }
-  ],
-  "customScripts": 'custom scripts',
-  "customReadyScripts": 'dom ready custom scripts',
-}
-            </code></pre>
-        </li>
-        <li>
-            <strong>Custom Scripts</strong>
-            <p>Shareable functions and scripts are located here.</p>
-            <pre class="bg-darkBg text-bg dark:bg-black p-4 mt-2 rounded-md overflow-hidden"><code>
-"scripts": [
+  <div class="p-6 w-full max-w-[1000px]">
+      <h1 class="text-3xl font-bold text-center mb-6">{{$t("configurationPage.title2")}}</h1>
+      <ol class="list-decimal list-inside space-y-4">
+          <li>
+              <strong>{{$t("configurationPage.subtitle4")}} </strong>
+              <p>{{$t("configurationPage.desc4")}}</p>
+              <pre class="bg-darkBg text-bg dark:bg-black p-4 mt-2 rounded-md overflow-hidden"><code>
   {
-    "name": "shared",
-    "pages": [],
-    "script": "import siteData from '../../siteData.json'
-    import commonFunctions from './common';
-    const sharedFunctions = {
-        getPageByPath: function(path) {
-            const currentPageJson = siteData.pages.find(x => x.path == path);
-            const formatted = JSON.stringify(currentPageJson);
-            commonFunctions.openModal(500, 600, formatted);
-        }
-    }
-    export { sharedFunctions }"
+    "logo": "/images/logo.png",   
+    "siteName": "My CRM",         
+    "icon": "/images/icon.png",   
+    "title": "My CRM"      
   }
-]
-            </code></pre>
-        </li>
-    </ol>
-</div>
+              </code></pre>
+          </li>
+          <li>
+              <strong>{{$t("configurationPage.subtitle5")}}</strong>
+              <p>{{$t("configurationPage.desc5")}}</p>
+              <pre class="bg-darkBg text-bg dark:bg-black p-4 mt-2 rounded-md overflow-hidden"><code>
+  "theme": {
+    "darkModeEnabled": true,
+    "colors": {
+      "bg": "#F7F7F7",
+      "text": "#333",
+      "darkBg": "#091625",
+      "darkText": "#FFF",
+      "accept": "#4CAF50",
+      "cancel": "#DC3545",
+      "main": "#87567A",
+      "second": "#2F323A",
+      "third": "#E3D26F",
+      "fourth": "#347FC4",
+      "customColors": {
+        "test": "00FF00"
+        ...
+      }
+    },
+    "font": {
+      "family": "Montserrat",
+      "size": "14px",
+      "custom": [
+        {
+          "name": "Montserrat",
+          "file": "Montserrat.woff2"
+        }
+        ...
+      ]
+    },
+  },
+              </code></pre>
+          </li>
+          <li>
+              <strong>{{$t("configurationPage.subtitle6")}}</strong>
+              <p>{{$t("configurationPage.desc6")}}</p>
+              <p class="p-3"><span class="font-semibold">{{$t("configurationPage.desc7-1")}}</span> {{$t("configurationPage.desc7-2")}}</p>
+              <p class="p-3 pt-0"><span class="font-semibold">{{$t("configurationPage.desc8-1")}}</span> {{$t("configurationPage.desc8-2")}}</p>
+              <pre class="bg-darkBg text-bg dark:bg-black p-4 mt-2 rounded-md overflow-hidden"><code>
+  {
+    "file": "Configuration.vue",
+    "name": "Configuration",
+    "path": "/configuration",
+    "icon": 'fa-solid fa-layer-group',
+    "seo": {
+      "title": "Configuration - My CRM",
+      "description": "Configuration",
+      "keywords": ["Configuration", "options", "settings"]
+    },
+    "doms": [
+      {
+        "type": "custom",
+        "content": 'Content here'
+      },
+      {
+        "type": "datatable",
+        "id": "productsTable",
+        "columns": ["title", "url", "albumId", "thumbnailUrl"],
+        "ajax": { "url": "https://jsonplaceholder.typicode.com/photos", "method": "GET", "dataSrc": '' },
+        "filters": [],
+        "toolbar": []
+      },
+      {
+        "type": "custom",
+        "content": 'Content here'
+      }
+    ],
+    "customScripts": 'custom scripts',
+    "customReadyScripts": 'dom ready custom scripts',
+  }
+              </code></pre>
+          </li>
+          <li>
+              <strong>{{$t("configurationPage.subtitle7")}}</strong>
+              <p>{{$t("configurationPage.desc9")}}</p>
+              <pre class="bg-darkBg text-bg dark:bg-black p-4 mt-2 rounded-md overflow-hidden"><code>
+  "scripts": [
+    {
+      "name": "shared",
+      "pages": [],
+      "script": "import siteData from '../../siteData.json'
+      import commonFunctions from './common';
+      const sharedFunctions = {
+          getPageByPath: function(path) {
+              const currentPageJson = siteData.pages.find(x => x.path == path);
+              const formatted = JSON.stringify(currentPageJson);
+              commonFunctions.openModal(500, 600, formatted);
+          }
+      }
+      export { sharedFunctions }"
+    }
+  ]
+              </code></pre>
+          </li>
+      </ol>
+  </div>
 </div>`
         },
         {
           "type": "custom",
           "content": `<div class="w-full flex justify-center items-center">
             <div class="w-full py-0 px-6 max-w-[1000px] gap-8 flex justify-between items-center">
-              <button @click=examples class="px-4 py-2 bg-third text-white shadow-md text-xl font-bold rounded-lg">Examples</button>
-              <button @click="sharedFunctions.getPageByPath(route.path)" class="px-4 py-2 bg-main text-white shadow-md text-xl font-bold rounded-lg">This Page</button>
+              <button @click=examples class="px-4 py-2 bg-third text-white shadow-md text-xl font-bold rounded-lg">{{$t("configurationPage.button")}}</button>
+              <button @click="sharedFunctions.getPageByPath(route.path)" class="px-4 py-2 bg-main text-white shadow-md text-xl font-bold rounded-lg">{{$t("thisPage")}}</button>
             </div>
           </div>`
         }
@@ -255,7 +508,7 @@ module.exports = {
           "type": "custom",
           "content": `<div class="w-full flex justify-beetween items-center">
             <div class="w-full flex items-center gap-8">
-              <h1 class="text-2xl font-bold text-second dark:text-white">Datatable Example</h1>
+              <h1 class="text-2xl font-bold text-second dark:text-white">{{$t("examplesPage.title1")}}</h1>
             </div>
           </div>`
         },
@@ -268,7 +521,7 @@ module.exports = {
             {
               order: 0,
               name: 'postId',
-              title: 'Group',
+              title: 'examplesPage.exampleTable.group',
               checkable: true,
               render: function (data, type, row) {
                 if (data != null) {
@@ -282,7 +535,7 @@ module.exports = {
             {
               order: 1,
               name: 'name',
-              title: 'Name',
+              title: 'examplesPage.exampleTable.name',
               checkable: false,
               render: function (data, type, row) {
                 if (data != null) {
@@ -296,7 +549,7 @@ module.exports = {
             {
               order: 2,
               name: 'email',
-              title: 'Mail',
+              title: 'examplesPage.exampleTable.mail',
               checkable: true,
               render: function (data, type, row) {
                 if (data != null) {
@@ -310,7 +563,7 @@ module.exports = {
             {
               order: 3,
               name: 'body',
-              title: 'Message',
+              title: 'examplesPage.exampleTable.message',
               checkable: false,
               render: function (data, type, row) {
                 if (data != null) {
@@ -340,7 +593,7 @@ module.exports = {
           "type": "custom",
           "content": `<div class="w-full flex justify-beetween items-center mt-4">
             <div class="w-full flex items-center gap-8">
-              <h1 class="text-2xl font-bold text-second dark:text-white">Card Example</h1>
+              <h1 class="text-2xl font-bold text-second dark:text-white">{{$t("examplesPage.title2")}}</h1>
             </div>
           </div>`
         },
@@ -382,7 +635,7 @@ module.exports = {
           },
           "searchBar": {
             "name": "searchValue",
-            "placeholder": "Search Products...",
+            "placeholder": "examplesPage.exampleCard.searchPlaceholder",
             "delay": 300
           },
           "cardLayout": {
@@ -408,7 +661,7 @@ module.exports = {
           "content": `<div class="w-full flex justify-center items-center mt-4">
             <div class="w-full py-0 gap-8 flex justify-between items-center">
               <div></div>
-              <button @click="sharedFunctions.getPageByPath(route.path)" class="px-4 py-2 bg-main text-white shadow-md text-xl font-bold rounded-lg">This Page</button>
+              <button @click="sharedFunctions.getPageByPath(route.path)" class="px-4 py-2 bg-main text-white shadow-md text-xl font-bold rounded-lg">{{$t("thisPage")}}</button>
             </div>
           </div>`
         }
@@ -494,7 +747,7 @@ module.exports = {
           "type": "custom",
           "content": `<div class="w-full flex justify-beetween items-center mt-4">
             <div class="w-full flex items-center gap-8">
-              <h1 class="text-2xl font-bold text-second dark:text-white">Datatable with filters</h1>
+              <h1 class="text-2xl font-bold text-second dark:text-white">{{$t("datatablesPage.title1")}}</h1>
             </div>
           </div>`
         },
@@ -507,7 +760,7 @@ module.exports = {
             {
               order: 1,
               name: 'model',
-              title: 'Model',
+              title: 'datatablesPage.table1.model',
               checkable: true,
               orderable: false,
               render: function (data, type, row) {
@@ -522,7 +775,7 @@ module.exports = {
             {
               order: 0,
               name: 'plate',
-              title: 'Plate',
+              title: 'datatablesPage.table1.plate',
               checkable: false,
               orderable: false,
               render: function (data, type, row) {
@@ -537,21 +790,21 @@ module.exports = {
             {
               order: 2,
               name: 'customerName',
-              title: 'Customer',
+              title: 'datatablesPage.table1.customer',
               checkable: true,
               orderable: false,
             },
             {
               order: 3,
               name: 'location',
-              title: 'Location',
+              title: 'datatablesPage.table1.location',
               checkable: true,
               orderable: false,
             },
             {
               order: 4,
               name: 'transferedTime',
-              title: 'Date',
+              title: 'datatablesPage.table1.date',
               checkable: true,
               orderable: true,
               render: function (data, type, row) {
@@ -645,7 +898,7 @@ module.exports = {
           "type": "custom",
           "content": `<div class="w-full flex justify-beetween items-center mt-4">
             <div class="w-full flex items-center gap-8">
-              <h1 class="text-2xl font-bold text-second dark:text-white">Editable datatable</h1>
+              <h1 class="text-2xl font-bold text-second dark:text-white">{{$t("datatablesPage.title2")}}</h1>
             </div>
           </div>`
         },
@@ -658,7 +911,7 @@ module.exports = {
             { 
               order: 0,
               name: 'plate',
-              title: 'Plate',
+              title: 'datatablesPage.table2.plate',
               checkable: false,
               orderable: false,
               render: function (data, type, row) {
@@ -673,7 +926,7 @@ module.exports = {
             {
               order: 1,
               name: 'model',
-              title: 'Model',
+              title: 'datatablesPage.table2.model',
               checkable: true,
               orderable: false,
               render: function (data, type, row) {
@@ -688,7 +941,7 @@ module.exports = {
             {
               order: 2,
               name: 'imeiAndroid',
-              title: 'Android Imei',
+              title: 'datatablesPage.table2.androidImei',
               checkable: true,
               orderable: false,
               className: 'notSelectRow',
@@ -705,7 +958,7 @@ module.exports = {
             {
               order: 3,
               name: 'macAndroid',
-              title: 'Android Mac',
+              title: 'datatablesPage.table2.androidMac',
               checkable: true,
               orderable: false,
               className: 'notSelectRow',
@@ -722,35 +975,35 @@ module.exports = {
             {
               order: 4,
               name: 'imeimodem',
-              title: 'Modem Imei',
+              title: 'datatablesPage.table2.modemImei',
               checkable: true,
               orderable: false,
             },
             {
               order: 5,
               name: 'macmodem',
-              title: 'Modem Mac',
+              title: 'datatablesPage.table2.modemMac',
               checkable: true,
               orderable: false,
             },
             {
               order: 6,
               name: 'imeiplc',
-              title: 'PLC Imei',
+              title: 'datatablesPage.table2.plcImei',
               checkable: true,
               orderable: false,
             },
             {
               order: 7,
               name: 'macplc',
-              title: 'PLC Mac',
+              title: 'datatablesPage.table2.plcMac',
               checkable: true,
               orderable: false,
             },
             {
               order: 8,
               name: null,
-              title: 'Test',
+              title: 'datatablesPage.table2.test',
               checkable: true,
               orderable: false,
               render: function (data, type, row) {
@@ -1346,7 +1599,7 @@ module.exports = {
           "type": "custom",
           "content": `<div class="w-full flex justify-beetween items-center mt-4">
             <div class="w-full flex items-center gap-8">
-              <h1 class="text-2xl font-bold text-second dark:text-white">Multiselect datatable</h1>
+              <h1 class="text-2xl font-bold text-second dark:text-white">{{$t("datatablesPage.title3")}}</h1>
             </div>
           </div>`
         },
@@ -1993,8 +2246,8 @@ module.exports = {
                 <div class="flex flex-col justify-center items-center gap-8">
                   <h1 class="text-2xl font-bold">Some changes were noticed</h1>
                   <div class="flex gap-4 w-full">
-                      <button @click="saveCellChanges" class="w-1/2 px-4 py-2 bg-green-600 text-white shadow-md text-xl font-bold rounded-lg">Save</button>
-                      <button @click="cancelCellChanges" class="w-1/2 px-4 py-2 bg-red-600 text-white shadow-md text-xl font-bold rounded-lg">Cancel</button>
+                      <button @click="saveCellChanges" class="w-1/2 px-4 py-2 bg-green-600 text-white shadow-md text-xl font-bold rounded-lg">{{$t("datatablesPage.save")}}</button>
+                      <button @click="cancelCellChanges" class="w-1/2 px-4 py-2 bg-red-600 text-white shadow-md text-xl font-bold rounded-lg">{{$t("datatablesPage.cancel")}}</button>
                   </div>
                 </div>
             </div>
@@ -2176,7 +2429,7 @@ module.exports = {
           },
           "searchBar": {
             "name": "searchValue",
-            "placeholder": "Search Products...",
+            "placeholder": "cardsPage.card1.searchPlaceholder",
             "delay": 300
           },
           "filters": [
@@ -2275,7 +2528,7 @@ module.exports = {
           },
           "searchBar": {
             "name": "searchValue",
-            "placeholder": "Search Products...",
+            "placeholder": "cardsPage.card2.searchPlaceholder",
             "delay": 300
           },
           "filters": [

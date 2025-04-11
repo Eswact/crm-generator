@@ -210,8 +210,10 @@ function createViews() {
     <script setup>
       import { ref, onMounted, computed, watch } from 'vue';
       import { useRoute, useRouter } from 'vue-router';
+      import { useI18n } from 'vue-i18n';
       const route = useRoute();
       const router = useRouter();
+      const { locale } = useI18n();
       import commonFunctions from '../scripts/common.js'
       ${scriptsImports}
     
@@ -236,6 +238,14 @@ function createViews() {
     
         ${page.customReadyScripts || ''}
       });
+
+      ${page.doms.filter(x => x.type == 'datatable').map(function(item, index) {
+        return `watch(locale, () => {
+        ${item.name}.destroy();
+        ${item.name} = null;
+        ${item.name} = datatableService.initializeDataTable('${item.name}', '#${item.id}', ${item.id}Ajax, ${item.id}Columns, ${(item.filters && item.filters.data && item.filters.data.length > 0) ? `${item.id}Filters`: null}, ${item.id}TableOptions, ${item.id}Operations, ${item.id}Options);
+        });`;
+      }).join('\n')}
 
       ${page.shortcuts ? createShortcutsScript(page.shortcuts) : ''}
     
@@ -549,15 +559,15 @@ function generateCardsDom(item) {
   if (item.searchBar || item.ordering || item.filters || item.cardLayout.type === 2 || item.cardLayout.viewMode?.changeable) {
     topBar = `<div class="w-full flex justify-between items-center gap-4 md:flex-col md:justify-center">
       <div class="flex items-center md:w-full">
-        ${item.searchBar ? `<div class="w-[300px] md:w-full relative max-w-full flex items-center justify-end"> <input v-model="${item.name}SearchBar" type="text" placeholder="${item.searchBar.placeholder || 'Search...'}" class="peer w-full pl-4 pr-8 py-2 bg-white dark:bg-opacity-10 border-2 border-second dark:border-white rounded-xl placeholder:text-second dark:placeholder:text-white font-bold md:font-semibold text-lg focus:placeholder:text-fourth focus:border-fourth dark:focus:placeholder:text-fourth dark:focus:border-fourth focus:outline-none"/><i class="fa-solid fa-magnifying-glass absolute right-4 text-lg text-second dark:text-white peer-focus:text-fourth"></i></div>` : ''}
+        ${item.searchBar ? `<div class="w-[300px] md:w-full relative max-w-full flex items-center justify-end"> <input v-model="${item.name}SearchBar" type="text" :placeholder='$t(${JSON.stringify(item.searchBar.placeholder) || "defaults.search"})' class="peer w-full pl-4 pr-8 py-2 bg-white dark:bg-opacity-10 border-2 border-second dark:border-white rounded-xl placeholder:text-second dark:placeholder:text-white font-bold md:font-semibold text-lg focus:placeholder:text-fourth focus:border-fourth dark:focus:placeholder:text-fourth dark:focus:border-fourth focus:outline-none"/><i class="fa-solid fa-magnifying-glass absolute right-4 text-lg text-second dark:text-white peer-focus:text-fourth"></i></div>` : ''}
       </div>
       <div class="w-[400px] max-w-full md:w-full flex items-center justify-end gap-4">
         ${item.filters ? `<button id="${item.name}FiltersButton" class="w-[calc(50%-0.5rem)] bg-white dark:bg-opacity-10 border-2 border-second text-second dark:border-white dark:text-white hover:border-fourth hover:text-fourth dark:hover:border-fourth dark:hover:text-fourth text-lg py-2 px-4 rounded-xl flex items-center justify-between duration-200">
-          <span class="font-bold md:font-semibold">Filters</span>
+          <span class="font-bold md:font-semibold">{{$t("defaults.filters")}}</span>
           <i class="fa-solid fa-filter"></i>
         </button>` : ''}
         ${item.ordering ? `<button id="${item.name}OrderModalButton" class="w-[calc(50%-0.5rem)] bg-white dark:bg-opacity-10 border-2 border-second text-second dark:border-white dark:text-white hover:border-fourth hover:text-fourth dark:hover:border-fourth dark:hover:text-fourth text-lg py-2 px-4 rounded-xl flex items-center justify-between duration-200">
-          <span class="font-bold md:font-semibold">Sort</span>
+          <span class="font-bold md:font-semibold">{{$t("defaults.sort")}}</span>
           <i class="fa-solid fa-sort"></i>
         </button>` : ''}
         ${item.cardLayout.viewMode?.changeable ? `<button @click="${item.name}ChangeViewMode()" class="bg-white dark:bg-opacity-10 border-2 border-second text-second dark:border-white dark:text-white hover:border-fourth hover:text-fourth dark:hover:border-fourth dark:hover:text-fourth text-lg py-2 px-4 rounded-xl flex items-center justify-between duration-200">
@@ -576,14 +586,14 @@ function generateCardsDom(item) {
     modals += `<div v-show="${item.name}OrderModalVisibility" id="${item.name}OrderModal" @click.self="${item.name}ToggleOrderVisibility()" class="z-30 fixed w-full h-full top-0 left-0 bg-black bg-opacity-65 flex justify-center items-center md:items-end">
       <div class="bg-bg text-dark p-4 max-h-full max-w-full min-w-[400px] overflow-y-auto md:w-full md:min-w-[unset] md:pb-8 rounded-lg md:rounded-b-none md:rounded-t-2xl flex flex-col gap-4">
         <div class="w-full flex items-center justify-between mb-1">
-          <h2 class="text-2xl font-bold dark:text-darkBg">Sorting</h2>
+          <h2 class="text-2xl font-bold dark:text-darkBg">{{$t("defaults.sort")}}</h2>
           <button @click="${item.name}ToggleOrderVisibility()" class="px-2 text-3xl text-red-600"><i class="fa-solid fa-xmark"></i></button>
         </div>
-        <label v-for="option in ${item.name}OrderOptions" :key="option.id" :for="option.id" class="w-full px-6 py-3 border border-gray-400 flex items-center gap-4 text-lg font-semibold rounded-md">
+        <label v-for="option in ${item.name}OrderOptions" :key="option.id" :for="'${item.name}' + option.id" class="w-full px-6 py-3 border border-gray-400 flex items-center gap-4 text-lg font-semibold rounded-md">
           <input
             type="radio"
-            :id="option.id"
-            name="ordering"
+            :id="'${item.name}' + option.id"
+            name="${item.name}Ordering"
             :checked="${item.name}Ordering === option.value"
             @change="${item.name}Ordering = option.value"
           />
@@ -630,9 +640,9 @@ function generateCardsDom(item) {
 
   if (item.paging) {
     pagingDom = `<div class="flex justify-between items-center">
-                <button @click="${item.name}CurrentPage--" :disabled="${item.name}CurrentPage <= 1" class="bg-second text-white hover:bg-main duration-200 py-2 w-28 rounded-lg disabled:bg-second/50 dark:disabled:bg-second/20">Previous</button>
-                <div class="flex items-center gap-4 px-3 py-1 rounded-lg text-second dark:text-white font-semibold"><span>Page</span><span>{{ ${item.name}CurrentPage }} / {{ ${item.name}TotalPages }}</span></div>
-                <button @click="${item.name}CurrentPage++" :disabled="${item.name}CurrentPage >= ${item.name}TotalPages" class="bg-second text-white hover:bg-main duration-200 py-2 w-28 rounded-lg disabled:bg-second/50 dark:disabled:bg-second/20">Next</button>
+                <button @click="${item.name}CurrentPage--" :disabled="${item.name}CurrentPage <= 1" class="bg-second text-white hover:bg-main duration-200 py-2 w-28 rounded-lg disabled:bg-second/50 dark:disabled:bg-second/20">{{$t("defaults.previous")}}</button>
+                <div class="flex items-center gap-4 px-3 py-1 rounded-lg text-second dark:text-white font-semibold"><span>{{$t("defaults.page")}}</span><span>{{ ${item.name}CurrentPage }} / {{ ${item.name}TotalPages }}</span></div>
+                <button @click="${item.name}CurrentPage++" :disabled="${item.name}CurrentPage >= ${item.name}TotalPages" class="bg-second text-white hover:bg-main duration-200 py-2 w-28 rounded-lg disabled:bg-second/50 dark:disabled:bg-second/20">{{$t("defaults.next")}}</button>
               </div>`;
   }
 

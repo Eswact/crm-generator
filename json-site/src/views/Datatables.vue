@@ -2,21 +2,21 @@
       <div class="w-full flex flex-col justify-center items-center gap-4">
         <div class="w-full flex justify-beetween items-center mt-4">
             <div class="w-full flex items-center gap-8">
-              <h1 class="text-2xl font-bold text-second dark:text-white">Datatable with filters</h1>
+              <h1 class="text-2xl font-bold text-second dark:text-white">{{$t("datatablesPage.title1")}}</h1>
             </div>
           </div>
     <div class="w-full">
       <table id="transferedAutomatTable" class="display stripe hover" style="width:100%"></table>
     </div><div class="w-full flex justify-beetween items-center mt-4">
             <div class="w-full flex items-center gap-8">
-              <h1 class="text-2xl font-bold text-second dark:text-white">Editable datatable</h1>
+              <h1 class="text-2xl font-bold text-second dark:text-white">{{$t("datatablesPage.title2")}}</h1>
             </div>
           </div>
     <div class="w-full">
       <table id="createdAutomatTable" class="display stripe hover" style="width:100%"></table>
     </div><div class="w-full flex justify-beetween items-center mt-4">
             <div class="w-full flex items-center gap-8">
-              <h1 class="text-2xl font-bold text-second dark:text-white">Multiselect datatable</h1>
+              <h1 class="text-2xl font-bold text-second dark:text-white">{{$t("datatablesPage.title3")}}</h1>
             </div>
           </div>
     <div class="w-full">
@@ -27,8 +27,8 @@
                 <div class="flex flex-col justify-center items-center gap-8">
                   <h1 class="text-2xl font-bold">Some changes were noticed</h1>
                   <div class="flex gap-4 w-full">
-                      <button @click="saveCellChanges" class="w-1/2 px-4 py-2 bg-green-600 text-white shadow-md text-xl font-bold rounded-lg">Save</button>
-                      <button @click="cancelCellChanges" class="w-1/2 px-4 py-2 bg-red-600 text-white shadow-md text-xl font-bold rounded-lg">Cancel</button>
+                      <button @click="saveCellChanges" class="w-1/2 px-4 py-2 bg-green-600 text-white shadow-md text-xl font-bold rounded-lg">{{$t("datatablesPage.save")}}</button>
+                      <button @click="cancelCellChanges" class="w-1/2 px-4 py-2 bg-red-600 text-white shadow-md text-xl font-bold rounded-lg">{{$t("datatablesPage.cancel")}}</button>
                   </div>
                 </div>
             </div>
@@ -39,8 +39,10 @@
     <script setup>
       import { ref, onMounted, computed, watch } from 'vue';
       import { useRoute, useRouter } from 'vue-router';
+      import { useI18n } from 'vue-i18n';
       const route = useRoute();
       const router = useRouter();
+      const { locale } = useI18n();
       import commonFunctions from '../scripts/common.js'
       
 import $ from "jquery";
@@ -52,7 +54,7 @@ var transferedAutomatTable;
 let transferedAutomatTableColumns = [
   {
     order: 1,
-    title: "Model",
+    title: "datatablesPage.table1.model",
     data: "model",
     name: "model",
     checkable: true,
@@ -68,7 +70,7 @@ let transferedAutomatTableColumns = [
     className: ""
   },{
     order: 0,
-    title: "Plate",
+    title: "datatablesPage.table1.plate",
     data: "plate",
     name: "plate",
     checkable: false,
@@ -84,7 +86,7 @@ let transferedAutomatTableColumns = [
     className: ""
   },{
     order: 2,
-    title: "Customer",
+    title: "datatablesPage.table1.customer",
     data: "customerName",
     name: "customerName",
     checkable: true,
@@ -93,7 +95,7 @@ let transferedAutomatTableColumns = [
     className: ""
   },{
     order: 3,
-    title: "Location",
+    title: "datatablesPage.table1.location",
     data: "location",
     name: "location",
     checkable: true,
@@ -102,7 +104,7 @@ let transferedAutomatTableColumns = [
     className: ""
   },{
     order: 4,
-    title: "Date",
+    title: "datatablesPage.table1.date",
     data: "transferedTime",
     name: "transferedTime",
     checkable: true,
@@ -169,7 +171,7 @@ var createdAutomatTable;
 let createdAutomatTableColumns = [
   {
     order: 0,
-    title: "Plate",
+    title: "datatablesPage.table2.plate",
     data: "plate",
     name: "plate",
     checkable: false,
@@ -185,7 +187,7 @@ let createdAutomatTableColumns = [
     className: ""
   },{
     order: 1,
-    title: "Model",
+    title: "datatablesPage.table2.model",
     data: "model",
     name: "model",
     checkable: true,
@@ -201,7 +203,7 @@ let createdAutomatTableColumns = [
     className: ""
   },{
     order: 2,
-    title: "Android Imei",
+    title: "datatablesPage.table2.androidImei",
     data: "imeiAndroid",
     name: "imeiAndroid",
     checkable: true,
@@ -218,7 +220,7 @@ let createdAutomatTableColumns = [
     className: "notSelectRow"
   },{
     order: 3,
-    title: "Android Mac",
+    title: "datatablesPage.table2.androidMac",
     data: "macAndroid",
     name: "macAndroid",
     checkable: true,
@@ -235,7 +237,7 @@ let createdAutomatTableColumns = [
     className: "notSelectRow"
   },{
     order: 4,
-    title: "Modem Imei",
+    title: "datatablesPage.table2.modemImei",
     data: "imeimodem",
     name: "imeimodem",
     checkable: true,
@@ -244,7 +246,7 @@ let createdAutomatTableColumns = [
     className: ""
   },{
     order: 5,
-    title: "Modem Mac",
+    title: "datatablesPage.table2.modemMac",
     data: "macmodem",
     name: "macmodem",
     checkable: true,
@@ -253,7 +255,7 @@ let createdAutomatTableColumns = [
     className: ""
   },{
     order: 6,
-    title: "PLC Imei",
+    title: "datatablesPage.table2.plcImei",
     data: "imeiplc",
     name: "imeiplc",
     checkable: true,
@@ -262,7 +264,7 @@ let createdAutomatTableColumns = [
     className: ""
   },{
     order: 7,
-    title: "PLC Mac",
+    title: "datatablesPage.table2.plcMac",
     data: "macplc",
     name: "macplc",
     checkable: true,
@@ -271,7 +273,7 @@ let createdAutomatTableColumns = [
     className: ""
   },{
     order: 8,
-    title: "Test",
+    title: "datatablesPage.table2.test",
     data: "null",
     name: "null",
     checkable: true,
@@ -610,6 +612,22 @@ createdAutomatTable2 = datatableService.initializeDataTable('createdAutomatTable
         });
       
       });
+
+      watch(locale, () => {
+        transferedAutomatTable.destroy();
+        transferedAutomatTable = null;
+        transferedAutomatTable = datatableService.initializeDataTable('transferedAutomatTable', '#transferedAutomatTable', transferedAutomatTableAjax, transferedAutomatTableColumns, transferedAutomatTableFilters, transferedAutomatTableTableOptions, transferedAutomatTableOperations, transferedAutomatTableOptions);
+        });
+watch(locale, () => {
+        createdAutomatTable.destroy();
+        createdAutomatTable = null;
+        createdAutomatTable = datatableService.initializeDataTable('createdAutomatTable', '#createdAutomatTable', createdAutomatTableAjax, createdAutomatTableColumns, createdAutomatTableFilters, createdAutomatTableTableOptions, createdAutomatTableOperations, createdAutomatTableOptions);
+        });
+watch(locale, () => {
+        createdAutomatTable2.destroy();
+        createdAutomatTable2 = null;
+        createdAutomatTable2 = datatableService.initializeDataTable('createdAutomatTable2', '#createdAutomatTable2', createdAutomatTable2Ajax, createdAutomatTable2Columns, createdAutomatTable2Filters, createdAutomatTable2TableOptions, createdAutomatTable2Operations, createdAutomatTable2Options);
+        });
 
       document.addEventListener('keydown', function (e) {
     const pressedKeys = new Set();

@@ -7,7 +7,8 @@ import Sortable from 'sortablejs';
 import commonFunctions from '../scripts/common';
 import { toast } from "vue3-toastify";
 import select2Service from './select2Service';
-
+import i18n from './languageService';
+const t = i18n.global.t;
 
 const datatableService = {
     selectedRow: {},
@@ -46,7 +47,7 @@ const datatableService = {
         const columnDefinitions = tableColumns.map(column => ({
             data: column.data,
             name: column.name,
-            title: column.title,
+            title: t(column.title),
             visible: tablePrefs.find(pref => pref.name == column.name).visible,
             orderable: column.orderable != false,
             render: column.render || ((data, type, row) => data || ''),
@@ -110,12 +111,12 @@ const datatableService = {
                 <div class="flex items-center gap-2">
                     <button id="open${name}CT" class="p-2 px-4 flex items-center gap-2 bg-main hover:bg-opacity-80 duration-200 dark:bg-opacity-70 dark:hover:bg-opacity-100 text-white shadow-md text-xl rounded-lg">
                         <i class="fa-solid fa-eye text-xl"></i>
-                        <span class="font-semibold md:hidden">Visibility</span>
+                        <span class="font-semibold md:hidden">${t("defaults.visibility")}</span>
                     </button>
                     ${tableFilters
                         ? `<button id="open${name}Filters" class="p-2 px-4 flex items-center gap-2 bg-main hover:bg-opacity-80 duration-200 dark:bg-opacity-70 dark:hover:bg-opacity-100 text-white shadow-md text-xl rounded-lg">
                                 <i class="fa-solid fa-magnifying-glass text-xl"></i>
-                                <span class="font-semibold md:hidden">Filters</span>
+                                <span class="font-semibold md:hidden">${t("defaults.filters")}</span>
                                 <span class="filterCounter font-semibold hidden"></span>
                             </button>`
                         :''
@@ -376,8 +377,8 @@ const datatableService = {
         tablePrefs = tablePrefs.sort((a, b) => a.order - b.order);
         let modalHtml = `<div class="w-full h-full max-h-full overflow-hidden flex flex-col gap-4">
                             <div class="w-full h-[15%] flex flex-col gap-2">
-                                <h2 class="text-2xl font-bold">Customize Table</h2>
-                                <p>Drag and drop the items in the list to reorder them. Use checkboxes for column visibility.</p>
+                                <h2 class="text-2xl font-bold">${t("defaults.visibilityHeader")}</h2>
+                                <p>${t("defaults.visibilityDesc")}</p>
                             </div>
                             <div id="columnList" class="h-[calc(70%-2rem)]">
                                 <ul class="w-full h-full overflow-y-auto flex flex-col gap-2">
